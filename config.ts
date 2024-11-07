@@ -3,11 +3,11 @@ import { ConfigProps } from './types/config';
 
 const config = {
   // REQUIRED
-  appName: 'visainterviewai',
+  appName: 'AIPM - AI Project Manager',
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)
-  appDescription: 'Practice US F1 visa mock interview for FREE',
+  appDescription: 'AI Project Manager | AI Product Manager | AI Scrum Master',
   // REQUIRED (no https://, not trialing slash at the end, just the naked domain)
-  domainName: 'visainterviewai.com',
+  domainName: 'aipm.so',
   crisp: {
     // Crisp website ID. IF YOU DON'T USE CRISP: just remove this => Then add a support email in this config file (mailgun.supportEmail) otherwise customer support won't work.
     id: '',
@@ -25,20 +25,24 @@ const config = {
             ? 'price_1Niyy5AxyNprDp7iZIqEyD2h'
             : 'price_456',
         //  REQUIRED - Name of the plan, displayed on the pricing page
-        name: 'Starter',
+        name: 'HOBBY',
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
-        description: 'Perfect for small projects',
+        description: 'Perfect to stat with basic features',
         // The price you want to display, the one user will be charged on Stripe.
-        price: 99,
+        price: 19,
         // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
-        priceAnchor: 149,
+        priceAnchor: 29,
+
         features: [
           {
-            name: 'NextJS boilerplate',
+            name: '5 goals',
           },
-          { name: 'User oauth' },
-          { name: 'Database' },
-          { name: 'Emails' },
+          { name: '160 AI calls per month' },
+          { name: '1 Phone number' },
+          { name: 'Basic reminder' },
+          { name: 'AI Follow-Up' },
+          { name: 'Auto-repeat (daily/weekly/monthly)' },
+          { name: 'Limited email support' },
         ],
       },
       {
@@ -48,19 +52,48 @@ const config = {
             : 'price_456',
         // This plan will look different on the pricing page, it will be highlighted. You can only have one plan with isFeatured: true
         isFeatured: true,
-        name: 'Advanced',
-        description: 'You need more power',
-        price: 149,
-        priceAnchor: 299,
+        name: 'MASTER',
+        description:
+          'Serious about your life goals and want to build good habits',
+        price: 49,
+        priceAnchor: 69,
         features: [
-          {
-            name: 'NextJS boilerplate',
-          },
-          { name: 'User oauth' },
-          { name: 'Database' },
-          { name: 'Emails' },
-          { name: '1 year of updates' },
-          { name: '24/7 support' },
+          { name: '30 Goals' },
+          { name: '800 AI Calls per Month' },
+          // { name: 'Up to 3 Numbers (10 Goals Each)' },
+          { name: '1 Phone number' },
+          { name: 'AI Follow-Up' },
+          { name: 'Premium Human-Like Voice' },
+          { name: 'Special Days Reminders (e.g., Birthday, Mother’s Day)' },
+          { name: 'Auto-Repeat (Daily/Weekly/Monthly/Yearly)' },
+          // { name: 'Call-by-Call Summary' },
+          { name: 'Track Your Progress' },
+          { name: 'Priority Chat + Email Support' },
+        ],
+      },
+      {
+        priceId:
+          process.env.NODE_ENV === 'development'
+            ? 'price_1O5KtcAxyNprDp7iftKnrrpw'
+            : 'price_456',
+        // This plan will look different on the pricing page, it will be highlighted. You can only have one plan with isFeatured: true
+        isFeatured: true,
+        name: 'GOD',
+        description: 'Pay for 1 Year Plan and Get Lifetime Access',
+        price: 199,
+        priceAnchor: 829,
+        features: [
+          { name: 'Unlimited Goals' },
+          { name: 'Unlimited calls per Month' },
+          { name: '2 Phone number' },
+          { name: 'AI Follow-Up' },
+          { name: 'Ultra Realistic Human-Like Voice' },
+          { name: 'Special Days Reminders (e.g., Birthday, Mother’s Day)' },
+          { name: 'Auto-Repeat (Daily/Weekly/Monthly/Yearly)' },
+          // { name: 'Call-by-Call Summary' },
+          { name: 'Track Your Progress' },
+          { name: 'Early Access to Upcoming Features' },
+          { name: 'Priority Call + Chat + Email Support' },
         ],
       },
     ],

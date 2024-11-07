@@ -1,34 +1,38 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import config from '@/config';
-import logo from '@/app/logo.png';
+import logo from '@/app/icon.png';
 
 // Add the Footer to the bottom of your landing page and more.
 // The support link is connected to the config.js file. If there's no config.mailgun.supportEmail, the link won't be displayed.
 
-const FooterX = () => {
+const FooterBIg = () => {
   return (
-    <footer className='bg-gradient-to-t from-blue-300 via-blue-50 to-white w-full'>
-      <div className='max-w-5xl  mx-auto px-4 pb-20 pt-52'>
+    <footer className=' bg-blue-100 border-t border-base-content/10'>
+      <div className='max-w-7xl mx-auto px-8 py-24'>
         <div className=' flex lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col'>
           <div className='w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left'>
             <Link
-              className='flex items-center gap-2 shrink-0 '
-              href='/'
-              title={`${config.appName} homepage`}>
+              href='/#'
+              aria-current='page'
+              className='flex gap-2 justify-center md:justify-start items-center'>
               <Image
                 src={logo}
                 alt={`${config.appName} logo`}
-                className='w-[120px]'
                 priority={true}
-                width={130}
-                height={70}
+                className='w-6 h-6'
+                width={24}
+                height={24}
               />
+              <strong className='font-extrabold tracking-tight text-base md:text-lg'>
+                {config.appName}
+              </strong>
             </Link>
-            {/* <p className='mt-3 text-xs text-base-content/60'>
-              Never Miss Your Life Goals again!
-            </p> */}
-            <p className='mt-4 text-xs text-base-content/60'>
+
+            <p className='mt-3 text-sm text-base-content/80'>
+              {config.appDescription}
+            </p>
+            <p className='mt-3 text-sm text-base-content/60'>
               Copyright © {new Date().getFullYear()} - All rights reserved
             </p>
           </div>
@@ -39,25 +43,31 @@ const FooterX = () => {
               </div>
 
               <div className='flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm'>
-                <Link
-                  href='/'
-                  className='link link-hover'>
-                  Visa Officer AI
-                </Link>
+                {config.mailgun.supportEmail && (
+                  <a
+                    href={`mailto:${config.mailgun.supportEmail}`}
+                    target='_blank'
+                    className='link link-hover'
+                    aria-label='Contact Support'>
+                    Support
+                  </a>
+                )}
                 <Link
                   href='/#pricing'
                   className='link link-hover'>
                   Pricing
                 </Link>
-                {/* {config.mailgun.supportEmail && ( */}
+                <Link
+                  href='/blog'
+                  className='link link-hover'>
+                  Blog
+                </Link>
                 <a
-                  href={`mailto:sagarjaid321@gmail.com`}
+                  href='/#'
                   target='_blank'
-                  className='link link-hover'
-                  aria-label='Contact Support'>
-                  Support
+                  className='link link-hover'>
+                  Affiliates
                 </a>
-                {/* )} */}
               </div>
             </div>
 
@@ -86,4 +96,4 @@ const FooterX = () => {
   );
 };
 
-export default FooterX;
+export default FooterBIg;
