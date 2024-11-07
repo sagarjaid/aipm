@@ -19,9 +19,12 @@ export const getSEOTags = ({
 } = {}) => {
   return {
     // up to 50 characters (what does your app do for the user?) > your main should be here
-    title: 'Visa Interview AI — Practice US F1 Visa Mock Interview',
+    title: 'AIPM - AI Project Manager',
     // up to 160 characters (how does your app help the user?)
-    description: description || config.appDescription,
+    description:
+      description ||
+      config.appDescription ||
+      'AI Project Manager | AI Product Manager | AI Scrum Master',
     // some keywords separated by commas. by default it will be your app name
     keywords: keywords || [config.appName],
     applicationName: config.appName,
@@ -33,11 +36,11 @@ export const getSEOTags = ({
     ),
 
     openGraph: {
-      title:
-        openGraph?.title ||
-        'Visa Interview AI — Practice US Visa Mock Interview' ||
-        config.appName,
-      description: openGraph?.description || config.appDescription,
+      title: openGraph?.title || 'AIPM - AI Project Manager' || config.appName,
+      description:
+        openGraph?.description ||
+        config.appDescription ||
+        'AI Project Manager | AI Product Manager | AI Scrum Master',
       url: openGraph?.url || `https://${config.domainName}/`,
       siteName: openGraph?.title || config.appName,
       // If you add an opengraph-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
@@ -53,8 +56,11 @@ export const getSEOTags = ({
     },
 
     twitter: {
-      title: openGraph?.title || config.appName,
-      description: openGraph?.description || config.appDescription,
+      title: openGraph?.title || 'AIPM - AI Project Manager' || config.appName,
+      description:
+        openGraph?.description ||
+        config.appDescription ||
+        'AI Project Manager | AI Product Manager | AI Scrum Master',
       // If you add an twitter-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
       // images: [openGraph?.image || defaults.og.image],
       card: 'summary_large_image',
