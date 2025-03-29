@@ -1,3 +1,5 @@
+/** @format */
+
 import { Suspense } from 'react';
 import Header from '@/components/Header';
 // import ButtonSubmitYT from '@/components/ButtonSubmitYT';
@@ -112,7 +114,7 @@ export default function Home() {
         {/* <CtaBox /> */}
       </main>
       {/* <FooterBIg /> */}
-      <FooterX />
+      {/* <FooterX /> */}
     </>
   );
 }
