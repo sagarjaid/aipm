@@ -1,3 +1,5 @@
+/** @format */
+
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 
 @tailwind base;
@@ -89,4 +91,26 @@ progress::-webkit-progress-value {
     @apply bg-background text-foreground;
     @apply font-sans;
   }
+}
+
+@keyframes spin-variable {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(270deg);
+  }
+  75% {
+    transform: rotate(315deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-animation {
+  animation: spin-variable 4s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }

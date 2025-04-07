@@ -1,3 +1,5 @@
+/** @format */
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -7,6 +9,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ButtonSignin from './ButtonSignin';
 import logo from '@/app/logo.png';
+import arrowRight from '@/app/arrow-right.svg';
 
 import config from '@/config';
 import Navbar from './Navbar';
@@ -80,7 +83,7 @@ const Header = () => {
             <Image
               src={logo}
               alt={`${config.appName} logo`}
-              className='w-full'
+              className='w-[110px]'
               priority={true}
               width={130}
               height={70}
@@ -125,22 +128,64 @@ const Header = () => {
         </div> */}
 
         {/* CTA on large screens */}
-        <div className='hidden lg:flex lg:justify-end lg:flex-1 text-xs'>
+        <div className='hidden lg:flex lg:justify-end lg:flex-1 text-sm'>
           <div className='flex items-center justify-center gap-4'>
             {pathName.endsWith('/') ? (
               <>
-                <a
+                <a href='#'>Products</a>
+                <a href='#'>Mission</a>
+                <a href='#'>Join Waitlist</a>
+
+                {/* <a
                   href='/#pricing'
-                  className='flex items-center gap-2 hover:bg-base-300 duration-200
-              p-2 w-fit rounded-lg font-medium'>
+                  className='flex items-center gap-2 hover:bg-base-300 duration-200 p-2 w-fit rounded-lg font-medium'>
                   {pricingSvg}
                   <span>Pricing</span>
-                </a>
-                <ButtonAccount />
+                </a> */}
+
+                {/* <a
+                  href='#'
+                  className='w-fit bg-black text-white px-3.5 py-2 rounded-full flex items-center gap-2'>
+                  <span>Join Waitlist</span>
+
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 24 24'
+                    className='w-4 h-4  text-white'
+                    fill='white' // Add this line
+                  >
+                    <g
+                      id='_01_align_center'
+                      data-name='01 align center'>
+                      <path d='M17.414,10.586,13.121,6.293,11.707,7.707,15,11H5v2H15l-3.293,3.293,1.414,1.414,4.293-4.293A2,2,0,0,0,17.414,10.586Z' />
+                    </g>
+                  </svg>
+                </a> */}
+
+                {/* <ButtonAccount /> */}
               </>
             ) : (
               <>
-                <ButtonAccount />
+                {/* <ButtonAccount /> */}
+                {/* <a
+                  href='#'
+                  className='w-fit bg-black text-white px-3.5 py-2 rounded-full flex items-center gap-2'>
+                  <span>Join Waitlist</span>
+
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 24 24'
+                    className='w-4 h-4  text-white'
+                    fill='white' // Add this line
+                  >
+                    <g
+                      id='_01_align_center'
+                      data-name='01 align center'>
+                      <path d='M17.414,10.586,13.121,6.293,11.707,7.707,15,11H5v2H15l-3.293,3.293,1.414,1.414,4.293-4.293A2,2,0,0,0,17.414,10.586Z' />
+                    </g>
+                  </svg>
+                </a> */}
+                <a href='#'>Join Waitlist</a>
               </>
             )}
           </div>
