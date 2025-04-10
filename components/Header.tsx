@@ -134,7 +134,7 @@ const Header = () => {
               <>
                 <a href='#'>Products</a>
                 <a href='#'>Mission</a>
-                <a href='#'>Join Waitlist</a>
+                {/* <a href='#'>Join Waitlist</a> */}
 
                 {/* <a
                   href='/#pricing'

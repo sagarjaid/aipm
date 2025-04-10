@@ -15,10 +15,10 @@ export default function ParticleHead() {
     multiplier: 0.5,
     velocity: 0,
     size: 0.1,
-    color: '#636363',
-    width: 320,
-    height: 320,
-    zoom: 400,
+    color: '#363636',
+    width: 500,
+    height: 500,
+    zoom: 450,
     mouseSpeed: 0.01,
   };
 

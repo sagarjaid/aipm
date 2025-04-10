@@ -11,8 +11,8 @@ import footer from '@/app/footer.png';
 const FooterBIg = () => {
   return (
     <footer className='w-full mx-auto border-t border-base-content/10'>
-      <div className='max-w-5xl mx-auto px-8 py-24'>
-        <div className=' flex lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col gap-40'>
+      <div className='max-w-5xl mx-auto px-8 md:py-24 py-16'>
+        <div className=' flex lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col md:gap-40 gap-10'>
           <div className='w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left'>
             <Link
               href='/#'
@@ -38,13 +38,13 @@ const FooterBIg = () => {
               Copyright © {new Date().getFullYear()} - All rights reserved
             </p>
           </div>
-          <div className='flex-grow flex flex-wrap justify-end -mb-10 md:mt-0 mt-10 gap-10'>
-            <div className='px-4'>
-              <div className='footer-title font-semibold text-base-content tracking-widest text-sm md:text-left mb-3'>
+          <div className='flex md:flex-row flex-col justify-end md:gap-10'>
+            <div className='px-4 md:text-left text-center w-full'>
+              <div className='footer-title font-semibold text-base-content tracking-widest text-sm mb-3'>
                 LINKS
               </div>
 
-              <div className='flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm'>
+              <div className='flex flex-col justify-center  gap-2 mb-10 text-sm'>
                 {config.mailgun.supportEmail && (
                   <a
                     href={`mailto:${config.mailgun.supportEmail}`}
@@ -73,12 +73,12 @@ const FooterBIg = () => {
               </div>
             </div>
 
-            <div className='px-4'>
-              <div className='footer-title font-semibold text-base-content tracking-widest text-sm md:text-left mb-3'>
+            <div className='px-4 md:text-left text-center w-full'>
+              <div className='footer-title font-semibold text-base-content tracking-widest text-sm  mb-3'>
                 LEGAL
               </div>
 
-              <div className='flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm'>
+              <div className='flex flex-col justify-center gap-2 mb-10 text-sm'>
                 <Link
                   href='/tos'
                   className='link link-hover'>
@@ -92,12 +92,12 @@ const FooterBIg = () => {
               </div>
             </div>
 
-            <div className='px-4'>
-              <div className='footer-title font-semibold text-base-content tracking-widest text-sm md:text-left mb-3'>
+            <div className='px-4 md:text-left text-center w-full'>
+              <div className='footer-title font-semibold text-base-content tracking-widest text-sm mb-3'>
                 LEGAL
               </div>
 
-              <div className='flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm'>
+              <div className='flex flex-col justify-center  gap-2 mb-10 text-sm'>
                 <Link
                   href='/tos'
                   className='link link-hover'>
