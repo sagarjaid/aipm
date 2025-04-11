@@ -28,8 +28,8 @@ const UserInfo = () => {
     // Detect OS
     let os = 'Unknown';
     if (userAgent.includes('Windows')) os = 'Windows';
-    else if (userAgent.includes('Mac')) os = 'Mac';
-    else if (userAgent.includes('Linux')) os = 'Linux';
+    else if (userAgent.includes('Mac')) os = isMobile ? 'IOS' : 'Mac';
+    else if (userAgent.includes('Linux')) os = isMobile ? 'Android' : 'Linux';
     else if (userAgent.includes('Android')) os = 'Android';
     else if (userAgent.includes('iOS')) os = 'IOS';
 

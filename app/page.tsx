@@ -13,6 +13,8 @@ import Footer from '@/components/molecules/Footer';
 import FooterBIg from '@/components/FooterBig';
 import FooterX from '@/components/Footer';
 import UserInfo from './components/UserInfo';
+import logo from '@/app/icon.png';
+import RandomWord from './components/RandomWord';
 
 const ParticleHead = dynamic(() => import('./components/ParticleHead'), {
   ssr: false,
@@ -97,29 +99,120 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='flex flex-col w-full items-center justify-center gap-4 md:mt-36 mt-20 '>
+        <div className='flex flex-col w-full items-center justify-center gap-20 md:my-36 mt-20 '>
           <div className='relative group'>
             <h2 className='text-3xl font-bold'>
-              Hey,{' '}
-              <span className='underline decoration-wavy decoration-rose-300 underline-offset-4'>
-                Nomad
-              </span>{' '}
-              from 🇮🇳
+              Hey, <RandomWord /> from 🇮🇳
             </h2>
             <div className='hidden group-hover:block'>
               <UserInfo />
             </div>
           </div>
 
-          <Image
-            src={message}
-            alt='message'
-            className='w-full'
-            width={1000}
-            height={1000}
-          />
+          <div className='relative block w-full max-w-3xl'>
+            {/* Paper stack below - First paper */}
+            <div
+              className='absolute w-full bg-white rounded-md -rotate-2 z-0 overflow-hidden'
+              style={{
+                height: '102%',
+                top: '10px',
+                left: '6px',
+                boxShadow: '-0.5px 0.5px 1px rgba(0, 0, 15, 0.3)',
+              }}
+            />
+
+            {/* Paper stack below - Second paper */}
+            <div
+              className='absolute w-full bg-[#fcfcfc] rounded-md rotate-3 z-0 overflow-hidden'
+              style={{
+                height: '100%',
+                top: '16px',
+                left: '-4px',
+                boxShadow: '-0.5px 0.5px 1px rgba(0, 0, 15, 0.3)',
+              }}
+            />
+
+            <div
+              className='relative z-10 flex w-full items-center justify-start space-x-6 p-8 bg-white rotate hover:rotate-1 transition-all duration-300 rounded-md'
+              style={{
+                boxShadow: '-0.4px 0.4px 0px rgba(0, 0, 15, 0.5)', // left and bottom shadow
+              }}>
+              <div className='p-10 mt-6'>
+                <Image
+                  src={logo}
+                  alt={'logo'}
+                  className='w-[60px] opacity-50'
+                  priority={true}
+                  width={100}
+                  height={100}
+                />
+                <div className='mt-8 flex flex-col gap-6 text-base text-gray-900 text-justify'>
+                  <p>It&apos;s 2020, we need to talk about email.</p>
+                  <p>
+                    Email gets a bad rap, but it shouldn&apos;t. Email&apos;s a
+                    treasure.
+                  </p>
+                  <p>
+                    It feels great to get an email from someone you care about.
+                    Or a newsletter you enjoy. Or an update from a service you
+                    like.
+                  </p>
+                  <p>That&apos;s how email used to feel all the time.</p>
+                  <p>But things changed.</p>
+                  <p>
+                    You started getting stuff you didn&apos;t want from people
+                    you didn&apos;t know. You lost control over who could reach
+                    you. An avalanche of automated emails cluttered everything
+                    up.
+                  </p>
+                  <p>
+                    And Gmail, Outlook, Yahoo, and Apple just let it happen.
+                  </p>
+                  <p>
+                    Now email feels like a chore, rather than a joy. Something
+                    you fall behind on. Something you clear out, not cherish.
+                    Rather than delight in it, you deal with it.
+                  </p>
+                  <p>
+                    And yet, email remains a wonder. Thanks to email, people
+                    across cultures, continents, countries, cities, and
+                    communities communicate every day. It&apos;s reliable.
+                    It&apos;s simple. It makes it easy for two humans to share
+                    their love, and for millions of people to earn a living.
+                  </p>
+                  <p>
+                    So good news, the magic&apos;s still there. It&apos;s just
+                    obscured — buried under a mess of bad habits and neglect.
+                    Some from people, some from machines, a lot from email
+                    software.
+                  </p>
+                  <p>
+                    Email deserves a dust off. A renovation. Modernized for the
+                    way we email today.
+                  </p>
+                  <p>
+                    With HEY, we&apos;ve done just that. It&apos;s a redo, a
+                    rethink, a simplified, potent reintroduction of email. A
+                    fresh start, the way it should be.
+                  </p>
+                  <p>
+                    HEY is our love letter to email, and we&apos;re sending it
+                    to you on the Web, Mac, Windows, Linux, iOS, and Android.
+                  </p>
+                  <p>- Sagar Jaid</p>
+                </div>
+              </div>
+              <div
+                className='absolute before:content-[""] top-0 right-0 border-[30px] border-solid border-transparent border-r-transparent border-b-white border-l-white block rounded-b-md'
+                style={{
+                  boxShadow: '-0.2px 0.2px 0px rgba(0, 0, 15, 0.5)', // left and bottom shadow
+                }}
+              />
+            </div>
+          </div>
         </div>
-        <div className='flex flex-col w-full items-center justify-center gap-4 p-4'>
+
+        <div className='flex flex-col w-full items-center justify-center gap-4 p-4 mt-40 md:mt-10'>
           <Image
             src={photo}
             alt='photo'
