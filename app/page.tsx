@@ -1,6 +1,6 @@
 /** @format */
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import Header from '@/components/Header';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -12,6 +12,8 @@ import logos from '@/app/logos.png';
 import Footer from '@/components/molecules/Footer';
 import FooterBIg from '@/components/FooterBig';
 import FooterX from '@/components/Footer';
+import UserInfo from './components/UserInfo';
+
 const ParticleHead = dynamic(() => import('./components/ParticleHead'), {
   ssr: false,
 });
@@ -66,6 +68,7 @@ export default function Home() {
             <div className='flex flex-col max-w-[260px] pt-10 pb-36 w-full items-start border px-6 gap-4 rounded-md shadow-sm hover:shadow-md transition-all duration-300'>
               <Image
                 src={scrum}
+                className='animate-[spin_40s_linear_infinite]'
                 alt='scrum'
                 width={100}
                 height={100}
@@ -81,6 +84,7 @@ export default function Home() {
               <Image
                 src={pm}
                 alt='pm'
+                className='animate-[spin_30s_linear_infinite]'
                 width={100}
                 height={100}
               />
@@ -94,7 +98,18 @@ export default function Home() {
         </div>
 
         <div className='flex flex-col w-full items-center justify-center gap-4 md:mt-36 mt-20 '>
-          <h2 className='text-3xl font-bold'>Hey, Nomad from 🇮🇳</h2>
+          <div className='relative group'>
+            <h2 className='text-3xl font-bold'>
+              Hey,{' '}
+              <span className='underline decoration-wavy decoration-rose-300 underline-offset-4'>
+                Nomad
+              </span>{' '}
+              from 🇮🇳
+            </h2>
+            <div className='hidden group-hover:block'>
+              <UserInfo />
+            </div>
+          </div>
 
           <Image
             src={message}
