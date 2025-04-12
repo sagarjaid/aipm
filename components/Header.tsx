@@ -136,8 +136,8 @@ const Header = () => {
           <div className='flex items-center justify-center gap-4'>
             {pathName.endsWith('/') ? (
               <>
-                <a href='#'>Products</a>
-                <a href='#'>Mission</a>
+                <a href='#products'>Products</a>
+                <a href='/mission'>Mission</a>
                 {/* <a href='#'>Join Waitlist</a> */}
 
                 {/* <a
@@ -189,7 +189,7 @@ const Header = () => {
                     </g>
                   </svg>
                 </a> */}
-                <a href='#'>Join Waitlist</a>
+                <a href='/'>Home</a>
               </>
             )}
           </div>

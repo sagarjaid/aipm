@@ -6,10 +6,10 @@ import Link from 'next/link';
 
 const AnimatedLogo = () => {
   return (
-    <div className='flex items-center gap-2 group cursor-pointer overflow-hidden'>
-      <Link
-        href='/'
-        className='relative w-7 h-7'>
+    <Link
+      href='/'
+      className='flex items-center gap-2 group cursor-pointer overflow-hidden'>
+      <div className='relative w-7 h-7'>
         <svg
           width='514'
           height='514'
@@ -28,11 +28,11 @@ const AnimatedLogo = () => {
             strokeWidth='16'
           />
         </svg>
-      </Link>
+      </div>
       <p className='font-bold text-black text-3xl transition-all duration-1000 ease-in-out group-hover:translate-x-[-20%] group-hover:opacity-0'>
         aipm
       </p>
-    </div>
+    </Link>
   );
 };
 

@@ -19,6 +19,7 @@ import AnimatedCard from './components/AnimatedCard';
 import sagar from '@/app/sagar.png';
 import signature from '@/app/signature.png';
 import GradientInput from './components/GradientInput';
+import CountryFlag from './components/CountryFlag';
 
 const ParticleHead = dynamic(() => import('./components/ParticleHead'), {
   ssr: false,
@@ -56,7 +57,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='flex flex-col justify-center mt-40 items-center gap-10 p-4'>
+        <div
+          id='products'
+          className='flex flex-col justify-center pt-40 items-center gap-10 p-4'>
           <h2 className='text-3xl text-center font-bold'>
             To Start We have 2 Goals
           </h2>
@@ -85,7 +88,7 @@ export default function Home() {
         <div className='flex flex-col w-full items-center justify-center gap-20 md:my-36 mt-20 p-4'>
           <div className='relative group'>
             <h2 className='text-3xl font-bold'>
-              Hey, <RandomWord /> from 🇮🇳
+              Hey, <RandomWord /> from <CountryFlag />
             </h2>
             <div className='hidden group-hover:block'>
               <UserInfo />
