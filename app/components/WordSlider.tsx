@@ -26,7 +26,7 @@ const WordSlider = () => {
   }, []);
 
   return (
-    <div className='h2 relative w-full mdx:text-6xl xs:text-4xl text-3xl font-extrabold mt-2'>
+    <div className='h2 relative w-full mdx:text-6xl xs:text-4xl text-3xl font-bold mt-2'>
       {words.map((word, index) => (
         <div
           key={word}

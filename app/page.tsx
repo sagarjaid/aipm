@@ -15,6 +15,10 @@ import FooterX from '@/components/Footer';
 import UserInfo from './components/UserInfo';
 import logo from '@/app/icon.png';
 import RandomWord from './components/RandomWord';
+import AnimatedCard from './components/AnimatedCard';
+import sagar from '@/app/sagar.png';
+import signature from '@/app/signature.png';
+import GradientInput from './components/GradientInput';
 
 const ParticleHead = dynamic(() => import('./components/ParticleHead'), {
   ssr: false,
@@ -25,39 +29,30 @@ import WordSlider from './components/WordSlider';
 export default function Home() {
   return (
     <>
-      <main className='flex flex-col items-center  max-w-5xl mx-auto w-full justify-start'>
+      <main className='flex flex-col items-center  max-w-5xl mx-auto w-full justify-start overflow-hidden'>
         <div className='flex max-w-5xl w-full gap-4 flex-col items-center justify-center '>
           <Suspense>
             <Header />
           </Suspense>
         </div>
         <div className='flex flex-col items-center w-full justify-center'>
-          <div className='flex max-w-5xl w-full gap-8 flex-col items-center justify-center px-4 pt-10 '>
+          <div className='flex max-w-5xl w-full gap-8 flex-col items-center justify-center px-4 pt-10'>
             <ParticleHead />
             {/* <div className='text-5xl font-extrabold'>It&apos;s time!</div> */}
-            <div className='mdx:text-5xl xs:text-3xl text-2xl font-extrabold max-w-4xl text-center'>
-              What an AI Scrum Master and AI Project Manager should have been
+            <div className='mdx:text-5xl xs:text-3xl text-2xl font-extralight max-w-4xl text-center'>
+              What an <span className='font-bold'>AI Scrum Master</span> and{' '}
+              <span className='font-bold'>AI Project Manager</span> should have
+              been
+              {/* What an <span className='font-bold'>AI Scrum Master</span>{' '}
+              and <span className='font-bold'>AI Project Manager</span> should
+              have been */}
             </div>
             <div className=' mdx:text-sm xs:text-xs text-xs max-w-lg text-center'>
               Let the AI manage your scrum calls, update Jira tickets, resolve
               conflicts and keep the dev team motivated and accountable
             </div>
 
-            <div className='flex flex-col justify-between mdx:w-1/2 xs:w-full gap-3'>
-              <div className='flex items-center justify-between border-2 border-black rounded-full w-full'>
-                <input
-                  type='email'
-                  placeholder='Email'
-                  className='rounded-l-full w-full px-6 py-4 focus:outline-none'
-                />
-                <button className='bg-black text-white block w-[60%] border-black rounded-r-full px-4 py-4'>
-                  Get early access
-                </button>
-              </div>
-              <div className='text-[10px]  text-center'>
-                200+ companies and startups already join the waitlist
-              </div>
-            </div>
+            <GradientInput />
           </div>
         </div>
 
@@ -67,39 +62,27 @@ export default function Home() {
           </h2>
 
           <div className='flex flex-col md:flex-row p-4 gap-8'>
-            <div className='flex flex-col max-w-[260px] pt-10 pb-36 w-full items-start border px-6 gap-4 rounded-md shadow-sm hover:shadow-md transition-all duration-300'>
-              <Image
-                src={scrum}
-                className='animate-[spin_40s_linear_infinite]'
-                alt='scrum'
-                width={100}
-                height={100}
+            <div className='max-w-[280px] w-full'>
+              <AnimatedCard
+                image={scrum}
+                title='AI Scrum Master'
+                description='Innovating financial systems for a more transparent, inclusive and accessible economy.'
+                imageClassName='animate-[spin_40s_linear_infinite]'
               />
-              <div className='text-xl font-medium'>AI Scrum Master</div>
-              <p className='text-xs'>
-                Innovating financial systems for a more transparent, inclusive
-                and accessible economy.
-              </p>
             </div>
 
-            <div className='flex flex-col max-w-[260px] pt-10 pb-36 w-full items-start border px-6 gap-4 rounded-md shadow-sm hover:shadow-md transition-all duration-300'>
-              <Image
-                src={pm}
-                alt='pm'
-                className='animate-[spin_30s_linear_infinite]'
-                width={100}
-                height={100}
+            <div className='max-w-[280px] w-full'>
+              <AnimatedCard
+                image={pm}
+                title='AI Project Manager'
+                description='Innovating financial systems for a more transparent, inclusive and accessible economy.'
+                imageClassName='animate-[spin_30s_linear_infinite]'
               />
-              <div className='text-xl font-medium'>AI Project Manager</div>
-              <p className='text-xs'>
-                Innovating financial systems for a more transparent, inclusive
-                and accessible economy.
-              </p>
             </div>
           </div>
         </div>
 
-        <div className='flex flex-col w-full items-center justify-center gap-20 md:my-36 mt-20 '>
+        <div className='flex flex-col w-full items-center justify-center gap-20 md:my-36 mt-20 p-4'>
           <div className='relative group'>
             <h2 className='text-3xl font-bold'>
               Hey, <RandomWord /> from 🇮🇳
@@ -137,11 +120,11 @@ export default function Home() {
               style={{
                 boxShadow: '-0.4px 0.4px 0px rgba(0, 0, 15, 0.5)', // left and bottom shadow
               }}>
-              <div className='p-10 mt-6'>
+              <div className='md:p-10 mt-6'>
                 <Image
                   src={logo}
                   alt={'logo'}
-                  className='w-[60px] opacity-50'
+                  className='w-[60px] grayscale opacity-40'
                   priority={true}
                   width={100}
                   height={100}
@@ -199,7 +182,34 @@ export default function Home() {
                     HEY is our love letter to email, and we&apos;re sending it
                     to you on the Web, Mac, Windows, Linux, iOS, and Android.
                   </p>
-                  <p>- Sagar Jaid</p>
+                  <div className='flex items-center justify-between'>
+                    <Image
+                      src={sagar}
+                      alt='photo'
+                      className='w-16 h-16 rounded-full grayscale mt-10'
+                      width={100}
+                      height={100}
+                    />
+                    <Image
+                      src={signature}
+                      alt='photo'
+                      className='w-fit h-16 rounded-full grayscale mt-10'
+                      width={3000}
+                      height={1000}
+                    />
+                  </div>
+                  <div className='flex flex-col items-start justify-start'>
+                    <p>founder @ aipm</p>
+                    <p>
+                      <a
+                        href='https://www.linkedin.com/in/sagarjaid'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='hover:underline'>
+                        <strong>Sagar Jaid</strong>
+                      </a>
+                    </p>
+                  </div>
                 </div>
               </div>
               <div

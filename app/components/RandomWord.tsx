@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 
-const words = ['Wanderer', 'Explorer', 'Traveler', 'Nomad', 'You'];
+const words = ['Wanderer', 'Explorer', 'Traveler', 'Nomad'];
 
 export default function RandomWord() {
   const [randomWord, setRandomWord] = useState('');

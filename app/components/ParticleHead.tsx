@@ -9,11 +9,12 @@ import { gsap } from 'gsap';
 
 export default function ParticleHead() {
   const mountRef = useRef<HTMLDivElement>(null);
+  const isVisibleRef = useRef(true);
 
   // Constants instead of state
   const PARTICLE_CONFIG = {
-    multiplier: 0.5,
-    velocity: 0,
+    multiplier: 0.7,
+    velocity: 6,
     size: 0.1,
     color: '#363636',
     width: 500,
@@ -25,6 +26,22 @@ export default function ParticleHead() {
   useEffect(() => {
     let mouseX = 0;
     let mouseY = 0;
+
+    // Set up Intersection Observer
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisibleRef.current = entry.isIntersecting;
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when at least 10% of the element is visible
+      }
+    );
+
+    if (mountRef.current) {
+      observer.observe(mountRef.current);
+    }
 
     const camera = new THREE.PerspectiveCamera(
       35,
@@ -159,6 +176,8 @@ export default function ParticleHead() {
     mountRef.current?.appendChild(renderer.domElement);
 
     function onDocumentMouseMove(event: MouseEvent) {
+      if (!isVisibleRef.current) return;
+
       const bounds = mountRef.current?.getBoundingClientRect();
       if (!bounds) return;
       mouseX = (event.clientX - bounds.left - PARTICLE_CONFIG.width / 2) / 2;
@@ -166,10 +185,12 @@ export default function ParticleHead() {
     }
 
     function render() {
-      camera.position.x +=
-        (-mouseX * 0.5 - camera.position.x) * PARTICLE_CONFIG.mouseSpeed;
-      camera.position.y +=
-        (mouseY * 0.5 - camera.position.y) * PARTICLE_CONFIG.mouseSpeed;
+      if (isVisibleRef.current) {
+        camera.position.x +=
+          (-mouseX * 0.5 - camera.position.x) * PARTICLE_CONFIG.mouseSpeed;
+        camera.position.y +=
+          (mouseY * 0.5 - camera.position.y) * PARTICLE_CONFIG.mouseSpeed;
+      }
       camera.lookAt(scene.position);
       renderer.render(scene, camera);
     }
@@ -180,6 +201,7 @@ export default function ParticleHead() {
       window.removeEventListener('mousemove', onDocumentMouseMove);
       gsap.ticker.remove(render);
       mountRef.current?.removeChild(renderer.domElement);
+      observer.disconnect();
     };
   }, []);
 

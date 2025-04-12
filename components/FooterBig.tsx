@@ -5,6 +5,7 @@ import Image from 'next/image';
 import config from '@/config';
 import logo from '@/app/icon.png';
 import footer from '@/app/footer.png';
+import AnimatedLogo from './AnimatedLogo';
 // Add the Footer to the bottom of your landing page and more.
 // The support link is connected to the config.js file. If there's no config.mailgun.supportEmail, the link won't be displayed.
 
@@ -22,19 +23,18 @@ const FooterBIg = () => {
                 src={logo}
                 alt={`${config.appName} logo`}
                 priority={true}
-                className='w-12 h-12'
+                className='w-12 h-12  hover:animate-[spin_6s_linear_infinite] opacity-80'
                 width={100}
                 height={100}
               />
-              {/* <strong className='font-extrabold tracking-tight text-base md:text-lg'>
-                {config.appName}
-              </strong> */}
             </Link>
 
+            {/* <AnimatedLogo /> */}
+
             <p className='mt-3 text-sm text-base-content/80'>
-              {config.appDescription}
+              AI Scrum Master & Project Manager
             </p>
-            <p className='mt-3 text-sm text-base-content/60'>
+            <p className='mt-3 text-xs text-base-content/60'>
               Copyright © {new Date().getFullYear()} - All rights reserved
             </p>
           </div>

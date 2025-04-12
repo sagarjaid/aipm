@@ -10,6 +10,7 @@ import Image from 'next/image';
 import ButtonSignin from './ButtonSignin';
 import logo from '@/app/logo.png';
 import arrowRight from '@/app/arrow-right.svg';
+import logoGif from '@/app/logo.gif';
 
 import config from '@/config';
 import Navbar from './Navbar';
@@ -17,6 +18,7 @@ import ButtonAccount from './ButtonAccount';
 import { usePathname } from 'next/navigation';
 
 import MobileNav from './MobileNav';
+import AnimatedLogo from './AnimatedLogo';
 
 const links: {
   href: string;
@@ -76,19 +78,21 @@ const Header = () => {
         className='flex items-center justify-between px-4 py-3 w-full'
         aria-label='Global'>
         <div className='flex lg:flex-1'>
-          <Link
+          {/* <Link
             className='flex items-center gap-2 shrink-0 '
             href='/'
-            title={`${config.appName} homepage`}>
-            <Image
+            title={`${config.appName} homepage`}> */}
+          {/* <Image
               src={logo}
               alt={`${config.appName} logo`}
               className='w-[110px]'
               priority={true}
               width={130}
               height={70}
-            />
-          </Link>
+            /> */}
+
+          <AnimatedLogo />
+          {/* </Link> */}
         </div>
         {/* Burger button to open menu on mobile */}
         <div className='flex lg:hidden'>
@@ -225,7 +229,7 @@ const Header = () => {
           className={`fixed inset-y-0 right-0 z-10 w-full p-4 overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-neutral/10 transform origin-right transition ease-in-out duration-300`}>
           {/* Your logo/name on small screens */}
           <div className='flex items-center justify-between'>
-            <Link
+            {/* <Link
               className='flex items-center gap-2 shrink-0 '
               href='/'
               title={`${config.appName} homepage`}>
@@ -237,7 +241,9 @@ const Header = () => {
                 width={130}
                 height={70}
               />
-            </Link>
+            </Link> */}
+
+            <AnimatedLogo />
             <button
               type='button'
               className='-m-2.5 rounded-md p-2.5'
