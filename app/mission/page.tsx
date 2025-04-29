@@ -66,8 +66,9 @@ export default function Home() {
               Mission
             </div>
             <div className=' mdx:text-2xl xs:text-xs font-extralight mb-10 text-xs max-w-lg leading-loose text-center'>
-              Enable companies with AI Scrum Master and AI Project Managers that
-              can collaborate, reason and act independently in real-world 24/7
+              Enable companies with AI Scrum Masters and AI Project Managers
+              that can collaborate, reason and act independently in real-world
+              24/7
             </div>
             <GradientInput />
           </div>
