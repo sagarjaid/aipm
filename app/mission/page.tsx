@@ -13,7 +13,7 @@ import Footer from '@/components/molecules/Footer';
 import FooterBIg from '@/components/FooterBig';
 import FooterX from '@/components/Footer';
 import UserInfo from '@/app/components/UserInfo';
-import logo from '@/app/icon.png';
+import logo from '@/app/logo-2.png';
 import RandomWord from '@/app/components/RandomWord';
 import AnimatedCard from '@/app/components/AnimatedCard';
 import sagar from '@/app/sagar.png';
@@ -48,19 +48,27 @@ export default function Home() {
                 alt='logo'
                 priority={true}
                 className='animate-[spin_30s_linear_infinite] opacity-80'
-                width={100}
-                height={100}
+                width={50}
+                height={50}
               />
             </Link>
             {/* <div className='text-5xl font-extrabold'>It&apos;s time!</div> */}
             <div className='mdx:text-5xl xs:text-3xl text-2xl font-bold max-w-4xl text-center'>
-              Mission
+              Vision
             </div>
-            <div className=' mdx:text-2xl xs:text-xs font-extralight text-xs max-w-2xl text-center'>
-              Enable companies with AI Project Managers that can collaborate,
-              reason and act independently in real-world 24/7
+            <div className=' mdx:text-2xl xs:text-xs font-extralight text-xs max-w-xl leading-loose text-center'>
+              Every team in this world deserves an AI Agent that fosters daily
+              accountability drives last mile execution making the team 10X more
+              productive — Not someday. Every single day.
             </div>
 
+            <div className='mdx:text-5xl xs:text-3xl text-2xl mt-10 font-bold max-w-4xl text-center'>
+              Mission
+            </div>
+            <div className=' mdx:text-2xl xs:text-xs font-extralight mb-10 text-xs max-w-lg leading-loose text-center'>
+              Enable companies with AI Scrum Master and AI Project Managers that
+              can collaborate, reason and act independently in real-world 24/7
+            </div>
             <GradientInput />
           </div>
         </div>

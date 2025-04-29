@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import config from '@/config';
-import logo from '@/app/icon.png';
+import logo from '@/app/logo-2.png';
 import footer from '@/app/footer.png';
 import AnimatedLogo from './AnimatedLogo';
 // Add the Footer to the bottom of your landing page and more.
@@ -23,7 +23,7 @@ const FooterBIg = () => {
                 src={logo}
                 alt={`${config.appName} logo`}
                 priority={true}
-                className='w-12 h-12  hover:animate-[spin_6s_linear_infinite] opacity-80'
+                className='w-10 h-10  hover:animate-[spin_6s_linear_infinite] opacity-80'
                 width={100}
                 height={100}
               />
