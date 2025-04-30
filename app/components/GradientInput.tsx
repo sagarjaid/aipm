@@ -7,14 +7,16 @@ import { useState } from 'react';
 interface GradientInputProps {
   placeholder?: string;
   buttonText?: string;
-  onButtonClick?: () => void;
 }
 
 export default function GradientInput({
   placeholder = 'Email',
   buttonText = 'Get early access',
-  onButtonClick,
 }: GradientInputProps) {
+  const onButtonClick = () => {
+    window.open('https://www.linkedin.com/in/sagarjaid/', '_blank');
+  };
+
   return (
     <div className='flex flex-col justify-between mdx:w-1/2 xs:w-full gap-3'>
       <div className='flex p-[3px] items-center justify-between rounded-full w-full relative overflow-hidden group'>

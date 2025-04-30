@@ -1,23 +1,18 @@
 /** @format */
 
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import Header from '@/components/Header';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import scrum from '@/app/ai-scrum.png';
 import pm from '@/app/ai-pm.png';
-import message from '@/app/message.png';
-import photo from '@/app/photo.png';
 import logos from '@/app/logos.png';
-import Footer from '@/components/molecules/Footer';
 import FooterBIg from '@/components/FooterBig';
-import FooterX from '@/components/Footer';
 import UserInfo from './components/UserInfo';
 import logo from '@/app/logo-2.png';
 import RandomWord from './components/RandomWord';
 import AnimatedCard from './components/AnimatedCard';
 import sagar from '@/app/sagar.png';
-import signature from '@/app/signature.png';
 import GradientInput from './components/GradientInput';
 import CountryFlag from './components/CountryFlag';
 import Photos from './components/Photos';
@@ -31,13 +26,13 @@ import WordSlider from './components/WordSlider';
 export default function Home() {
   return (
     <>
-      <main className='flex flex-col items-center  max-w-5xl mx-auto w-full justify-start overflow-hidden'>
-        <div className='flex max-w-5xl w-full gap-4 flex-col items-center justify-center '>
+      <main className='flex flex-col items-center  bg-[url("/bg.svg")]  max-w-5xl mx-auto w-full justify-start overflow-hidden'>
+        <div className='flex max-w-5xl w-full gap-4 mt-4 flex-col items-center justify-center relative '>
           <Suspense>
             <Header />
           </Suspense>
         </div>
-        <div className='flex flex-col items-center w-full justify-center'>
+        <div className='flex flex-col items-center w-full justify-center '>
           <div className='flex max-w-5xl w-full gap-8 flex-col items-center justify-center px-4 pt-10'>
             <ParticleHead />
             {/* <div className='text-5xl font-extrabold'>It&apos;s time!</div> */}
@@ -196,11 +191,11 @@ export default function Home() {
                     master right?
                   </p>
                   <p>
-                    That’s why we’re building the &quot;AIPM&quot; an AI Scrum
-                    Master — an affordable, cloud-native, always-on time and on
-                    goals that makes sure your idea, your team, your startup,
-                    your company executes daily. Just relentless clarity,
-                    progress every day.
+                    That&apos;s why we&apos;re building the &quot;AIPM&quot; an
+                    AI Scrum Master — an affordable, cloud-native, always-on
+                    time and on goals that makes sure your idea, your team, your
+                    startup, your company executes daily. Just relentless
+                    clarity, progress every day.
                   </p>
                   <p>
                     Because every team in this world deserves an AI that fosters
