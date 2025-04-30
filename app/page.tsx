@@ -13,7 +13,7 @@ import Footer from '@/components/molecules/Footer';
 import FooterBIg from '@/components/FooterBig';
 import FooterX from '@/components/Footer';
 import UserInfo from './components/UserInfo';
-import logo from '@/app/icon.png';
+import logo from '@/app/logo-2.png';
 import RandomWord from './components/RandomWord';
 import AnimatedCard from './components/AnimatedCard';
 import sagar from '@/app/sagar.png';
@@ -66,20 +66,30 @@ export default function Home() {
           </h2>
 
           <div className='flex flex-col md:flex-row p-4 gap-8'>
-            <div className='max-w-[280px] w-full'>
+            <div className='w-[300px]'>
               <AnimatedCard
                 image={scrum}
                 title='AI Scrum Master'
-                description='Innovating financial systems for a more transparent, inclusive and accessible economy.'
+                description={[
+                  'Facilitate Daily Stand-up',
+                  'Remove Impediments',
+                  'Protect Team Focus',
+                  'Monitor Progress on Jira',
+                ]}
                 imageClassName='animate-[spin_40s_linear_infinite]'
               />
             </div>
 
-            <div className='max-w-[280px] w-full'>
+            <div className='w-[300px]'>
               <AnimatedCard
                 image={pm}
                 title='AI Project Manager'
-                description='Innovating financial systems for a more transparent, inclusive and accessible economy.'
+                description={[
+                  'Track Project Progress',
+                  'Team Coordination',
+                  'Manage Risks & Issues',
+                  'Communicate with Stakeholders',
+                ]}
                 imageClassName='animate-[spin_30s_linear_infinite]'
               />
             </div>
@@ -120,7 +130,7 @@ export default function Home() {
             />
 
             <div
-              className='relative z-10 flex w-full items-center justify-start space-x-6 p-8 bg-white rotate-1 hover:rotate-0 transition-all duration-300 rounded-md'
+              className='relative z-10 flex w-full items-center justify-start space-x-6 p-8 bg-white lg:rotate-1 lg:hover:rotate-0 transition-all duration-300 rounded-md'
               style={{
                 boxShadow: '-0.4px 0.4px 0px rgba(0, 0, 15, 0.5)', // left and bottom shadow
               }}>
@@ -137,7 +147,7 @@ export default function Home() {
                   <p>It&apos;s 2025 — we need to talk about productivity. </p>
                   <p>
                     Specially in engineering teams. I used to hate working in
-                    agile scrum teams.{' '}
+                    agile scrum teams.
                   </p>
                   <p>All those daily standups, all those meetings. </p>
                   <p>
@@ -205,13 +215,13 @@ export default function Home() {
                       width={100}
                       height={100}
                     />
-                    <Image
+                    {/* <Image
                       src={signature}
                       alt='photo'
                       className='w-fit h-16 rounded-full grayscale mt-10'
                       width={3000}
                       height={1000}
-                    />
+                    /> */}
                   </div>
                   <div className='flex flex-col items-start justify-start'>
                     <p>founder @ aipm</p>

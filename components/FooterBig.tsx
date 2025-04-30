@@ -45,31 +45,25 @@ const FooterBIg = () => {
               </div>
 
               <div className='flex flex-col justify-center  gap-2 mb-10 text-sm'>
+                <Link
+                  href='/#'
+                  className='link link-hover'>
+                  Home
+                </Link>
+                <Link
+                  href='/mission'
+                  className='link link-hover'>
+                  Mission
+                </Link>
                 {config.mailgun.supportEmail && (
                   <a
                     href={`mailto:${config.mailgun.supportEmail}`}
                     target='_blank'
                     className='link link-hover'
                     aria-label='Contact Support'>
-                    Support
+                    Help
                   </a>
                 )}
-                <Link
-                  href='/#pricing'
-                  className='link link-hover'>
-                  Pricing
-                </Link>
-                <Link
-                  href='/blog'
-                  className='link link-hover'>
-                  Blog
-                </Link>
-                <a
-                  href='/#'
-                  target='_blank'
-                  className='link link-hover'>
-                  Affiliates
-                </a>
               </div>
             </div>
 
@@ -94,19 +88,19 @@ const FooterBIg = () => {
 
             <div className='px-4 md:text-left text-center w-full'>
               <div className='footer-title font-semibold text-base-content tracking-widest text-sm mb-3'>
-                LEGAL
+                SOCIAL
               </div>
 
               <div className='flex flex-col justify-center  gap-2 mb-10 text-sm'>
                 <Link
-                  href='/tos'
+                  href='https://www.linkedin.com/in/sagarjaid/'
                   className='link link-hover'>
-                  Terms of services
+                  Instagram
                 </Link>
                 <Link
-                  href='/privacy-policy'
+                  href='https://www.linkedin.com/in/sagarjaid/'
                   className='link link-hover'>
-                  Privacy policy
+                  LinkedIn
                 </Link>
               </div>
             </div>

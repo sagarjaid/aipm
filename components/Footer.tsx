@@ -1,3 +1,5 @@
+/** @format */
+
 import Link from 'next/link';
 import Image from 'next/image';
 import config from '@/config';
@@ -70,12 +72,12 @@ const FooterX = () => {
                 <Link
                   href='/tos'
                   className='link link-hover'>
-                  Terms of services
+                  Instagram
                 </Link>
                 <Link
                   href='/privacy-policy'
                   className='link link-hover'>
-                  Privacy policy
+                  LinkedIn
                 </Link>
               </div>
             </div>

@@ -8,7 +8,7 @@ import Image from 'next/image';
 interface AnimatedCardProps {
   image: any;
   title: string;
-  description: string;
+  description: string[];
   imageClassName?: string;
 }
 
@@ -36,7 +36,11 @@ export default function AnimatedCard({
           height={100}
         />
         <div className='text-xl font-medium'>{title}</div>
-        <p className='text-xs'>{description}</p>
+        <ul className='flex flex-col gap-2 text-xs list-disc pl-4'>
+          {description.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
       </div>
       <style jsx>{`
         @keyframes gradient-x {
