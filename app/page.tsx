@@ -133,7 +133,7 @@ export default function Home() {
                   width={100}
                   height={100}
                 />
-                <div className='mt-8 flex flex-col gap-6 text-base text-gray-900 text-justify'>
+                <div className='mt-8 flex flex-col gap-6 text-base text-gray-900'>
                   <p>It&apos;s 2025 — we need to talk about productivity. </p>
                   <p>
                     Specially in engineering teams. I used to hate working in
