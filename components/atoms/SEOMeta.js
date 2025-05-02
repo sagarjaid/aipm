@@ -1,3 +1,5 @@
+/** @format */
+
 import Head from 'next/head';
 
 const SEOMeta = (props) => {
@@ -15,11 +17,7 @@ const SEOMeta = (props) => {
       />
       <link
         rel='canonical'
-        href={
-          slug
-            ? `https://visainterviewai.com/${slug}`
-            : 'https://visainterviewai.com/'
-        }
+        href={slug ? `https://aipm.so/${slug}` : 'https://aipm.so/'}
       />
 
       <meta
@@ -32,11 +30,7 @@ const SEOMeta = (props) => {
       />
       <meta
         property='og:url'
-        content={
-          slug
-            ? `https://visainterviewai.com/${slug}`
-            : 'https://visainterviewai.com/'
-        }
+        content={slug ? `https://aipm.so/${slug}` : 'https://aipm.so/'}
       />
       <meta
         property='og:title'
@@ -48,7 +42,7 @@ const SEOMeta = (props) => {
       />
       <meta
         property='og:image'
-        content={imgUrl || 'https://visainterviewai.com/cover.png'}
+        content={imgUrl || 'https://aipm.so/cover.png'}
       />
 
       <meta
@@ -57,11 +51,7 @@ const SEOMeta = (props) => {
       />
       <meta
         property='twitter:url'
-        content={
-          slug
-            ? `https://visainterviewai.com/${slug}`
-            : 'https://visainterviewai.com/'
-        }
+        content={slug ? `https://aipm.so/${slug}` : 'https://aipm.so/'}
       />
       <meta
         property='twitter:title'
@@ -73,11 +63,11 @@ const SEOMeta = (props) => {
       />
       <meta
         property='twitter:image'
-        content={imgUrl || 'https://visainterviewai.com/cover.png'}
+        content={imgUrl || 'https://aipm.so/cover.png'}
       />
       <link
         rel='icon'
-        href='https://visainterviewai.com/favicon.svg'
+        href='https://aipm.so/favicon.svg'
       />
     </Head>
   );

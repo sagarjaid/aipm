@@ -1,10 +1,12 @@
+/** @format */
+
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { redirect } from 'next/navigation';
 import config from '@/config';
 
 // use this to interact with our own API (/app/api folder) from the front-end side
-// See https://shipfa.st/docs/tutorials/api-call
+// See https://aipm.so/docs/tutorials/api-call
 const apiClient = axios.create({
   baseURL: '/api',
 });

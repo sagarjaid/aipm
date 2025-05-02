@@ -5,9 +5,9 @@ import { ConfigProps } from './types/config';
 
 const config = {
   // REQUIRED
-  appName: 'AIPM - AI Project Manager',
+  appName: 'AIPM - AI Scrum Master | AI Project Manager',
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)
-  appDescription: 'AI Project Manager | AI Product Manager | AI Scrum Master',
+  appDescription: 'AI Scrum Master | AI Project Manager ',
   // REQUIRED (no https://, not trialing slash at the end, just the naked domain)
   domainName: 'aipm.so',
   crisp: {
@@ -134,13 +134,13 @@ const config = {
     // subdomain to use when sending emails, if you don't have a subdomain, just remove it. Highly recommended to have one (i.e. mg.yourdomain.com or mail.yourdomain.com)
     subdomain: 'mg',
     // REQUIRED — Email 'From' field to be used when sending magic login links
-    fromNoReply: `Sagar Jaid <visainterviewai@gmail.com>`,
+    fromNoReply: `Sagar Jaid <sagarjaid321@gmail.com>`,
     // REQUIRED — Email 'From' field to be used when sending other emails, like abandoned carts, updates etc..
-    fromAdmin: `Sagar Jaid at VisaInterviewAI <visainterviewai@gmail.com>`,
+    fromAdmin: `Sagar Jaid at VisaInterviewAI <sagarjaid321@gmail.com>`,
     // Email shown to customer if need support. Leave empty if not needed => if empty, set up Crisp above, otherwise you won't be able to offer customer support."
-    supportEmail: 'visainterviewai@gmail.com',
+    supportEmail: 'sagarjaid321@gmail.com',
     // When someone replies to supportEmail sent by the app, forward it to the email below (otherwise it's lost). If you set supportEmail to empty, this will be ignored.
-    forwardRepliesTo: 'visainterviewai@gmail.com',
+    forwardRepliesTo: 'sagarjaid321@gmail.com',
   },
   colors: {
     // REQUIRED — The DaisyUI theme to use (added to the main layout.js). Leave blank for default (light & dark mode). If you any other theme than light/dark, you need to add it in config.tailwind.js in daisyui.themes.

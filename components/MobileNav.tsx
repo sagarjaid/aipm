@@ -1,4 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
+/**
+ * eslint-disable @next/next/no-img-element
+ *
+ * @format
+ */
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -8,13 +13,14 @@ import apiClient from '@/libs/api';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import RightSidebar from './molecules/RightSidebar';
+import config from '@/config';
 
 // A button to show user some account actions
 //  1. Billing: open a Stripe Customer Portal to manage their billing (cancel subscription, update payment method, etc.).
 //     You have to manually activate the Customer Portal in your Stripe Dashboard (https://dashboard.stripe.com/test/settings/billing/portal)
 //     This is only available if the customer has a customerId (they made a purchase previously)
 //  2. Logout: sign out and go back to homepage
-// See more at https://shipfa.st/docs/components/buttonAccount
+// See more at https://aipm.so/docs/components/buttonAccount
 const MobileNav = () => {
   const pathName = usePathname();
 
@@ -151,7 +157,7 @@ const MobileNav = () => {
 
   return (
     <>
-      <div className='flex flex-col h-full justify-between pt-4 pb-10'>
+      <div className='flex flex-col h-full justify-between pt-2 pb-10'>
         {/* <div className='flex flex-col gap-2.5'>
               <div className='bg-white p-1.5 rounded-md hover:bg-gray-50 flex gap-2'>
                 <svg
@@ -332,7 +338,7 @@ const MobileNav = () => {
               <>
                 <hr />
                 {/* <div className='flex flex-col gap-4'> */}
-                <button
+                {/* <button
                   className='flex items-center gap-2 hover:bg-base-300 duration-200 p-1.5 border rounded-full  w-full font-medium'
                   onClick={() => (window.location.href = '/signin')}>
                   <svg
@@ -357,7 +363,27 @@ const MobileNav = () => {
                     />
                   </svg>
                   Continue with Google
-                </button>
+                </button> */}
+
+                <div className=' w-full'>
+                  <div className='flex flex-col justify-start  gap-2 mb-10 text-sm'>
+                    <Link
+                      href='/'
+                      className='link link-hover'>
+                      Home
+                    </Link>
+                    <Link
+                      href='/#products'
+                      className='link link-hover'>
+                      Products
+                    </Link>
+                    <Link
+                      href='/manifesto'
+                      className='link link-hover'>
+                      Manifesto
+                    </Link>
+                  </div>
+                </div>
                 {/* <button
                   className='flex items-center gap-2 hover:bg-base-300 duration-200 p-1.5   w-full rounded-lg font-medium'
                   onClick={() => (window.location.href = '/signin')}>
@@ -416,7 +442,7 @@ const MobileNav = () => {
         </div>
 
         <div>
-          {user && <RightSidebar />}
+          {/* {user && <RightSidebar />} */}
 
           <div className='pt-6 pl-1.5'>
             <div className='footer-title font-semibold text-base-content tracking-widest text-sm md:text-left mb-3'>
@@ -425,27 +451,31 @@ const MobileNav = () => {
 
             <div className='flex flex-col justify-center items-start gap-2.5  text-xs'>
               <Link
+                target='_blank'
                 href='/tos'
                 className='link link-hover'>
                 Terms of services
               </Link>
               <Link
-                href='/privacy-policy'
+                target='_blank'
+                href='/privacy'
                 className='link link-hover'>
                 Privacy policy
               </Link>
-              <Link
+              {/* <Link
                 href='/#pricing'
                 className='link link-hover'>
                 Pricing
-              </Link>
+              </Link> */}
               <Link
-                href='/privacy-policy'
+                target='_blank'
+                href='/privacy'
                 className='link link-hover'>
                 Support
               </Link>
               <Link
-                href='/privacy-policy'
+                target='_blank'
+                href='https://sagarjaid.com'
                 className='link link-hover'>
                 Build by Sagar Jaid
               </Link>

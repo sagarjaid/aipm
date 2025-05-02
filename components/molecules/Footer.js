@@ -1,3 +1,5 @@
+/** @format */
+
 import Link from 'next/link';
 import Image from 'next/image';
 import config from '@/config';
@@ -30,7 +32,7 @@ const Footer = () => {
         <span>|</span> */}
 
         <a
-          href='/privacy-policy'
+          href='/privacy'
           target='_blank'>
           Privacy
         </a>

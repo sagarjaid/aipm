@@ -1,3 +1,5 @@
+/** @format */
+
 'use client';
 
 import config from '@/config';
@@ -171,7 +173,7 @@ const Navbar = () => {
             Terms of services
           </Link>
           <Link
-            href='/privacy-policy'
+            href='/privacy'
             target='_blank'
             className='link link-hover'>
             Privacy policy

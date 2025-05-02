@@ -137,7 +137,7 @@ const Header = () => {
             {pathName.endsWith('/') ? (
               <>
                 <a href='#products'>Products</a>
-                <a href='/mission'>Mission</a>
+                <a href='/manifesto'>Manifesto</a>
                 {/* <a href='#'>Join Waitlist</a> */}
 
                 {/* <a

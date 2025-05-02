@@ -51,9 +51,9 @@ const FooterBIg = () => {
                   Home
                 </Link>
                 <Link
-                  href='/mission'
+                  href='/manifesto'
                   className='link link-hover'>
-                  Mission
+                  Manifesto
                 </Link>
                 {config.mailgun.supportEmail && (
                   <a
@@ -79,7 +79,7 @@ const FooterBIg = () => {
                   Terms of services
                 </Link>
                 <Link
-                  href='/privacy-policy'
+                  href='/privacy'
                   className='link link-hover'>
                   Privacy policy
                 </Link>

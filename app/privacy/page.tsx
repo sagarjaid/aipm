@@ -1,3 +1,5 @@
+/** @format */
+
 import Link from 'next/link';
 import { getSEOTags } from '@/libs/seo';
 import config from '@/config';
@@ -12,7 +14,7 @@ import config from '@/config';
 // You are an excellent lawyer.
 
 // I need your help to write a simple privacy policy for my website. Here is some context:
-// - Website: https://visainterviewai.com
+// - Website: https://aipm.so
 // - Name: VisaInterviewAI
 // - Description: A JavaScript code boilerplate to help entrepreneurs launch their startups faster
 // - User data collected: name, email and payment information
@@ -21,13 +23,13 @@ import config from '@/config';
 // - Data sharing: we do not share the data with any other parties
 // - Children's Privacy: we do not collect any data from children
 // - Updates to the Privacy Policy: users will be updated by email
-// - Contact information: marc@shipfa.st
+// - Contact information: marc@aipm.so
 
 // Please write a simple privacy policy for my site. Add the current date.  Do not add or explain your reasoning. Answer:
 
 export const metadata = getSEOTags({
   title: `Privacy Policy | ${config.appName}`,
-  canonicalUrlRelative: '/privacy-policy',
+  canonicalUrlRelative: '/privacy',
 });
 
 const PrivacyPolicy = () => {
@@ -59,7 +61,7 @@ const PrivacyPolicy = () => {
           style={{ fontFamily: 'sans-serif' }}>
           {`Last Updated: 2023-08-25
 
-Thank you for visiting VisaInterviewAI ("we," "us," or "our"). This Privacy Policy outlines how we collect, use, and protect your personal and non-personal information when you use our website located at https://visainterviewai.com (the "Website").
+Thank you for visiting VisaInterviewAI ("we," "us," or "our"). This Privacy Policy outlines how we collect, use, and protect your personal and non-personal information when you use our website located at https://aipm.so (the "Website").
 
 By accessing or using the Website, you agree to the terms of this Privacy Policy. If you do not agree with the practices described in this policy, please do not use the Website.
 
@@ -97,7 +99,7 @@ We may update this Privacy Policy from time to time to reflect changes in our pr
 
 If you have any questions, concerns, or requests related to this Privacy Policy, you can contact us at:
 
-Email: marc@shipfa.st
+Email: marc@aipm.so
 
 For all other inquiries, please visit our Contact Us page on the Website.
 

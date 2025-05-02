@@ -1,3 +1,5 @@
+/** @format */
+
 import config from '@/config';
 import Link from 'next/link';
 import React from 'react';
@@ -99,7 +101,7 @@ const NavbarMobile = () => {
             Terms of services
           </Link>
           <Link
-            href='/privacy-policy'
+            href='/privacy'
             target='_blank'
             className='link link-hover'>
             Privacy policy
