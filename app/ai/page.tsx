@@ -89,7 +89,7 @@ const AIPage: React.FC = () => {
   const [isInMeeting, setIsInMeeting] = useState(false);
   const [transcripts, setTranscripts] = useState<string[]>([]);
   const [showTranscripts, setShowTranscripts] = useState(false);
-  const silenceTimer = useRef<NodeJS.Timeout | null>(null);
+  const silenceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
 
   // Meeting audio hook
