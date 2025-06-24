@@ -21,8 +21,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create bot with output media configuration
-    const response = await fetch('https://api.recall.ai/api/v1/bot/', {
+    // Create bot with output media configuration using us-west-2 region (Pay-as-you-go)
+    const response = await fetch('https://us-west-2.recall.ai/api/v1/bot/', {
       method: 'POST',
       headers: {
         Authorization: `Token ${recallApiKey}`,

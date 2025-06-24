@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useConversation } from '@elevenlabs/react';
 import { Mic, X, Headphones, MessageSquare } from 'lucide-react';
 import { useMeetingAudio } from '@/hooks/useMeetingAudio';
+import { useSearchParams } from 'next/navigation';
 
 const AnimatedWaveform = ({ active }: { active: boolean }) => {
   const [time, setTime] = useState(0);
@@ -91,6 +92,9 @@ const AIPage: React.FC = () => {
   const [showTranscripts, setShowTranscripts] = useState(false);
   const silenceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
+  const searchParams = useSearchParams();
+  const agentId =
+    searchParams.get('agentID') || process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID;
 
   // Meeting audio hook
   const { isListening, startListening, stopListening } = useMeetingAudio({
@@ -151,15 +155,15 @@ const AIPage: React.FC = () => {
     checkMeetingContext();
   }, []);
 
-  // WebSocket connection for real-time transcripts
+  // WebSocket connection for real-time transcripts using us-west-2 region
   const connectToTranscriptWebSocket = () => {
     try {
       const ws = new WebSocket(
-        'wss://meeting-data.bot.recall.ai/api/v1/transcript'
+        'wss://meeting-data.us-west-2.recall.ai/api/v1/transcript'
       );
 
       ws.onopen = () => {
-        console.log('Connected to Recall transcript WebSocket');
+        console.log('Connected to Recall transcript WebSocket (us-west-2)');
       };
 
       ws.onmessage = (event) => {
@@ -211,8 +215,6 @@ const AIPage: React.FC = () => {
       try {
         setIsLoading(true);
         await navigator.mediaDevices.getUserMedia({ audio: true });
-        const agentId = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID;
-        if (!agentId) throw new Error('Agent ID not configured');
         const response = await fetch('/api/elevenlabs/get-signed-url', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

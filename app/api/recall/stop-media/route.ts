@@ -21,9 +21,9 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Stop the bot's output media
+    // Stop the bot's output media using us-west-2 region
     const response = await fetch(
-      `https://api.recall.ai/api/v1/bot/${botId}/output_media/`,
+      `https://us-west-2.recall.ai/api/v1/bot/${botId}/output_media/`,
       {
         method: 'DELETE',
         headers: {

@@ -7,7 +7,7 @@ your AI interface to Google Meet calls.
 
 ## Prerequisites
 
-1. A Recall.ai account with API access
+1. A Recall.ai account with API access (us-west-2 region)
 2. Google Meet meeting URL
 3. Your AI interface running at `https://aipm.so/ai`
 
@@ -18,13 +18,13 @@ your AI interface to Google Meet calls.
 Add the following environment variable to your `.env.local` file:
 
 ```bash
-# Recall.ai API Key (get this from your Recall.ai dashboard)
+# Recall.ai API Key (get this from your Recall.ai dashboard - us-west-2 region)
 RECALL_API_KEY=your_recall_api_key_here
 ```
 
 ### 2. Get Your Recall.ai API Key
 
-1. Go to [Recall.ai Dashboard](https://app.recall.ai/)
+1. Go to [Recall.ai Dashboard (us-west-2)](https://us-west-2.recall.ai/)
 2. Navigate to your account settings
 3. Copy your API key
 
@@ -99,10 +99,12 @@ Stops the bot's output media.
 ## WebSocket Integration
 
 The application connects to Recall.ai's WebSocket endpoint for real-time
-transcripts:
+transcripts (us-west-2 region):
 
 ```javascript
-const ws = new WebSocket('wss://meeting-data.bot.recall.ai/api/v1/transcript');
+const ws = new WebSocket(
+  'wss://meeting-data.us-west-2.recall.ai/api/v1/transcript'
+);
 
 ws.onmessage = (event) => {
   const data = JSON.parse(event.data);
@@ -129,7 +131,7 @@ const { isListening, startListening, stopListening } = useMeetingAudio({
 Use Recall.ai's remote DevTools to debug your webpage:
 
 1. Send an output media bot to your meeting
-2. Log in to your Recall.ai dashboard
+2. Log in to your Recall.ai dashboard (us-west-2)
 3. Select Bot Explorer in the sidebar
 4. Search for your bot by ID
 5. Open the "Debug Data" tab
@@ -156,25 +158,43 @@ Use Recall.ai's remote DevTools to debug your webpage:
 
    - Ensure `RECALL_API_KEY` is set in your environment variables
 
-2. **"MediaStreamTrackProcessor is not supported"**
+2. **"Invalid API token" or "authentication_failed"**
+
+   - Verify your API key is for the us-west-2 region
+   - Check that you're using the correct regional endpoints
+   - Ensure your API key is valid and not expired
+
+3. **"MediaStreamTrackProcessor is not supported"**
 
    - Use a modern browser with WebCodecs support
    - Chrome/Chromium-based browsers recommended
 
-3. **"Failed to create bot"**
+4. **"Failed to create bot"**
 
    - Check your Recall.ai API key
    - Verify the Google Meet URL is valid
    - Ensure your webpage URL is accessible
 
-4. **Poor video/audio quality**
+5. **Poor video/audio quality**
    - Use 4-core bots (configured automatically)
    - Optimize your webpage performance
    - Check CPU usage in Recall.ai dashboard
 
+### Regional Configuration
+
+This implementation uses the **us-west-2** region (Pay-as-you-go plan). If you
+need to use a different region:
+
+- **US (Monthly plan)**: `https://us-east-1.recall.ai`
+- **EU**: `https://eu-central-1.recall.ai`
+- **Japan**: `https://ap-northeast-1.recall.ai`
+
+Update the API endpoints and WebSocket URLs accordingly.
+
 ### Getting Help
 
 - Check the [Recall.ai Documentation](https://docs.recall.ai/)
+- Review the [Regions Guide](https://docs.recall.ai/v1.10/docs/regions)
 - Review the
   [Stream Media Guide](https://docs.recall.ai/v1.10/docs/stream-media)
 - Contact Recall.ai support for API issues
