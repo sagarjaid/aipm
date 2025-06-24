@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@chengsokdara/use-whisper": "^0.2.0",
+    "@elevenlabs/react": "^0.1.7",
     "@ffmpeg/core": "^0.12.6",
     "@ffmpeg/ffmpeg": "^0.12.10",
     "@headlessui/react": "^1.7.18",
