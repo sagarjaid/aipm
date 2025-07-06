@@ -214,38 +214,30 @@ const AIPageContent: React.FC<AIPageContentProps> = ({ issues }) => {
   };
 
   useEffect(() => {
-    console.log('i got called');
     const start = async () => {
-      console.log('start got called');
-
       try {
         setIsLoading(true);
         await navigator.mediaDevices.getUserMedia({ audio: true });
-        // const uniqueAssignees = getUniqueAssignees(issues);
-
-        const list_of_team_members = 'Asha, Bob, Charlie';
-
-        // const list_of_team_members = uniqueAssignees
-        //   .map((a) => a.displayName)
-        //   .join(', ');
-
-        console.log('list_of_team_members', list_of_team_members);
-
-        console.log(
-          'Starting session with agentId:',
-          agentId,
-          'list_of_team_members:',
-          list_of_team_members
-        );
-
         const response = await fetch('/api/elevenlabs/get-signed-url', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ agentId, list_of_team_members }),
+          body: JSON.stringify({ agentId }),
         });
         if (!response.ok) throw new Error('Failed to get signed URL');
         const { signedUrl } = await response.json();
-        await conversation.startSession({ signedUrl });
+        const uniqueAssignees = getUniqueAssignees(issues);
+        const list_of_team_members = uniqueAssignees
+          .map((a) => a.displayName)
+          .join(', ');
+
+        console.log('list_of_team_members', list_of_team_members);
+
+        await conversation.startSession({
+          signedUrl,
+          dynamicVariables: {
+            list_of_team_members,
+          },
+        });
       } catch (err: any) {
         toast({
           title: 'Error',

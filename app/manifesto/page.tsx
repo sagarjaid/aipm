@@ -1,5 +1,7 @@
 /** @format */
 
+'use client';
+
 import { Suspense } from 'react';
 import Header from '@/components/Header';
 import dynamic from 'next/dynamic';

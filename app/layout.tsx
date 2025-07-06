@@ -1,3 +1,5 @@
+/** @format */
+
 import { ReactNode } from 'react';
 import PlausibleProvider from 'next-plausible';
 import { getSEOTags } from '@/libs/seo';
@@ -14,18 +16,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang='en'
-      data-theme={config.colors.theme}
-      // className={font.className}
-    >
-      {config.domainName && (
-        <head>
-          <PlausibleProvider domain={config.domainName} />
-        </head>
-      )}
+      data-theme={config.colors.theme}>
       <body>
+        {config.domainName && <PlausibleProvider domain={config.domainName} />}
         <GoogleAnalytics gaId='G-HJN7SJ6V09' />
-        <HotJar />
-        <ClientWrapper>{children}</ClientWrapper> {/* Use a client component */}
+        {/* <HotJar /> */}
+        <ClientWrapper>{children}</ClientWrapper>
       </body>
     </html>
   );
