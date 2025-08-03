@@ -136,6 +136,8 @@ const Header = () => {
           <div className='flex items-center justify-center gap-4'>
             {pathName.endsWith('/') ? (
               <>
+               <a href='#try-it'>Try Demo</a>
+
                 <a href='#products'>Products</a>
                 <a href='/manifesto'>Manifesto</a>
                 {/* <a href='#'>Join Waitlist</a> */}

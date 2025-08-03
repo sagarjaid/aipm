@@ -75,12 +75,12 @@ const FooterBIg = () => {
               <div className='flex flex-col justify-center gap-2 mb-10 text-sm'>
                 <Link
                   href='/tos'
-                  className='link link-hover'>
+                  className='link link-hover whitespace-nowrap'>
                   Terms of services
                 </Link>
                 <Link
                   href='/privacy'
-                  className='link link-hover'>
+                  className='link link-hover whitespace-nowrap'>
                   Privacy policy
                 </Link>
               </div>
