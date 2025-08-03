@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     process.env.LEMONSQUEEZY_SIGNING_SECRET
   );
   const digest = Buffer.from(hmac.update(text).digest('hex'), 'utf8');
-  const signature = Buffer.from(headers().get('x-signature'), 'utf8');
+  const signature = Buffer.from((await headers()).get('x-signature'), 'utf8');
 
   // Verify the signature
   if (!crypto.timingSafeEqual(digest, signature)) {

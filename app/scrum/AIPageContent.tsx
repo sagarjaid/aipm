@@ -10,9 +10,9 @@ import { useSearchParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { JiraIssue } from '@/lib/jira-types';
 
-type AIPageContentProps = {
-  issues?: JiraIssue[];
-};
+// type ScrumPageContentProps = {
+//   issues: JiraIssue[];
+// };
 
 const AnimatedWaveform = ({ active }: { active: boolean }) => {
   const [time, setTime] = useState(0);
@@ -104,7 +104,7 @@ function getUniqueAssignees(issues: JiraIssue[]) {
   return Array.from(assigneeMap.values());
 }
 
-const AIPageContent: React.FC<AIPageContentProps> = ({ issues = [] }) => {
+const ScrumPageContent = () => {
   const { toast } = useToast();
   const [isInitialized, setIsInitialized] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -299,7 +299,7 @@ const AIPageContent: React.FC<AIPageContentProps> = ({ issues = [] }) => {
   }, [error, toast]);
 
   return (
-    <div className='flex items-center gap-3 min-h-[48px]'>
+    <div className='flex flex-col w-full justify-center items-center gap-3 h-screen'>
       <AnimatedWaveform active={conversation.isSpeaking} />
       <div className='flex items-center gap-2'>
         <button
@@ -383,4 +383,4 @@ const AIPageContent: React.FC<AIPageContentProps> = ({ issues = [] }) => {
   );
 };
 
-export default AIPageContent;
+export default ScrumPageContent;
