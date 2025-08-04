@@ -110,7 +110,7 @@ export default function ScrumMasterInput({
 
   return (
     <div className="w-full rounded-2xl p-[2.8px] relative overflow-hidden group cursor-pointer hover:scale-105 transition-all duration-300 mdx:w-1/2 xs:w-full">
-      <div className="absolute inset-0 bg-gradient-to-l from-stone-900 via-green-100 to-gray-500 hover-animation" />
+      <div className="absolute inset-0 bg-gradient-to-l from-stone-600 via-green-100 to-green-600 hover-animation" />
       <div className="bg-white rounded-xl shadow-md p-6 relative">
         <div className="flex justify-between items-center mb-6">
      <div className="flex flex-col gap-1">
