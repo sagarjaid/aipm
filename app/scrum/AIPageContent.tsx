@@ -60,30 +60,6 @@ const AnimatedWaveform = ({ active }: { active: boolean }) => {
   );
 };
 
-if (typeof window !== 'undefined') {
-  const style = document.createElement('style');
-  style.innerHTML = `
-    @keyframes dot-bounce {
-      0%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-8px); }
-    }
-    .animate-dot-bounce {
-      animation: dot-bounce 1.2s infinite both;
-    }
-    @keyframes wave-bounce {
-      0%, 100% { transform: scaleY(1); }
-      50% { transform: scaleY(2.2); }
-    }
-    .animate-wave {
-      animation: wave-bounce 1s infinite ease-in-out;
-    }
-  `;
-  if (!document.getElementById('dot-bounce-style')) {
-    style.id = 'dot-bounce-style';
-    document.head.appendChild(style);
-  }
-}
-
 function getUniqueAssignees(issues: JiraIssue[]) {
   const assigneeMap = new Map<
     string,
@@ -117,6 +93,39 @@ const ScrumPageContent = () => {
   const searchParams = useSearchParams();
   const agentId =
     searchParams.get('botID') || process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID;
+
+  // Move CSS injection to useEffect to prevent hydration mismatch
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes dot-bounce {
+        0%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-8px); }
+      }
+      .animate-dot-bounce {
+        animation: dot-bounce 1.2s infinite both;
+      }
+      @keyframes wave-bounce {
+        0%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(2.2); }
+      }
+      .animate-wave {
+        animation: wave-bounce 1s infinite ease-in-out;
+      }
+    `;
+    if (!document.getElementById('dot-bounce-style')) {
+      style.id = 'dot-bounce-style';
+      document.head.appendChild(style);
+    }
+
+    // Cleanup function to remove the style when component unmounts
+    return () => {
+      const existingStyle = document.getElementById('dot-bounce-style');
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+    };
+  }, []);
 
   const { isListening, startListening, stopListening } = useMeetingAudio({
     onAudioData: (audioData) => {

@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Countdown from "react-countdown";
 
 const SubmitAnswer = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  const [countdownDate, setCountdownDate] = useState(0);
+
+  useEffect(() => {
+    setIsMounted(true);
+    setCountdownDate(Date.now() + 4000);
+  }, []);
+
   const renderer = ({ seconds }) => <span>{seconds}</span>;
 
   return (
@@ -30,7 +38,11 @@ const SubmitAnswer = () => {
         <span className="flex gap-1">
           <span>automatically in</span>
           <span className="text-base text-rose-600">
-            <Countdown date={Date.now() + 4000} renderer={renderer} />
+            {isMounted && countdownDate > 0 ? (
+              <Countdown date={countdownDate} renderer={renderer} />
+            ) : (
+              <span>4</span>
+            )}
           </span>
           <span>seconds</span>
         </span>

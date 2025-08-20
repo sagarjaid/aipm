@@ -26,15 +26,15 @@ const WordSlider = () => {
   }, []);
 
   return (
-    <div className='h2 relative w-full mdx:text-6xl xs:text-4xl text-3xl font-bold mt-2'>
+    <div className='h2 relative w-full mdx:text-6xl xs:text-4xl text-3xl font-bold mt-2 min-h-[1.5em]'>
       {words.map((word, index) => (
         <div
           key={word}
-          className={`absolute w-full text-center ${
+          className={`${
             index === currentIndex
               ? 'transition-all duration-700 ease-in-out opacity-100 translate-y-0 blur-0'
-              : 'opacity-0 translate-y-4 blur text-gray-600'
-          }`}>
+              : 'opacity-0 translate-y-4 blur text-gray-600 absolute top-0 left-0 w-full text-center'
+          } ${index === currentIndex ? 'relative' : ''}`}>
           {word}
         </div>
       ))}

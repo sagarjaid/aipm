@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import RightSidebar from './molecules/RightSidebar';
 import config from '@/config';
+import BookerDemo from './BookerDemo';
 
 // A button to show user some account actions
 //  1. Billing: open a Stripe Customer Portal to manage their billing (cancel subscription, update payment method, etc.).
@@ -382,6 +383,7 @@ const MobileNav = () => {
                       className='link link-hover'>
                       Manifesto
                     </Link>
+                    <BookerDemo /> 
                   </div>
                 </div>
                 {/* <button

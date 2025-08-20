@@ -19,7 +19,8 @@ export default function GradientInput({
 
   return (
     <div className='flex flex-col justify-between mdx:w-1/2 xs:w-full gap-3'>
-      <div className='flex border-black rounded-full w-full border-2'>
+      <div className='flex p-[2.5px] items-center justify-between rounded-full w-full relative overflow-hidden group'>
+        <div className='absolute inset-0 bg-gradient-to-l from-black via-gray-50 to-black hover-animation' />
         <input
           type='email'
           placeholder={placeholder}

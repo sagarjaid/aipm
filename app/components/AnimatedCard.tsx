@@ -10,6 +10,7 @@ interface AnimatedCardProps {
   title: string;
   description: string[];
   imageClassName?: string;
+  gradientDirection?: 'left' | 'right';
 }
 
 export default function AnimatedCard({
@@ -17,6 +18,7 @@ export default function AnimatedCard({
   title,
   description,
   imageClassName,
+  gradientDirection = 'left',
 }: AnimatedCardProps) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -24,10 +26,15 @@ export default function AnimatedCard({
     setIsVisible(true);
   }, []);
 
+  // Determine gradient classes based on direction prop
+  const gradientClasses = gradientDirection === 'left' 
+    ? 'bg-gradient-to-l from-stone-600 via-green-100 to-green-600'
+    : 'bg-gradient-to-r from-stone-600 via-green-100 to-green-600';
+
   return (
-    <div className='w-full rounded-lg p-[2.8px] relative overflow-hidden group cursor-pointer hover:scale-105 transition-all duration-300'>
-      <div className='absolute inset-0 bg-gradient-to-l from-stone-900 via-green-100 to-gray-500 hover-animation ' />
-      <div className='flex pt-16 rounded-lg pb-36 flex-col h-full w-full items-start px-6 gap-4 bg-white relative'>
+    <div className='w-full rounded-2xl p-[2.5px] relative overflow-hidden group cursor-pointer hover:scale-105 transition-all duration-300'>
+      <div className={`absolute inset-0 ${gradientClasses} hover-animation`} />
+      <div className='flex pt-16 rounded-xl pb-36 flex-col h-full w-full items-start px-6 gap-4 bg-white relative'>
         <Image
           src={image}
           className={imageClassName}

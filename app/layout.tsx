@@ -6,6 +6,7 @@ import { getSEOTags } from '@/libs/seo';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { HotJar } from '@/components/helper/hotjar';
 import ClientWrapper from '@/components/ClientWrapper';
+import BackToTop from '@/components/BackToTop';
 import config from '@/config';
 import './globals.css';
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <GoogleAnalytics gaId='G-HJN7SJ6V09' />
         {/* <HotJar /> */}
         <ClientWrapper>{children}</ClientWrapper>
+        <BackToTop />
       </body>
     </html>
   );

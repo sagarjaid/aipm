@@ -19,6 +19,7 @@ import { usePathname } from 'next/navigation';
 
 import MobileNav from './MobileNav';
 import AnimatedLogo from './AnimatedLogo';
+import BookerDemo from './BookerDemo';
 
 const links: {
   href: string;
@@ -134,12 +135,15 @@ const Header = () => {
         {/* CTA on large screens */}
         <div className='hidden lg:flex lg:justify-end lg:flex-1 text-sm'>
           <div className='flex items-center justify-center gap-4'>
+
+            
             {pathName.endsWith('/') ? (
               <>
-               <a href='#try-it'>Try Demo</a>
+               <a href='#try-it'>Try it</a>
 
                 <a href='#products'>Products</a>
                 <a href='/manifesto'>Manifesto</a>
+               
                 {/* <a href='#'>Join Waitlist</a> */}
 
                 {/* <a
@@ -192,8 +196,11 @@ const Header = () => {
                   </svg>
                 </a> */}
                 <a href='/'>Home</a>
+                
               </>
+              
             )}
+            <BookerDemo />  
           </div>
 
           {/* <a

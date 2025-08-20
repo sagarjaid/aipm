@@ -194,8 +194,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className=' my-40 flex justify-center  w-full p-4'>
-          <GradientInput />
+        <div className=' my-32 flex justify-center  w-full p-4'>
+          {/* <GradientInput /> */}
         </div>
       </main>
       <FooterBIg />

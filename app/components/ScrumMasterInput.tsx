@@ -2,13 +2,14 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import meet from "@/app/img/google-meet.svg";
 import teams from "@/app/img/teams.svg";
 import zoom from "@/app/img/zoom.svg";
 import slack from "@/app/img/slack.svg";
 import webex from "@/app/img/webex.svg";
 import goTo from "@/app/img/go-to.svg";
+import BookerDemo from "@/components/BookerDemo";
 
 interface ScrumMasterInputProps {
   emailPlaceholder?: string;
@@ -23,6 +24,9 @@ export default function ScrumMasterInput({
 }: ScrumMasterInputProps) {
   const [email, setEmail] = useState("");
   const [meetUrl, setMeetUrl] = useState("");
+  const [userName, setUserName] = useState("");
+  const [optInInterview, setOptInInterview] = useState(false);
+  const [optInManuallySet, setOptInManuallySet] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{
     type: "success" | "error";
@@ -33,9 +37,15 @@ export default function ScrumMasterInput({
   const [webpageUrl, setWebpageUrl] = useState(
     "https://getaipm.com/scrum?botID"
   );
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure component is mounted before rendering dynamic content
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const onButtonClick = async () => {
-    if (!email || !meetUrl) {
+    if (!email || !userName || !meetUrl) {
       setMessage({ type: "error", text: "Please fill in all fields" });
       return;
     }
@@ -78,12 +88,46 @@ export default function ScrumMasterInput({
       const meetingInfo = {
         botId: botData.botId,
         email,
+        userName,
         meetUrl,
+        optInInterview,
         createdAt: new Date().toISOString(),
       };
 
       // You can store this in localStorage or send to your backend
       console.log("Meeting info:", meetingInfo);
+
+      // Send lead data to Sheety API
+      try {
+        const sheetyUrl = 'https://api.sheety.co/33d9ec27f5c7dfb130eb655baacab48d/aipmLeads/leads';
+        const leadData = {
+          lead: {
+            name: userName,
+            email: email,
+            url: meetUrl,
+            optin: optInInterview,
+            date: new Date().toISOString().split('T')[0] // YYYY-MM-DD format for consistency
+          }
+        };
+
+        const sheetyResponse = await fetch(sheetyUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(leadData)
+        });
+
+        if (sheetyResponse.ok) {
+          const sheetyData = await sheetyResponse.json();
+          console.log('Lead saved to Sheety:', sheetyData.lead);
+        } else {
+          console.warn('Failed to save lead to Sheety:', await sheetyResponse.text());
+        }
+      } catch (sheetyError) {
+        console.warn('Error saving lead to Sheety:', sheetyError);
+        // Don't fail the main flow if Sheety fails
+      }
 
       setMessage({
         type: "success",
@@ -92,7 +136,10 @@ export default function ScrumMasterInput({
 
       // Clear form on success
       setEmail("");
+      setUserName("");
       setMeetUrl("");
+      setOptInInterview(false);
+      setOptInManuallySet(false);
 
       console.log("AI Scrum Master sent successfully:", botData);
     } catch (error: any) {
@@ -106,16 +153,40 @@ export default function ScrumMasterInput({
     }
   };
 
-  const isFormValid = email && meetUrl;
+  const isFormValid = email && userName && meetUrl;
+
+  // Don't render until mounted to prevent hydration mismatch
+  if (!isMounted) {
+    return (
+      <div className="w-full rounded-2xl p-[2.5px] relative overflow-hidden group cursor-pointer hover:scale-105 transition-all duration-300 mdx:w-1/2 xs:w-full">
+        <div className="absolute inset-0 bg-gradient-to-l from-stone-600 via-green-100 to-green-600 hover-animation" />
+        <div className="bg-white rounded-xl shadow-md p-6 relative">
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col gap-1">
+              <h3 className="text-lg font-bold text-gray-900">AI Scrum Facilitator live demo</h3>
+              <div className="text-[11px] text-gray-500">AI will join the meeing url & facilitate current meeting</div>
+            </div>
+            <div className="w-6 h-6 text-gray-400"></div>
+          </div>
+          <div className="space-y-4">
+            <div className="h-10 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-10 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-10 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-10 bg-gray-200 rounded animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full rounded-2xl p-[2.8px] relative overflow-hidden group cursor-pointer hover:scale-105 transition-all duration-300 mdx:w-1/2 xs:w-full">
+    <div className="w-full rounded-2xl p-[2.5px] relative overflow-hidden group cursor-pointer hover:scale-105 transition-all duration-300 mdx:w-1/2 xs:w-full">
       <div className="absolute inset-0 bg-gradient-to-l from-stone-600 via-green-100 to-green-600 hover-animation" />
       <div className="bg-white rounded-xl shadow-md p-6 relative">
         <div className="flex justify-between items-center mb-6">
      <div className="flex flex-col gap-1">
-     <h3 className="text-lg font-bold text-gray-900">AI Scrum Master Demo</h3>
-     <div className="text-[11px] text-gray-500">AI will join your meeting & facilitate daily stand-up</div>
+     <h3 className="text-lg font-bold text-gray-900">AI Scrum Facilitator live demo</h3>
+     <div className="text-[11px] text-gray-500">AI will join the meeing url & facilitate current meeting</div>
      </div>
         <button
           onClick={() => setShowSettings(!showSettings)}
@@ -140,19 +211,41 @@ export default function ScrumMasterInput({
       </div>
 
       <div className="space-y-4">
+
+        {/* User Name Input */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Full Name
+          </label>
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-transparent"
+          />
+        </div>
+
         {/* Email Input */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Email
+          Company Email
           </label>
           <input
             type="email"
             placeholder="Enter your email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setEmail(value);
+              if (!optInManuallySet) {
+                setOptInInterview(!!value);
+              }
+            }}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-transparent"
           />
         </div>
+
 
         {/* Google Meet URL Input */}
         <div>
@@ -219,8 +312,8 @@ export default function ScrumMasterInput({
                 </div>
 
                 {/* GoToMeeting - Coming Soon */}
-                <div className="relative gotomeeting-tooltip">
-                  <div className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center border-2 border-white hover:scale-110 transition-transform duration-200 cursor-pointer z-10 opacity-60">
+                <div className="hidden md:block relative gotomeeting-tooltip">
+                  <div className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center border-2 border-white hover:scale-105 transition-transform duration-200 cursor-pointer z-10 opacity-60">
                     <img src={goTo.src} alt="GoToMeeting" className="w-5 h-5" />
                   </div>
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-600 text-white text-xs rounded opacity-0 transition-opacity duration-200 whitespace-nowrap z-20">
@@ -238,6 +331,23 @@ export default function ScrumMasterInput({
             onChange={(e) => setMeetUrl(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-transparent"
           />
+        </div>
+
+             {/* Optional Opt-in Checkbox */}
+             <div className="flex items-center gap-2">
+          <input
+            id="opt-in-interview"
+            type="checkbox"
+            checked={optInInterview}
+            onChange={(e) => {
+              setOptInInterview(e.target.checked);
+              setOptInManuallySet(true);
+            }}
+            className="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-gray-900"
+          />
+          <label htmlFor="opt-in-interview" className="text-[10px] text-gray-700">
+            Opt me in for user interviews to improve the product <span className="text-gray-500 text-[9px]">(optional)</span>
+          </label>
         </div>
 
         {/* Settings Fields */}
@@ -271,58 +381,68 @@ export default function ScrumMasterInput({
           </>
         )}
 
-        {/* Send Button */}
-        <button
-          onClick={onButtonClick}
-          disabled={!isFormValid || isLoading}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors duration-300 disabled:bg-green-500 disabled:cursor-not-allowed"
-        >
-          {isLoading ? (
-            <>
-              <svg
-                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
+        {/* Send Button with tooltip on invalid form */}
+        <div className={"relative " + (!isFormValid && !isLoading ? "send-tooltip" : "") }>
+          <button
+            onClick={onButtonClick}
+            disabled={!isFormValid || isLoading}
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors duration-300 disabled:bg-green-500 disabled:cursor-not-allowed"
+          >
+            {isLoading ? (
+              <>
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Sending...
+              </>
+            ) : (
+              <>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
                   stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              Sending...
-            </>
-          ) : (
-            <>
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                />
-              </svg>
-              {buttonText}
-            </>
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+                {buttonText}
+              </>
+            )}
+          </button>
+          {(!isFormValid && !isLoading) && (
+            <div className="send-tooltip-content absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 transition-opacity duration-200 whitespace-nowrap z-20">
+              All fields are required
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+            </div>
           )}
-        </button>
+        </div>
 
         {/* Message Display */}
         {message && (
+
+          <>
           <div
             className={`mt-3 p-3 rounded-md text-sm ${
               message.type === "success"
@@ -332,6 +452,10 @@ export default function ScrumMasterInput({
           >
             {message.text}
           </div>
+          <div className="flex justify-center">
+          <BookerDemo buttonText="BOOK DETAILED DEMO" />
+          </div>
+          </>
         )}
         </div>
       </div>
@@ -372,6 +496,10 @@ export default function ScrumMasterInput({
           opacity: 1;
         }
         .gotomeeting-tooltip:hover > div:last-child {
+          opacity: 1;
+        }
+        /* Send button tooltip hover state */
+        .send-tooltip:hover .send-tooltip-content {
           opacity: 1;
         }
       `}</style>
