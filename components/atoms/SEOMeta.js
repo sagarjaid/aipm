@@ -22,7 +22,7 @@ const SEOMeta = (props) => {
 
       <meta
         name='google-site-verification'
-        content='yqkTsEPyBxAxUcimbxVUySPMRT57sOEfOyQgFQRRcQ0'
+        content='LXDeIpvQYde2OCvg11rdWuaV__5vn7LaaX9U91wXC38'
       />
       <meta
         property='og:type'

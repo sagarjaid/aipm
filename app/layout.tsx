@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       data-theme={config.colors.theme}>
       <body>
         {config.domainName && <PlausibleProvider domain={config.domainName} />}
-        <GoogleAnalytics gaId='G-HJN7SJ6V09' />
+        <GoogleAnalytics gaId='G-XWQZQB0RB3' />  {/* GA email: getaipmcom@gmail.com*/}
         {/* <HotJar /> */}
         <ClientWrapper>{children}</ClientWrapper>
         <BackToTop />
