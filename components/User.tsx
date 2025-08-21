@@ -19,7 +19,7 @@ import { usePathname } from 'next/navigation';
 //     You have to manually activate the Customer Portal in your Stripe Dashboard (https://dashboard.stripe.com/test/settings/billing/portal)
 //     This is only available if the customer has a customerId (they made a purchase previously)
 //  2. Logout: sign out and go back to homepage
-// See more at https://aipm.so/docs/components/buttonAccount
+// See more at https://getaipm.com/docs/components/buttonAccount
 const UserInfo = () => {
   const pathName = usePathname();
 

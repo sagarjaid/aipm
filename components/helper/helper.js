@@ -8,5 +8,5 @@ export const formatTime = (seconds) => {
   ).padStart(2, '0')}`;
 };
 
-export const domainUrl = 'https://aipm.so';
+export const domainUrl = 'https://getaipm.com';
 // export const domainUrl = 'http://localhost:3000';

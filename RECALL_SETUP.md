@@ -9,7 +9,7 @@ your AI interface to Google Meet calls.
 
 1. A Recall.ai account with API access (us-west-2 region)
 2. Google Meet meeting URL
-3. Your AI interface running at `https://aipm.so/ai`
+3. Your AI interface running at `https://getaipm.com/ai`
 
 ## Setup Steps
 
@@ -60,7 +60,7 @@ Creates a Recall.ai bot with output media configuration.
 {
   "meetingUrl": "https://meet.google.com/xxx-xxxx-xxx",
   "botName": "AI Assistant",
-  "webpageUrl": "https://aipm.so/ai"
+  "webpageUrl": "https://getaipm.com/ai"
 }
 ```
 

@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // This is where we receive Lemon Squeezy webhook events
 // It used to update the user data, send emails, etc...
 // By default, it'll store the user in the database
-// See more: https://aipm.so/docs/features/payments
+// See more: https://getaipm.com/docs/features/payments
 export async function POST(req: NextRequest) {
   const text = await req.text();
 

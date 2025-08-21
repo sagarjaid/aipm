@@ -2,33 +2,33 @@
 
 # ShipFast — Typescript
 
-Hey maker 👋 it's Marc from [ShipFast](https://aipm.so/docs). Let's get your
+Hey maker 👋 it's Marc from [ShipFast](https://getaipm.com/docs). Let's get your
 startup off the ground, FAST ⚡️
 
 <sub>**Watch/Star the repo to be notified when updates are pushed**</sub>
 
 ## Get Started
 
-1. Follow the [Get Started Tutorial](https://aipm.so/docs) to clone the repo and
+1. Follow the [Get Started Tutorial](https://getaipm.com/docs) to clone the repo and
    run your local server 💻
 
 <sub>**Looking for the /pages router version?** Use this
-[documentation](https://aipm.so/docs-old) instead</sub>
+[documentation](https://getaipm.com/docs-old) instead</sub>
 
 2. Follow the
-   [Ship In 5 Minutes Tutorial](https://aipm.so/docs/tutorials/ship-in-5-minutes)
+   [Ship In 5 Minutes Tutorial](https://getaipm.com/docs/tutorials/ship-in-5-minutes)
    to learn the foundation and ship your app quickly ⚡️
 
 ## Links
 
-- [📚 Documentation](https://aipm.so/docs)
+- [📚 Documentation](https://getaipm.com/docs)
 - [📣 Updates](https://shipfast.beehiiv.com/)
-- [🧑‍💻 Discord](https://aipm.so/dashboard)
-- [🥇 Leaderboard](https://aipm.so/leaderboard)
+- [🧑‍💻 Discord](https://getaipm.com/dashboard)
+- [🥇 Leaderboard](https://getaipm.com/leaderboard)
 
 ## Support
 
-Reach out to me on [Twitter](https://twitter.com/marc_louvion) or marc@aipm.so
+Reach out to me on [Twitter](https://twitter.com/marc_louvion) or marc@getaipm.com
 
 \_
 

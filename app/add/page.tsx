@@ -54,7 +54,7 @@ const AddPageContent = () => {
             <ul className='text-sm text-blue-800 space-y-1'>
               <li>• Enter your Google Meet URL to join the call</li>
               <li>
-                • The bot will stream your AI interface (https://aipm.so/ai) to
+                • The bot will stream your AI interface (https://getaipm.com/ai) to
                 the meeting
               </li>
               <li>

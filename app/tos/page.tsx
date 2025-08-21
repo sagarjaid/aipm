@@ -14,14 +14,14 @@ import config from '@/config';
 // You are an excellent lawyer.
 
 // I need your help to write a simple Terms & Services for my website. Here is some context:
-// - Website: https://aipm.so/
+// - Website: https://getaipm.com/
 // - Name: VisaInterviewAI
-// - Contact information: marc@aipm.so
+// - Contact information: marc@getaipm.com
 // - Description: A JavaScript code boilerplate to help entrepreneurs launch their startups faster
 // - Ownership: when buying a package, users can download code to create apps. They own the code but they do not have the right to resell it. They can ask for a full refund within 7 day after the purchase.
 // - User data collected: name, email and payment information
 // - Non-personal data collection: web cookies
-// - Link to privacy: https://aipm.so/privacy
+// - Link to privacy: https://getaipm.com/privacy
 // - Governing Law: France
 // - Updates to the Terms: users will be updated by email
 
@@ -63,7 +63,7 @@ const TOS = () => {
 
 Welcome to VisaInterviewAI!
 
-These Terms of Service ("Terms") govern your use of the VisaInterviewAI website at https://aipm.so/ ("Website") and the services provided by VisaInterviewAI. By using our Website and services, you agree to these Terms.
+These Terms of Service ("Terms") govern your use of the VisaInterviewAI website at https://getaipm.com/ ("Website") and the services provided by VisaInterviewAI. By using our Website and services, you agree to these Terms.
 
 1. Description of VisaInterviewAI
 
@@ -75,7 +75,7 @@ When you purchase a package from VisaInterviewAI, you gain the right to download
 
 3. User Data and Privacy
 
-We collect and store user data, including name, email, and payment information, as necessary to provide our services. For details on how we handle your data, please refer to our Privacy Policy at https://aipm.so//privacy.
+We collect and store user data, including name, email, and payment information, as necessary to provide our services. For details on how we handle your data, please refer to our Privacy Policy at https://getaipm.com//privacy.
 
 4. Non-Personal Data Collection
 

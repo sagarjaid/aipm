@@ -17,7 +17,7 @@ const SEOMeta = (props) => {
       />
       <link
         rel='canonical'
-        href={slug ? `https://aipm.so/${slug}` : 'https://aipm.so/'}
+        href={slug ? `https://getaipm.com/${slug}` : 'https://getaipm.com/'}
       />
 
       <meta
@@ -30,7 +30,7 @@ const SEOMeta = (props) => {
       />
       <meta
         property='og:url'
-        content={slug ? `https://aipm.so/${slug}` : 'https://aipm.so/'}
+        content={slug ? `https://getaipm.com/${slug}` : 'https://getaipm.com/'}
       />
       <meta
         property='og:title'
@@ -42,7 +42,7 @@ const SEOMeta = (props) => {
       />
       <meta
         property='og:image'
-        content={imgUrl || 'https://aipm.so/cover.png'}
+        content={imgUrl || 'https://getaipm.com/cover.png'}
       />
 
       <meta
@@ -51,7 +51,7 @@ const SEOMeta = (props) => {
       />
       <meta
         property='twitter:url'
-        content={slug ? `https://aipm.so/${slug}` : 'https://aipm.so/'}
+        content={slug ? `https://getaipm.com/${slug}` : 'https://getaipm.com/'}
       />
       <meta
         property='twitter:title'
@@ -63,11 +63,11 @@ const SEOMeta = (props) => {
       />
       <meta
         property='twitter:image'
-        content={imgUrl || 'https://aipm.so/cover.png'}
+        content={imgUrl || 'https://getaipm.com/cover.png'}
       />
       <link
         rel='icon'
-        href='https://aipm.so/favicon.svg'
+        href='https://getaipm.com/favicon.svg'
       />
     </Head>
   );

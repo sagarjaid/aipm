@@ -41,7 +41,7 @@ const Result = ({ interviewId }) => {
   }, [interviewId]);
 
   const message =
-    'Hey, I found this AI-powered F1 visa interview tool that takes mock interview, I used it and got my F1 visa approved in the test > https://aipm.so/';
+    'Hey, I found this AI-powered F1 visa interview tool that takes mock interview, I used it and got my F1 visa approved in the test > https://getaipm.com/';
 
   return (
     <div className='flex h-full w-full cursor-pointer items-center justify-between gap-2 rounded-md  border shadow-md hover:shadow-lg'>

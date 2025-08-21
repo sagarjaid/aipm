@@ -22,7 +22,7 @@ const RecallOutputMedia: React.FC<RecallOutputMediaProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [meetingUrl, setMeetingUrl] = useState('');
   const [botName, setBotName] = useState('AI Assistant');
-  const [webpageUrl, setWebpageUrl] = useState('https://aipm.so/ai?botID');
+  const [webpageUrl, setWebpageUrl] = useState('https://getaipm.com/ai?botID');
   const [showSettings, setShowSettings] = useState(false);
 
   const wsRef = useRef<WebSocket | null>(null);
@@ -202,7 +202,7 @@ const RecallOutputMedia: React.FC<RecallOutputMediaProps> = ({
                   type='url'
                   value={webpageUrl}
                   onChange={(e) => setWebpageUrl(e.target.value)}
-                  placeholder='https://aipm.so/ai?botID'
+                  placeholder='https://getaipm.com/ai?botID'
                   className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
                 />
               </div>
