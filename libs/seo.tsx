@@ -21,7 +21,7 @@ export const getSEOTags = ({
 } = {}) => {
   return {
     // up to 50 characters (what does your app do for the user?) > your main should be here
-    title: 'AIPM - AI Scrum Master | AI Project Manager',
+    title: 'AIPM - AI Scrum Master',
     // up to 160 characters (how does your app help the user?)
     description:
       description ||
@@ -40,7 +40,7 @@ export const getSEOTags = ({
     openGraph: {
       title:
         openGraph?.title ||
-        'AIPM -  AI Scrum Master | AI Project Manager' ||
+        'AIPM -  AI Scrum Master' ||
         config.appName,
       description:
         openGraph?.description ||
@@ -63,7 +63,7 @@ export const getSEOTags = ({
     twitter: {
       title:
         openGraph?.title ||
-        'AIPM - AI Scrum Master | AI Project Manager' ||
+        'AIPM - AI Scrum Master' ||
         config.appName,
       description:
         openGraph?.description ||

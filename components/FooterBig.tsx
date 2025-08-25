@@ -31,8 +31,8 @@ const FooterBIg = () => {
 
             {/* <AnimatedLogo /> */}
 
-            <p className='mt-3 text-sm text-base-content/80'>
-              AI Scrum Master & Project Manager
+            <p className='mt-4 text-sm text-base-content/80'>
+              Relentless clarity, progress everyday.
             </p>
             <p className='mt-3 text-xs text-base-content/60'>
               Copyright © {new Date().getFullYear()} - All rights reserved
