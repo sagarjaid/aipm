@@ -92,9 +92,11 @@ export default function Home() {
                   height={100}
                 />
                 <div className='mt-8 flex flex-col gap-6 text-base text-gray-900'>
-                  <p>It&apos;s 2025 — we need to talk about productivity. </p>
+                  {/* <p>It&apos;s 2025 — we need to talk about productivity. </p>
                   <p>
-                    Specially in engineering teams. I used to hate working in
+                    Specially in engineering teams.  */}
+                    <p>
+                    I used to hate working in
                     agile scrum teams.
                   </p>
                   <p>All those daily standups, all those meetings. </p>
@@ -113,11 +115,11 @@ export default function Home() {
                     They made me accountable. they gave me clearity on what i
                     need to do today and till next week.
                   </p>
-                  <p>
+                  {/* <p>
                     Suddenly, I wasn&apos;t just writing code. I was
                     contributing to a shared mission a feature that could reach
                     millions of people.
-                  </p>
+                  </p> */}
                   <p>
                     Scrum helped me understand what mattered today. It made sure
                     last-mile execution actually happened.{' '}
