@@ -91,13 +91,11 @@ export default function Home() {
                   width={100}
                   height={100}
                 />
-                <div className='mt-8 flex flex-col gap-6 text-base text-gray-900'>
+<div className='mt-8 flex flex-col gap-6 text-base text-gray-900'>
                   {/* <p>It&apos;s 2025 — we need to talk about productivity. </p>
                   <p>
                     Specially in engineering teams.  */}
-                    <p>
-                    I used to hate working in
-                    agile scrum teams.
+                    <p>I used to hate working in agile scrum teams.
                   </p>
                   <p>All those daily standups, all those meetings. </p>
                   <p>
@@ -112,8 +110,8 @@ export default function Home() {
                     track.
                   </p>
                   <p>
-                    They made me accountable. they gave me clearity on what i
-                    need to do today and till next week.
+                    They made me accountable. They gave me clarity on what I
+                    need to do today and until next week.
                   </p>
                   {/* <p>
                     Suddenly, I wasn&apos;t just writing code. I was
@@ -128,7 +126,7 @@ export default function Home() {
                     I only truly understood the power of agile when I left it.
                   </p>
                   <p>
-                    for small time in my career i worked In a non-agile team, I
+                    For a short time in my career, I worked in a non-agile team. I
                     had freedom — but I was lost. No code. No clarity. No real
                     momentum.
                   </p>
@@ -139,23 +137,23 @@ export default function Home() {
                   <p>
                     Compare that to the agile team, where I was producing 10X
                     what I thought I could. The secret? Daily rhythm. Clear
-                    focus. Shared goals. last-mile execution.
+                    focus. Shared goals. Last-mile execution.
                   </p>
                   <p>
-                    But not every team can afford an expensive seasoned scrum
-                    master right?
+                    But not every team can afford an expensive, seasoned scrum
+                    master, right?
                   </p>
                   <p>
-                    That&apos;s why we&apos;re building the &quot;AIPM&quot; an
+                    That&apos;s why we&apos;re building &quot;AIPM&quot; — an
                     AI Scrum Master — an affordable, cloud-native, always-on
-                    time and on goals that makes sure your idea, your team, your
+                    system that keeps you on time and on goals, making sure your idea, your team, your
                     startup, your company executes daily. Just relentless
                     clarity, progress every day.
                   </p>
                   <p>
                     Because every team in this world deserves an AI that fosters
-                    daily accountability drives last mile execution making the
-                    team 10X more productive — Not someday. Every single day.
+                    daily accountability, drives last-mile execution, and makes the
+                    team 10X more productive — not someday, but every single day.
                   </p>
                   <div className='flex items-center justify-between'>
                     <Image
