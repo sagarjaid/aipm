@@ -5,7 +5,7 @@ import { ConfigProps } from './types/config';
 
 const config = {
   // REQUIRED
-  appName: 'AIPM - AI Scrum Master | AI Project Manager',
+  appName: 'AIPM - AI Scrum Master',
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)
   appDescription: 'AI Scrum Master | AI Project Manager ',
   // REQUIRED (no https://, not trialing slash at the end, just the naked domain)
