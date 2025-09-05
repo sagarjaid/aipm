@@ -40,10 +40,9 @@ export default function Home() {
           <div className='flex max-w-5xl w-full gap-8 flex-col items-center justify-center px-4 pt-10'>
             <ParticleHead />
             {/* <div className='text-5xl font-extrabold'>It&apos;s time!</div> */}
-            <div className='mdx:text-5xl xs:text-3xl text-2xl font-semibold max-w-4xl text-center'>
+            <div className='mdx:text-5xl xs:text-3xl text-2xl font-extrabold max-w-4xl flex flex-wrap gap-2 leading-6 text-center'>
               {/* A True <span className='font-bold'>AI Scrum Master at 10X the cost of a Scrum Master</span> */}
-              Save $80K/Year: 
-              Replace Your Scrum Master with AI — at 100X Less Cost.
+              Save $80K/Year: Replace Your Scrum Master with AI — at 100X Less Cost
                {/* and{' '} */}
               {/* <span className='font-bold'>AI Project Manager</span> should have
               been */}
