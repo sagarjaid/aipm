@@ -43,7 +43,7 @@ export default function Home() {
             <div className='mdx:text-5xl xs:text-3xl text-2xl font-semibold max-w-4xl text-center'>
               {/* A True <span className='font-bold'>AI Scrum Master at 10X the cost of a Scrum Master</span> */}
               Save $80K/Year: 
-              Replace Your Scrum Master with AI — at 10X Less Cost.
+              Replace Your Scrum Master with AI — at 100X Less Cost.
                {/* and{' '} */}
               {/* <span className='font-bold'>AI Project Manager</span> should have
               been */}
