@@ -20,7 +20,7 @@ interface ScrumMasterInputProps {
 export default function ScrumMasterInput({
   emailPlaceholder = "Email",
   meetPlaceholder = "Google Meet URL",
-  buttonText = "Send AI Scrum Master",
+  buttonText = "Join live Demo with AI Scrum Master",
 }: ScrumMasterInputProps) {
   const [email, setEmail] = useState("");
   const [meetUrl, setMeetUrl] = useState("https://meet.google.com/ijk-jhvp-kkc");
@@ -329,8 +329,7 @@ export default function ScrumMasterInput({
             placeholder="https://meet.google.com/xxx-xxxx-xxx"
             value={meetUrl}
             onChange={(e) => setMeetUrl(e.target.value)}
-            disabled
-            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-500 cursor-not-allowed"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
 
