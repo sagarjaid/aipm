@@ -23,7 +23,7 @@ export default function ScrumMasterInput({
   buttonText = "Send AI Scrum Master",
 }: ScrumMasterInputProps) {
   const [email, setEmail] = useState("");
-  const [meetUrl, setMeetUrl] = useState("");
+  const [meetUrl, setMeetUrl] = useState("https://meet.google.com/ijk-jhvp-kkc");
   const [userName, setUserName] = useState("");
   const [optInInterview, setOptInInterview] = useState(false);
   const [optInManuallySet, setOptInManuallySet] = useState(false);
@@ -329,7 +329,8 @@ export default function ScrumMasterInput({
             placeholder="https://meet.google.com/xxx-xxxx-xxx"
             value={meetUrl}
             onChange={(e) => setMeetUrl(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-transparent"
+            disabled
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-500 cursor-not-allowed"
           />
         </div>
 

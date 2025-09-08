@@ -84,9 +84,9 @@ export default function Home() {
                 title='AI Scrum Master'
                 description={[
                   'Facilitate Daily Stand-up',
+                  'Monitor & update Jira tickets',
                   'Remove Impediments',
                   'Protect Team Focus',
-                  'Monitor Progress on Jira',
                 ]}
                 gradientDirection='left'
                 imageClassName='animate-[spin_40s_linear_infinite]'

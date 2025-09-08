@@ -11,7 +11,7 @@ interface GradientInputProps {
 
 export default function GradientInput({
   placeholder = 'Email',
-  buttonText = 'Get early access',
+  buttonText = 'BOOK DETAILED DEMO',
 }: GradientInputProps) {
   const onButtonClick = () => {
     window.open('https://www.linkedin.com/in/sagarjaid/', '_blank');
