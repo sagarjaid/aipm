@@ -52,7 +52,7 @@ const Footer = () => {
         <span>|</span>
 
         <a
-          href={`mailto:sagarjaid321@gmail.com`}
+          href={`mailto:sagar@getaipm.com`}
           target='_blank'
           className='link link-hover'
           aria-label='Contact Support'>

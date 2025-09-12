@@ -83,7 +83,7 @@ const Plans = () => {
                 <div className='text-red-500'>
                   You have used all paid credits, You can reqvest more FREE
                   Interview credit by writing us on this email id:
-                  sagarjaid321@gmail.com
+                  sagar@getaipm.com
                 </div>
               </div>
             ) : (
