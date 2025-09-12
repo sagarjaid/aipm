@@ -43,7 +43,7 @@ export default function Home() {
                 Save $80K/Year!
               </div>
               <div className="mdx:text-5xl xs:text-3xl text-2xl font-extrabold max-w-4xl flex flex-wrap gap-4 leading-10 text-center  bg-gradient-to-t from-white via-yellow-50 to-white">
-                Replace Your Scrum Master with Vetical AI Scrum Master Agent
+                Replace Your Scrum Master with Vertical AI Scrum Master Agent
               </div>
             </div>
             <div className=" mdx:text-sm xs:text-xs text-xs max-w-lg text-center">
