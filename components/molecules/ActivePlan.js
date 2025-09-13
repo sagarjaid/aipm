@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { createClient } from '@/libs/supabase/client';
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { createClient } from "@/libs/supabase/client";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const ActivePlan = () => {
   const supabase = createClient();
@@ -26,13 +26,13 @@ const ActivePlan = () => {
         } = await supabase.auth.getUser();
 
         if (userError) throw userError;
-        if (!user) throw new Error('No user found');
+        if (!user) throw new Error("No user found");
 
         // Fetch the user's profile from the 'profiles' table
         const { data, error: profileError } = await supabase
-          .from('profiles')
-          .select('has_access, total_credits')
-          .eq('id', user.id)
+          .from("profiles")
+          .select("has_access, total_credits")
+          .eq("id", user.id)
           .single();
 
         if (profileError) throw profileError;
@@ -73,22 +73,24 @@ const ActivePlan = () => {
 
   return (
     <>
-      <div className=' flex flex-col items-start border shadow border-gray-100 w-full h-fit rounded-md'>
-        <div className='flex w-full flex-col gap-1.5 p-3 pb-3.5'>
-          <div className='flex w-full justify-between items-center'>
-            <h2 className='text-base font-semibold'>Active Plan</h2>
+      <div className="flex h-fit w-full flex-col items-start rounded-md border border-gray-100 shadow">
+        <div className="flex w-full flex-col gap-1.5 p-3 pb-3.5">
+          <div className="flex w-full items-center justify-between">
+            <h2 className="text-base font-semibold">Active Plan</h2>
             {/* <h2 className='text-base font-semibold'>SUCCESS Plan</h2> */}
 
             {isPaidUser ? (
               <a
-                href='/account'
-                className='border border-black bg-black text-white text-[9px] px-2 py-0.5 rounded-full'>
+                href="/account"
+                className="rounded-full border border-black bg-black px-2 py-0.5 text-[9px] text-white"
+              >
                 Manage Plan
               </a>
             ) : (
               <a
-                href='/pricing'
-                className='border border-black bg-black text-white text-[9px] px-2 py-0.5 rounded-full'>
+                href="/pricing"
+                className="rounded-full border border-black bg-black px-2 py-0.5 text-[9px] text-white"
+              >
                 Upgrade
               </a>
             )}
@@ -97,16 +99,16 @@ const ActivePlan = () => {
                       Upgrade
                     </span> */}
           </div>
-          <div className='text-xs font-medium '>
-            {' '}
-            {isPaidUser ? 'Success Plan' : 'Free Plan'}
+          <div className="text-xs font-medium">
+            {" "}
+            {isPaidUser ? "Success Plan" : "Free Plan"}
           </div>
-          <div className='text-xs  '>Interview credits:</div>
+          <div className="text-xs">Interview credits:</div>
           <hr />
 
-          <div className='text-xs mt-0.5'>Total : {totalCredits}</div>
-          <div className='text-xs'>Used : {usedCredits}</div>
-          <div className='text-xs'>Remaining : {remainingCredits}</div>
+          <div className="mt-0.5 text-xs">Total : {totalCredits}</div>
+          <div className="text-xs">Used : {usedCredits}</div>
+          <div className="text-xs">Remaining : {remainingCredits}</div>
         </div>
       </div>
     </>

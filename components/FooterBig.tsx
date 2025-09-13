@@ -12,20 +12,20 @@ import ClickableEmail from "./ClickableEmail";
 
 const FooterBIg = () => {
   return (
-    <footer className='w-full mx-auto border-t border-base-content/10  bg-[url("/bg.svg")]'>
-      <div className="max-w-5xl mx-auto px-8 md:py-24 py-16">
-        <div className=" flex lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col md:gap-40 gap-10">
-          <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
+    <footer className='mx-auto w-full border-t border-base-content/10 bg-[url("/bg.svg")]'>
+      <div className="mx-auto max-w-5xl px-8 py-16 md:py-24">
+        <div className="flex flex-col flex-wrap gap-10 md:flex-row md:flex-nowrap md:gap-40 lg:items-start">
+          <div className="mx-auto w-64 flex-shrink-0 text-center md:mx-0 md:text-left">
             <Link
               href="/#"
               aria-current="page"
-              className="flex gap-2 justify-center md:justify-start items-center"
+              className="flex items-center justify-center gap-2 md:justify-start"
             >
               <Image
                 src={logo}
                 alt={`${config.appName} logo`}
                 priority={true}
-                className="w-10 h-10  hover:animate-[spin_6s_linear_infinite] opacity-80"
+                className="h-10 w-10 opacity-80 hover:animate-[spin_6s_linear_infinite]"
                 width={100}
                 height={100}
               />
@@ -40,17 +40,17 @@ const FooterBIg = () => {
               Copyright © {new Date().getFullYear()} - All rights reserved
             </p>
           </div>
-          <div className="flex md:flex-row flex-col justify-end md:gap-10">
-            <div className="px-4 md:text-left text-center w-full">
-              <div className="footer-title font-semibold text-base-content tracking-widest text-sm mb-3">
+          <div className="flex flex-col justify-end md:flex-row md:gap-10">
+            <div className="w-full px-4 text-center md:text-left">
+              <div className="footer-title mb-3 text-sm font-semibold tracking-widest text-base-content">
                 LINKS
               </div>
 
-              <div className="flex flex-col justify-center  gap-2 mb-10 text-sm">
-                <Link href="/" className="link link-hover">
+              <div className="mb-10 flex flex-col justify-center gap-2 text-sm">
+                <Link href="/" className="link-hover link">
                   Home
                 </Link>
-                <Link href="/manifesto" className="link link-hover">
+                <Link href="/manifesto" className="link-hover link">
                   Manifesto
                 </Link>
                 {/* {config.mailgun.supportEmail && (
@@ -71,39 +71,39 @@ const FooterBIg = () => {
               </div>
             </div>
 
-            <div className="px-4 md:text-left text-center w-full">
-              <div className="footer-title font-semibold text-base-content tracking-widest text-sm  mb-3">
+            <div className="w-full px-4 text-center md:text-left">
+              <div className="footer-title mb-3 text-sm font-semibold tracking-widest text-base-content">
                 LEGAL
               </div>
 
-              <div className="flex flex-col justify-center gap-2 mb-10 text-sm">
-                <Link href="/tos" className="link link-hover whitespace-nowrap">
+              <div className="mb-10 flex flex-col justify-center gap-2 text-sm">
+                <Link href="/tos" className="link-hover link whitespace-nowrap">
                   Terms of services
                 </Link>
                 <Link
                   href="/privacy"
-                  className="link link-hover whitespace-nowrap"
+                  className="link-hover link whitespace-nowrap"
                 >
                   Privacy policy
                 </Link>
               </div>
             </div>
 
-            <div className="px-4 md:text-left text-center w-full">
-              <div className="footer-title font-semibold text-base-content tracking-widest text-sm mb-3">
+            <div className="w-full px-4 text-center md:text-left">
+              <div className="footer-title mb-3 text-sm font-semibold tracking-widest text-base-content">
                 SOCIAL
               </div>
 
-              <div className="flex flex-col justify-center  gap-2 mb-10 text-sm">
+              <div className="mb-10 flex flex-col justify-center gap-2 text-sm">
                 <Link
                   href="https://www.linkedin.com/in/sagarjaid/"
-                  className="link link-hover"
+                  className="link-hover link"
                 >
                   Instagram
                 </Link>
                 <Link
                   href="https://www.linkedin.com/in/sagarjaid/"
-                  className="link link-hover"
+                  className="link-hover link"
                 >
                   LinkedIn
                 </Link>

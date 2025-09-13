@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import UserFeedbackView from '../molecules/userFeedbackView';
-import SpeechContainer from '../molecules/speechContainer';
-import ToggleSections from '../molecules/toggleSections';
-import Question from '../molecules/question';
+import UserFeedbackView from "../molecules/userFeedbackView";
+import SpeechContainer from "../molecules/speechContainer";
+import ToggleSections from "../molecules/toggleSections";
+import Question from "../molecules/question";
 
-import { useEffect, useState } from 'react';
-import { useWhisperRecording } from '@/hooks/useWhisperRecording';
-import { useToggle } from '@/hooks/useToggle';
+import { useEffect, useState } from "react";
+import { useWhisperRecording } from "@/hooks/useWhisperRecording";
+import { useToggle } from "@/hooks/useToggle";
 // import { useTextToSpeech } from '@/hooks/useTextToSpeech';
-import useSpeechSynthesis from '@/hooks/useSpeechSynthesis';
+import useSpeechSynthesis from "@/hooks/useSpeechSynthesis";
 
 const VisaInterviewTwo = ({ baseInterviewQuestions }) => {
   const {
@@ -31,12 +31,12 @@ const VisaInterviewTwo = ({ baseInterviewQuestions }) => {
   const { recording, transcript, startRecording, stopRecording } =
     useWhisperRecording(process.env.NEXT_PUBLIC_OPENAI_KEY);
 
-  console.log({ transcript, recording }, 'recording');
+  console.log({ transcript, recording }, "recording");
 
-  const [visaOfficerResponseText, setVisaOfficerResponseText] = useState('');
-  const [visaOfficerFeedbackText, setVisaOfficerFeedbackText] = useState('');
+  const [visaOfficerResponseText, setVisaOfficerResponseText] = useState("");
+  const [visaOfficerFeedbackText, setVisaOfficerFeedbackText] = useState("");
   const [visaOfficerSampleResponseText, setVisaOfficerSampleResponseText] =
-    useState('');
+    useState("");
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
@@ -50,7 +50,7 @@ const VisaInterviewTwo = ({ baseInterviewQuestions }) => {
   };
 
   const handleResult = () => {
-    console.log(' getResult() got called');
+    console.log(" getResult() got called");
   };
 
   const totalQuestions = baseInterviewQuestions?.length - 1;
@@ -60,7 +60,7 @@ const VisaInterviewTwo = ({ baseInterviewQuestions }) => {
   }, [currentQuestionIndex]);
 
   return (
-    <div className='flex h-fit flex-col rounded-xl'>
+    <div className="flex h-fit flex-col rounded-xl">
       <Question
         questionNumber={
           baseInterviewQuestions[currentQuestionIndex].questionNumber
@@ -69,8 +69,8 @@ const VisaInterviewTwo = ({ baseInterviewQuestions }) => {
         handleTextToSpeech={handleTextToSpeech}
         isSpeaking={isSpeaking}
       />
-      <div className='flex h-screen overflow-y-scroll w-full flex-col rounded-lg bg-white sdm:flex-row'>
-        <div className='w-full'>
+      <div className="flex h-screen w-full flex-col overflow-y-scroll rounded-lg bg-white sdm:flex-row">
+        <div className="w-full">
           <UserFeedbackView
             userAnswer={transcript}
             recording={recording}
@@ -97,7 +97,7 @@ const VisaInterviewTwo = ({ baseInterviewQuestions }) => {
             }
           />
         </div>
-        <div className='w-full border-l'>
+        <div className="w-full border-l">
           <ToggleSections
             visaOfficerResponseText={visaOfficerResponseText}
             visaOfficerFeedbackText={visaOfficerFeedbackText}

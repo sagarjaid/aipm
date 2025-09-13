@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
-import { createCustomerPortal } from '@/libs/lemonsqueezy';
-import { createClient } from '@/libs/supabase/server';
+import { NextResponse } from "next/server";
+import { createCustomerPortal } from "@/libs/lemonsqueezy";
+import { createClient } from "@/libs/supabase/server";
 
 export async function POST() {
   const supabase = createClient();
@@ -12,9 +12,9 @@ export async function POST() {
   if (user) {
     try {
       const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user?.id)
+        .from("profiles")
+        .select("*")
+        .eq("id", user?.id)
         .single();
 
       if (!profile?.customer_id) {
@@ -23,7 +23,7 @@ export async function POST() {
             error:
               "You don't have a billing account yet. Make a purchase first.",
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -31,7 +31,7 @@ export async function POST() {
         customerId: profile?.customer_id,
       });
 
-      console.log(url, 'url');
+      console.log(url, "url");
 
       return NextResponse.json({
         url,
@@ -42,6 +42,6 @@ export async function POST() {
     }
   } else {
     // Not Signed in
-    return NextResponse.json({ error: 'Not signed in' }, { status: 401 });
+    return NextResponse.json({ error: "Not signed in" }, { status: 401 });
   }
 }

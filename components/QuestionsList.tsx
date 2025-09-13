@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../store';
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../store";
 import {
   addQuestion,
   removeQuestion,
   addMultipleQuestions,
   removeAllQuestions,
-} from '../store/questionsSlice';
+} from "../store/questionsSlice";
 
 const QuestionsList = () => {
   const questions = useSelector(
-    (state: RootState) => state.questions.questions
+    (state: RootState) => state.questions.questions,
   );
   const dispatch = useDispatch<AppDispatch>();
 
   const handleAddQuestion = () => {
     const newQuestion = {
       questionNumber: 10,
-      question: 'What motivates you to study?',
-      questionCategory: 'otherQuestions',
+      question: "What motivates you to study?",
+      questionCategory: "otherQuestions",
     };
     dispatch(addQuestion(newQuestion));
   };
@@ -38,18 +38,18 @@ const QuestionsList = () => {
     const newQuestions = [
       {
         questionNumber: 10,
-        question: 'What motivates you to study?',
-        questionCategory: 'otherQuestions',
+        question: "What motivates you to study?",
+        questionCategory: "otherQuestions",
       },
       {
         questionNumber: 11,
-        question: 'What is your long-term career goal?',
-        questionCategory: 'postGraduationPlans',
+        question: "What is your long-term career goal?",
+        questionCategory: "postGraduationPlans",
       },
       {
         questionNumber: 12,
-        question: 'How do you plan to balance work and study?',
-        questionCategory: 'workExperience',
+        question: "How do you plan to balance work and study?",
+        questionCategory: "workExperience",
       },
     ];
 
@@ -58,7 +58,7 @@ const QuestionsList = () => {
   };
 
   return (
-    <div className='flex flex-col justify-start items-start'>
+    <div className="flex flex-col items-start justify-start">
       <h1>Questions List</h1>
 
       <ul>
@@ -66,17 +66,16 @@ const QuestionsList = () => {
           <li key={q.questionNumber}>
             {q.question} - {q.questionCategory}
             <button
-              className='ml-2'
-              onClick={() => handleRemoveQuestion(q.questionNumber)}>
+              className="ml-2"
+              onClick={() => handleRemoveQuestion(q.questionNumber)}
+            >
               Remove
             </button>
           </li>
         ))}
       </ul>
 
-      <button
-        className='ml-2'
-        onClick={handleRemoveAllQuestions}>
+      <button className="ml-2" onClick={handleRemoveAllQuestions}>
         Remove all
       </button>
 

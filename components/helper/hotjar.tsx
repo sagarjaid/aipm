@@ -1,12 +1,12 @@
 // Hotjar.tsx
 
-'use client';
+"use client";
 
-import Script from 'next/script';
+import Script from "next/script";
 
 export const HotJar = () => {
   return (
-    <Script id='hotjar'>
+    <Script id="hotjar">
       {`
           (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

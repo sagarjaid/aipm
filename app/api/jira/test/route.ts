@@ -1,28 +1,31 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const { domain, email, apiToken } = await request.json()
+    const { domain, email, apiToken } = await request.json();
 
     if (!domain || !email || !apiToken) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
     }
 
     // Clean domain
-    let cleanDomain = domain.trim().replace(/^https?:\/\//, "")
+    let cleanDomain = domain.trim().replace(/^https?:\/\//, "");
     if (!cleanDomain.includes(".atlassian.net")) {
-      cleanDomain = `${cleanDomain}.atlassian.net`
+      cleanDomain = `${cleanDomain}.atlassian.net`;
     }
 
-    const auth = Buffer.from(`${email}:${apiToken}`).toString("base64")
+    const auth = Buffer.from(`${email}:${apiToken}`).toString("base64");
 
     // Test with a simple API call first
-    const testUrl = `https://${cleanDomain}/rest/api/3/myself`
+    const testUrl = `https://${cleanDomain}/rest/api/3/myself`;
 
-    console.log(`Testing connection to: ${testUrl}`)
+    console.log(`Testing connection to: ${testUrl}`);
 
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 15000)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
       const response = await fetch(testUrl, {
@@ -32,20 +35,20 @@ export async function POST(request: NextRequest) {
           Accept: "application/json",
         },
         signal: controller.signal,
-      })
+      });
 
-      clearTimeout(timeoutId)
+      clearTimeout(timeoutId);
 
       if (response.ok) {
-        const userData = await response.json()
+        const userData = await response.json();
         return NextResponse.json({
           success: true,
           message: "Connection successful",
           user: userData.displayName || userData.emailAddress,
           domain: cleanDomain,
-        })
+        });
       } else {
-        const errorText = await response.text()
+        const errorText = await response.text();
         return NextResponse.json(
           {
             success: false,
@@ -53,10 +56,10 @@ export async function POST(request: NextRequest) {
             domain: cleanDomain,
           },
           { status: response.status },
-        )
+        );
       }
     } catch (fetchError) {
-      clearTimeout(timeoutId)
+      clearTimeout(timeoutId);
 
       return NextResponse.json(
         {
@@ -65,7 +68,7 @@ export async function POST(request: NextRequest) {
           domain: cleanDomain,
         },
         { status: 500 },
-      )
+      );
     }
   } catch (error) {
     return NextResponse.json(
@@ -74,6 +77,6 @@ export async function POST(request: NextRequest) {
         error: `Server error: ${error.message}`,
       },
       { status: 500 },
-    )
+    );
   }
 }

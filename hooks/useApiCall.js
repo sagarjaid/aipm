@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
 export const useApiCall = () => {
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ export const useApiCall = () => {
       }
       const result = await response.json();
 
-      console.log(result, 'result');
+      console.log(result, "result");
       setData(result);
       setLoading(false);
       return result;

@@ -1,29 +1,35 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const { domain, email, apiToken, issueKey, transitionId } = await request.json()
+    const { domain, email, apiToken, issueKey, transitionId } =
+      await request.json();
 
     if (!domain || !email || !apiToken || !issueKey) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
     }
 
     // Clean domain
-    let cleanDomain = domain.trim().replace(/^https?:\/\//, "")
+    let cleanDomain = domain.trim().replace(/^https?:\/\//, "");
     if (!cleanDomain.includes(".atlassian.net")) {
-      cleanDomain = `${cleanDomain}.atlassian.net`
+      cleanDomain = `${cleanDomain}.atlassian.net`;
     }
 
-    const auth = Buffer.from(`${email}:${apiToken}`).toString("base64")
+    const auth = Buffer.from(`${email}:${apiToken}`).toString("base64");
 
     // If transitionId is provided, execute the transition
     if (transitionId) {
-      const transitionUrl = `https://${cleanDomain}/rest/api/3/issue/${issueKey}/transitions`
+      const transitionUrl = `https://${cleanDomain}/rest/api/3/issue/${issueKey}/transitions`;
 
-      console.log(`Transitioning issue: ${issueKey} to transition: ${transitionId}`)
+      console.log(
+        `Transitioning issue: ${issueKey} to transition: ${transitionId}`,
+      );
 
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 30000)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
 
       try {
         const response = await fetch(transitionUrl, {
@@ -40,29 +46,37 @@ export async function POST(request: NextRequest) {
             },
           }),
           signal: controller.signal,
-        })
+        });
 
-        clearTimeout(timeoutId)
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
-          const errorText = await response.text()
-          console.error(`Failed to transition issue: ${response.status} - ${errorText}`)
-          return NextResponse.json({ error: `Failed to transition issue: ${errorText}` }, { status: response.status })
+          const errorText = await response.text();
+          console.error(
+            `Failed to transition issue: ${response.status} - ${errorText}`,
+          );
+          return NextResponse.json(
+            { error: `Failed to transition issue: ${errorText}` },
+            { status: response.status },
+          );
         }
 
-        return NextResponse.json({ success: true, message: "Issue status updated successfully" })
+        return NextResponse.json({
+          success: true,
+          message: "Issue status updated successfully",
+        });
       } catch (fetchError) {
-        clearTimeout(timeoutId)
-        throw fetchError
+        clearTimeout(timeoutId);
+        throw fetchError;
       }
     } else {
       // Get available transitions
-      const transitionsUrl = `https://${cleanDomain}/rest/api/3/issue/${issueKey}/transitions`
+      const transitionsUrl = `https://${cleanDomain}/rest/api/3/issue/${issueKey}/transitions`;
 
-      console.log(`Getting transitions for issue: ${issueKey}`)
+      console.log(`Getting transitions for issue: ${issueKey}`);
 
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 30000)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
 
       try {
         const response = await fetch(transitionsUrl, {
@@ -73,25 +87,33 @@ export async function POST(request: NextRequest) {
             "User-Agent": "Jira-Board-App/1.0",
           },
           signal: controller.signal,
-        })
+        });
 
-        clearTimeout(timeoutId)
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
-          const errorText = await response.text()
-          console.error(`Failed to get transitions: ${response.status} - ${errorText}`)
-          return NextResponse.json({ error: `Failed to get transitions: ${errorText}` }, { status: response.status })
+          const errorText = await response.text();
+          console.error(
+            `Failed to get transitions: ${response.status} - ${errorText}`,
+          );
+          return NextResponse.json(
+            { error: `Failed to get transitions: ${errorText}` },
+            { status: response.status },
+          );
         }
 
-        const transitionsData = await response.json()
-        return NextResponse.json(transitionsData)
+        const transitionsData = await response.json();
+        return NextResponse.json(transitionsData);
       } catch (fetchError) {
-        clearTimeout(timeoutId)
-        throw fetchError
+        clearTimeout(timeoutId);
+        throw fetchError;
       }
     }
   } catch (error) {
-    console.error("Server error:", error)
-    return NextResponse.json({ error: `Server error: ${error.message || "Unknown error occurred"}` }, { status: 500 })
+    console.error("Server error:", error);
+    return NextResponse.json(
+      { error: `Server error: ${error.message || "Unknown error occurred"}` },
+      { status: 500 },
+    );
   }
 }

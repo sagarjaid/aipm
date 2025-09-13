@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import UserFeedbackView from '../molecules/userFeedbackView';
-import SpeechContainer from '../molecules/speechContainer';
-import ToggleSections from '../molecules/toggleSections';
-import Question from '../molecules/question';
+import UserFeedbackView from "../molecules/userFeedbackView";
+import SpeechContainer from "../molecules/speechContainer";
+import ToggleSections from "../molecules/toggleSections";
+import Question from "../molecules/question";
 
-import { useEffect, useState } from 'react';
-import { useWhisperRecording } from '@/hooks/useWhisperRecording';
-import { useToggle } from '@/hooks/useToggle';
+import { useEffect, useState } from "react";
+import { useWhisperRecording } from "@/hooks/useWhisperRecording";
+import { useToggle } from "@/hooks/useToggle";
 // import { useTextToSpeech } from '@/hooks/useTextToSpeech';
-import useSpeechSynthesis from '@/hooks/useSpeechSynthesis';
+import useSpeechSynthesis from "@/hooks/useSpeechSynthesis";
 
 const VisaInterviewF = ({ baseInterviewQuestions }) => {
   const {
@@ -31,12 +31,12 @@ const VisaInterviewF = ({ baseInterviewQuestions }) => {
   const { recording, transcript, startRecording, stopRecording } =
     useWhisperRecording(process.env.NEXT_PUBLIC_OPENAI_KEY);
 
-  console.log({ transcript, recording }, 'recording');
+  console.log({ transcript, recording }, "recording");
 
-  const [visaOfficerResponseText, setVisaOfficerResponseText] = useState('');
-  const [visaOfficerFeedbackText, setVisaOfficerFeedbackText] = useState('');
+  const [visaOfficerResponseText, setVisaOfficerResponseText] = useState("");
+  const [visaOfficerFeedbackText, setVisaOfficerFeedbackText] = useState("");
   const [visaOfficerSampleResponseText, setVisaOfficerSampleResponseText] =
-    useState('');
+    useState("");
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
@@ -50,7 +50,7 @@ const VisaInterviewF = ({ baseInterviewQuestions }) => {
   };
 
   const handleResult = () => {
-    console.log(' getResult() got called');
+    console.log(" getResult() got called");
   };
 
   const totalQuestions = baseInterviewQuestions?.length - 1;
@@ -60,8 +60,8 @@ const VisaInterviewF = ({ baseInterviewQuestions }) => {
   }, [currentQuestionIndex]);
 
   return (
-    <div className='flex h-fit flex-col gap-4 rounded-xl sdm:flex-row'>
-      <div className='flex h-fit w-full flex-col rounded-lg bg-white'>
+    <div className="flex h-fit flex-col gap-4 rounded-xl sdm:flex-row">
+      <div className="flex h-fit w-full flex-col rounded-lg bg-white">
         <Question
           questionNumber={
             baseInterviewQuestions[currentQuestionIndex].questionNumber

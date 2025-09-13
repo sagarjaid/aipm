@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { createClient } from '@/libs/supabase/client';
-import { useEffect, useState } from 'react';
-import Pricing from '@/components/Pricing';
-import ActivePlan from './ActivePlan';
+import { createClient } from "@/libs/supabase/client";
+import { useEffect, useState } from "react";
+import Pricing from "@/components/Pricing";
+import ActivePlan from "./ActivePlan";
 
 const Plans = () => {
   const supabase = createClient();
@@ -26,18 +26,18 @@ const Plans = () => {
         } = await supabase.auth.getUser();
 
         if (userError) throw userError;
-        if (!user) throw new Error('No user found');
+        if (!user) throw new Error("No user found");
 
         // Fetch the user's profile from the 'profiles' table
         const { data, error: profileError } = await supabase
-          .from('profiles')
-          .select('has_access, total_credits')
-          .eq('id', user.id)
+          .from("profiles")
+          .select("has_access, total_credits")
+          .eq("id", user.id)
           .single();
 
         if (profileError) throw profileError;
 
-        console.log(data, 'data');
+        console.log(data, "data");
 
         // Check if the user has access
         if (data?.has_access) {
@@ -59,35 +59,36 @@ const Plans = () => {
 
   return (
     <>
-      <div className='flex flex-col justify-start items-start text-sm gap-2  xs:text-lg sdm:text-xl sm:gap-3 md:text-2xl p-1'>
-        <div className='font-semibold'>Pricing</div>
+      <div className="flex flex-col items-start justify-start gap-2 p-1 text-sm xs:text-lg sdm:text-xl sm:gap-3 md:text-2xl">
+        <div className="font-semibold">Pricing</div>
 
         {isPaidUser ? (
           <>
             {remainingCredits == 0 ? (
-              <div className='flex items-center text-sm gap-2'>
+              <div className="flex items-center gap-2 text-sm">
                 <svg
-                  className='w-10 h-10'
-                  fill='none'
+                  className="h-10 w-10"
+                  fill="none"
                   strokeWidth={1.5}
-                  stroke='#EF4444'
-                  viewBox='0 0 24 24'
-                  xmlns='http://www.w3.org/2000/svg'
-                  aria-hidden='true'>
+                  stroke="#EF4444"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
                   <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z'
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
                   />
                 </svg>
-                <div className='text-red-500'>
+                <div className="text-red-500">
                   You have used all paid credits, You can reqvest more FREE
                   Interview credit by writing us on this email id:
                   sagar@getaipm.com
                 </div>
               </div>
             ) : (
-              <div className='text-sm'>
+              <div className="text-sm">
                 Manage your plan, check interview credits and more
               </div>
             )}
@@ -95,34 +96,35 @@ const Plans = () => {
         ) : (
           <>
             {remainingCredits == 0 ? (
-              <div className='flex items-center justify-center text-sm gap-2'>
+              <div className="flex items-center justify-center gap-2 text-sm">
                 <svg
-                  className='w-10 h-10'
-                  fill='none'
+                  className="h-10 w-10"
+                  fill="none"
                   strokeWidth={1.5}
-                  stroke='#EF4444'
-                  viewBox='0 0 24 24'
-                  xmlns='http://www.w3.org/2000/svg'
-                  aria-hidden='true'>
+                  stroke="#EF4444"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
                   <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z'
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
                   />
                 </svg>
-                <div className='text-red-500'>
+                <div className="text-red-500">
                   You have used all FREE credits, Update to Success plan for
                   more interview credits
                 </div>
               </div>
             ) : (
-              <div className='text-sm'>
+              <div className="text-sm">
                 Upgrade to become visa ready with our success plan
               </div>
             )}
           </>
         )}
-        {loading && <div className='text-sm'>loading... </div>}
+        {loading && <div className="text-sm">loading... </div>}
       </div>
       {isPaidUser && !loading && <ActivePlan />}
 

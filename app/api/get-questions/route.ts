@@ -1,7 +1,7 @@
 // app/api/get-questions/route.ts
-import { interviewQuestions } from '@/components/helper/questions';
-import OpenAI from 'openai';
-import { NextResponse } from 'next/server';
+import { interviewQuestions } from "@/components/helper/questions";
+import OpenAI from "openai";
+import { NextResponse } from "next/server";
 
 // Initialize OpenAI with the API key from environment variables
 const openai = new OpenAI({
@@ -110,11 +110,11 @@ Output the result in the JSON format, ensuring each object inside balancedInterv
     const response = await openai.chat.completions.create({
       messages: [
         {
-          role: 'system',
+          role: "system",
           content: systemPrompt,
         },
       ],
-      model: 'gpt-3.5-turbo',
+      model: "gpt-3.5-turbo",
       temperature: 0.7,
       max_tokens: 4000,
       top_p: 1,
@@ -126,13 +126,13 @@ Output the result in the JSON format, ensuring each object inside balancedInterv
     const responseData = response.choices[0]?.message?.content;
 
     if (!responseData) {
-      throw new Error('Invalid response from OpenAI');
+      throw new Error("Invalid response from OpenAI");
     }
 
     // Return the result as JSON
     return NextResponse.json({ result: responseData });
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
 
     // Return an error response
     return NextResponse.json({ result: error.message }, { status: 500 });

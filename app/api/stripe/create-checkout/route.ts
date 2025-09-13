@@ -1,6 +1,6 @@
-import { createCheckout } from '@/libs/stripe';
-import { createClient } from '@/libs/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
+import { createCheckout } from "@/libs/stripe";
+import { createClient } from "@/libs/supabase/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // This function is used to create a Stripe Checkout Session (one-time payment or subscription)
 // It's called by the <ButtonCheckout /> component
@@ -10,13 +10,13 @@ export async function POST(req: NextRequest) {
 
   if (!body.priceId) {
     return NextResponse.json(
-      { error: 'Price ID is required' },
-      { status: 400 }
+      { error: "Price ID is required" },
+      { status: 400 },
     );
   } else if (!body.successUrl || !body.cancelUrl) {
     return NextResponse.json(
-      { error: 'Success and cancel URLs are required' },
-      { status: 400 }
+      { error: "Success and cancel URLs are required" },
+      { status: 400 },
     );
   } else if (!body.mode) {
     return NextResponse.json(
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         error:
           "Mode is required (either 'payment' for one-time payments or 'subscription' for recurring subscription)",
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -38,9 +38,9 @@ export async function POST(req: NextRequest) {
     const { priceId, mode, successUrl, cancelUrl } = body;
 
     const { data } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user?.id)
+      .from("profiles")
+      .select("*")
+      .eq("id", user?.id)
       .single();
 
     const stripeSessionURL = await createCheckout({

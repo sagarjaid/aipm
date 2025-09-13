@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export const useDeviceDetection = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -17,10 +17,10 @@ export const useDeviceDetection = () => {
     handleResize();
 
     // Listen for window resize events
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Cleanup
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []); // Empty dependency array to ensure the effect runs only once
 
   return { isMobile, isDesktop, isTablet };

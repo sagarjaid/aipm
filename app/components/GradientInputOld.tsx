@@ -1,8 +1,8 @@
 /** @format */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 interface GradientInputProps {
   placeholder?: string;
@@ -10,29 +10,30 @@ interface GradientInputProps {
 }
 
 export default function GradientInput({
-  placeholder = 'Email',
-  buttonText = 'Get early access',
+  placeholder = "Email",
+  buttonText = "Get early access",
 }: GradientInputProps) {
   const onButtonClick = () => {
-    window.open('https://www.linkedin.com/in/sagarjaid/', '_blank');
+    window.open("https://www.linkedin.com/in/sagarjaid/", "_blank");
   };
 
   return (
-    <div className='flex flex-col justify-between mdx:w-1/2 xs:w-full gap-3'>
-      <div className='flex p-[2.5px] items-center justify-between rounded-full w-full relative overflow-hidden group'>
-        <div className='absolute inset-0 bg-gradient-to-l from-black via-gray-50 to-black hover-animation' />
+    <div className="flex flex-col justify-between gap-3 xs:w-full mdx:w-1/2">
+      <div className="group relative flex w-full items-center justify-between overflow-hidden rounded-full p-[2.5px]">
+        <div className="hover-animation absolute inset-0 bg-gradient-to-l from-black via-gray-50 to-black" />
         <input
-          type='email'
+          type="email"
           placeholder={placeholder}
-          className='rounded-l-full ml-3 sd:ml-0 w-full px-6 py-4 focus:outline-none relative z-10 bg-white/90 backdrop-blur-sm'
+          className="relative z-10 ml-3 w-full rounded-l-full bg-white/90 px-6 py-4 backdrop-blur-sm focus:outline-none sd:ml-0"
         />
         <button
           onClick={onButtonClick}
-          className='bg-black text-white block w-[60%] border-black rounded-r-full px-4 py-4 relative z-10 hover:bg-gray-900 transition-colors duration-300'>
+          className="relative z-10 block w-[60%] rounded-r-full border-black bg-black px-4 py-4 text-white transition-colors duration-300 hover:bg-gray-900"
+        >
           {buttonText}
         </button>
       </div>
-      <div className='text-[10px] text-center'>
+      <div className="text-center text-[10px]">
         200+ companies and startups already join the waitlist
       </div>
       <style jsx>{`

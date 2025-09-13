@@ -1,8 +1,8 @@
 "use client";
 
-import React from 'react';
-import { Copy, Mail } from 'lucide-react';
-import toast from 'react-hot-toast';
+import React from "react";
+import { Copy, Mail } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface ClickableEmailProps {
   email: string;
@@ -10,29 +10,29 @@ interface ClickableEmailProps {
   showIcon?: boolean;
 }
 
-const ClickableEmail: React.FC<ClickableEmailProps> = ({ 
-  email, 
-  className = "", 
-  showIcon = true 
+const ClickableEmail: React.FC<ClickableEmailProps> = ({
+  email,
+  className = "",
+  showIcon = true,
 }) => {
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
-      toast.success('Email copied to clipboard!');
+      toast.success("Email copied to clipboard!");
     } catch (err) {
-      toast.error('Failed to copy email');
+      toast.error("Failed to copy email");
     }
   };
 
   return (
     <button
       onClick={handleCopyEmail}
-      className={`flex items-center whitespace-nowrap gap-2 hover:underline transition-colors ${className}`}
+      className={`flex items-center gap-2 whitespace-nowrap transition-colors hover:underline ${className}`}
       title="Click to copy email"
     >
-      {showIcon && <Mail className="w-4 h-4" />}
+      {showIcon && <Mail className="h-4 w-4" />}
       <span>Email</span>
-      <Copy className="w-3 h-3 opacity-40 hover:opacity-60 transition-opacity" />
+      <Copy className="h-3 w-3 opacity-40 transition-opacity hover:opacity-60" />
     </button>
   );
 };

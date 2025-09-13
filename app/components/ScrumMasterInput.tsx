@@ -20,10 +20,12 @@ interface ScrumMasterInputProps {
 export default function ScrumMasterInput({
   emailPlaceholder = "Email",
   meetPlaceholder = "Google Meet URL",
-  buttonText = "Join live Demo with AI Scrum Master",
+  buttonText = "Join live Demo",
 }: ScrumMasterInputProps) {
   const [email, setEmail] = useState("");
-  const [meetUrl, setMeetUrl] = useState("https://meet.google.com/ahz-iath-xks");
+  const [meetUrl, setMeetUrl] = useState(
+    "https://meet.google.com/ahz-iath-xks",
+  );
   const [userName, setUserName] = useState("");
   const [optInInterview, setOptInInterview] = useState(false);
   const [optInManuallySet, setOptInManuallySet] = useState(false);
@@ -35,7 +37,7 @@ export default function ScrumMasterInput({
   const [showSettings, setShowSettings] = useState(false);
   const [botName, setBotName] = useState("AI Scrum Master");
   const [webpageUrl, setWebpageUrl] = useState(
-    "https://getaipm.com/scrum?botID"
+    "https://getaipm.com/scrum?botID",
   );
   const [isMounted, setIsMounted] = useState(false);
 
@@ -90,7 +92,7 @@ export default function ScrumMasterInput({
 
       if (!botResponse.ok) {
         throw new Error(
-          botData.error || "Failed to create AI Scrum Master bot"
+          botData.error || "Failed to create AI Scrum Master bot",
         );
       }
 
@@ -109,33 +111,37 @@ export default function ScrumMasterInput({
 
       // Send lead data to Sheety API
       try {
-        const sheetyUrl = 'https://api.sheety.co/33d9ec27f5c7dfb130eb655baacab48d/aipmLeads/leads';
+        const sheetyUrl =
+          "https://api.sheety.co/33d9ec27f5c7dfb130eb655baacab48d/aipmLeads/leads";
         const leadData = {
           lead: {
             name: userName,
             email: email,
             url: meetUrl,
             optin: optInInterview,
-            date: new Date().toISOString().split('T')[0] // YYYY-MM-DD format for consistency
-          }
+            date: new Date().toISOString().split("T")[0], // YYYY-MM-DD format for consistency
+          },
         };
 
         const sheetyResponse = await fetch(sheetyUrl, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(leadData)
+          body: JSON.stringify(leadData),
         });
 
         if (sheetyResponse.ok) {
           const sheetyData = await sheetyResponse.json();
-          console.log('Lead saved to Sheety:', sheetyData.lead);
+          console.log("Lead saved to Sheety:", sheetyData.lead);
         } else {
-          console.warn('Failed to save lead to Sheety:', await sheetyResponse.text());
+          console.warn(
+            "Failed to save lead to Sheety:",
+            await sheetyResponse.text(),
+          );
         }
       } catch (sheetyError) {
-        console.warn('Error saving lead to Sheety:', sheetyError);
+        console.warn("Error saving lead to Sheety:", sheetyError);
         // Don't fail the main flow if Sheety fails
       }
 
@@ -168,21 +174,26 @@ export default function ScrumMasterInput({
   // Don't render until mounted to prevent hydration mismatch
   if (!isMounted) {
     return (
-      <div className="w-full  p-[2.5px] relative overflow-hidden group cursor-pointer hover:scale-105 transition-all duration-300 mdx:w-1/2 xs:w-full">
-        <div className="absolute inset-0 bg-gradient-to-l from-stone-600 via-green-100 to-green-600 hover-animation" />
-        <div className="bg-white  shadow-md p-6 relative">
-          <div className="flex justify-between items-center mb-6">
+      <div className="group relative w-full cursor-pointer overflow-hidden p-[2.5px] shadow-2xl transition-all duration-300 hover:scale-[102%] xs:w-full mdx:w-1/2">
+        <div className="hover-animation absolute inset-0 bg-gradient-to-l from-stone-600 via-green-100 to-green-600" />
+        <div className="relative bg-white p-6 shadow-md">
+          <div className="mb-6 flex items-center justify-between">
             <div className="flex flex-col gap-1">
-              <h3 className="text-lg font-bold text-gray-900">AI Scrum Facilitator demo</h3>
-              <div className="text-[11px] text-gray-500">AI will join the meeing URL mention below & facilitate the meeting</div>
+              <h3 className="text-lg font-bold text-gray-900">
+                AI Scrum Facilitator demo
+              </h3>
+              <div className="text-[11px] text-gray-500">
+                AI will join the meeing URL mention below & facilitate the
+                meeting
+              </div>
             </div>
-            <div className="w-6 h-6 text-gray-400"></div>
+            <div className="h-6 w-6 text-gray-400"></div>
           </div>
           <div className="space-y-4">
-            <div className="h-10 bg-gray-200 rounded animate-pulse"></div>
-            <div className="h-10 bg-gray-200 rounded animate-pulse"></div>
-            <div className="h-10 bg-gray-200 rounded animate-pulse"></div>
-            <div className="h-10 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-10 animate-pulse rounded bg-gray-200"></div>
+            <div className="h-10 animate-pulse rounded bg-gray-200"></div>
+            <div className="h-10 animate-pulse rounded bg-gray-200"></div>
+            <div className="h-10 animate-pulse rounded bg-gray-200"></div>
           </div>
         </div>
       </div>
@@ -190,286 +201,314 @@ export default function ScrumMasterInput({
   }
 
   return (
-    <div className="w-full  p-[2.5px] relative overflow-hidden group cursor-pointer hover:scale-105 transition-all duration-300 mdx:w-1/2 xs:w-full">
-      <div className="absolute inset-0 bg-gradient-to-l from-stone-600 via-green-100 to-green-600 hover-animation" />
-      <div className="bg-white  shadow-md p-6 relative min-h-[500px] flex flex-col">
-        <div className="flex justify-between items-center mb-6">
-     <div className="flex flex-col gap-1">
-     <h3 className="text-lg font-bold text-gray-900">AI Scrum Facilitator demo</h3>
-     <div className="text-[11px] text-gray-500">AI will join the meeing url & facilitate current meeting</div>
-     </div>
-        <button
-          onClick={() => setShowSettings(!showSettings)}
-          className="w-6 h-6 text-gray-400 hover:text-gray-600 transition-colors duration-200 cursor-pointer"
-          title="Settings"
-        >
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <div className="space-y-4 flex-1 flex flex-col justify-center">
-        {/* Show form fields and button only when there's no success message */}
-        {!message || message.type !== "success" ? (
-          <>
-            {/* User Name Input */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name
-              </label>
-              <input
-                type="text"
-                placeholder="Enter your name"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-transparent"
-              />
-            </div>
-
-            {/* Email Input */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-              Company Email
-              </label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setEmail(value);
-                  if (!optInManuallySet) {
-                    setOptInInterview(!!value);
-                  }
-                }}
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-transparent"
-              />
-            </div>
-
-
-            {/* Google Meet URL Input */}
-            <div>
-              <div className="flex w-full items-center justify-between gap-2">
-                <div className="relative meet-tooltip flex items-center gap-2">
-                  <div className="w-full h-10 bg-white gap-2 flex items-center justify-center border-2 border-white hover:scale-105 transition-transform duration-200 cursor-pointer z-10">
-                    <img src={meet.src} alt="Google Meet" className="w-6 h-6" />
-                    <span className="text-sm">Google Meet URL</span>
-                  </div>
-                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-green-600 text-white text-xs rounded opacity-0 transition-opacity duration-200 whitespace-nowrap z-20">
-                  Currently Supported
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-green-600"></div>
-                  </div>
-                </div>
-                <div>
-                  {/* Platform Icons */}
-                  <div className="flex items-center -space-x-2 mb-3">
-                    {/* Microsoft Teams - Coming Soon */}
-                    <div className="relative teams-tooltip">
-                      <div className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center border-2 border-white hover:scale-110 transition-transform duration-200 cursor-pointer z-10 opacity-60">
-                        <img
-                          src={teams.src}
-                          alt="Microsoft Teams"
-                          className="w-6 h-6"
-                        />
-                      </div>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-600 text-white text-xs rounded opacity-0 transition-opacity duration-200 whitespace-nowrap z-20">
-                        Coming Soon
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
-                      </div>
-                    </div>
-
-                    {/* Zoom - Coming Soon */}
-                    <div className="relative zoom-tooltip">
-                      <div className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center border-2 border-white hover:scale-110 transition-transform duration-200 cursor-pointer z-10 opacity-60">
-                        <img src={zoom.src} alt="Zoom" className="w-6 h-6" />
-                      </div>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-600 text-white text-xs rounded opacity-0 transition-opacity duration-200 whitespace-nowrap z-20">
-                        Coming Soon
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
-                      </div>
-                    </div>
-
-                    {/* Slack - Coming Soon */}
-                    <div className="relative slack-tooltip">
-                      <div className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center border-2 border-white hover:scale-110 transition-transform duration-200 cursor-pointer z-10 opacity-60">
-                        <img src={slack.src} alt="Slack" className="w-6 h-6" />
-                      </div>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-600 text-white text-xs rounded opacity-0 transition-opacity duration-200 whitespace-nowrap z-20">
-                        Coming Soon
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
-                      </div>
-                    </div>
-
-                    {/* Webex - Coming Soon */}
-                    <div className="relative webex-tooltip">
-                      <div className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center border-2 border-white hover:scale-110 transition-transform duration-200 cursor-pointer z-10 opacity-60">
-                        <img src={webex.src} alt="Webex" className="w-6 h-6" />
-                      </div>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-600 text-white text-xs rounded opacity-0 transition-opacity duration-200 whitespace-nowrap z-20">
-                        Coming Soon
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
-                      </div>
-                    </div>
-
-                    {/* GoToMeeting - Coming Soon */}
-                    <div className="hidden md:block relative gotomeeting-tooltip">
-                      <div className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center border-2 border-white hover:scale-105 transition-transform duration-200 cursor-pointer z-10 opacity-60">
-                        <img src={goTo.src} alt="GoToMeeting" className="w-5 h-5" />
-                      </div>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-600 text-white text-xs rounded opacity-0 transition-opacity duration-200 whitespace-nowrap z-20">
-                        Coming Soon
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <input
-                type="url"
-                placeholder="https://meet.google.com/xxx-xxxx-xxx"
-                value={meetUrl}
-                onChange={(e) => setMeetUrl(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded"
-              />
-            </div>
-
-                 {/* Optional Opt-in Checkbox */}
-                 <div className="flex items-center gap-2">
-              <input
-                id="opt-in-interview"
-                type="checkbox"
-                checked={optInInterview}
-                onChange={(e) => {
-                  setOptInInterview(e.target.checked);
-                  setOptInManuallySet(true);
-                }}
-                className="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-gray-900"
-              />
-              <label htmlFor="opt-in-interview" className="text-[10px] text-gray-700">
-                Opt me in for user interviews to improve the product <span className="text-gray-500 text-[9px]">(optional)</span>
-              </label>
-            </div>
-
-            {/* Settings Fields */}
-            {showSettings && (
-              <>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Bot Name
-                  </label>
-                  <input
-                    type="text"
-                    value={botName}
-                    onChange={(e) => setBotName(e.target.value)}
-                    placeholder="AIPM Scrum Master"
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-transparent"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Webpage URL
-                  </label>
-                  <input
-                    type="url"
-                    value={webpageUrl}
-                    disabled
-                    placeholder="https://getaipm.com/scrum?botID"
-                    className="w-full px-3 py-2 border border-gray-300 rounded bg-gray-50 text-gray-500 cursor-not-allowed"
-                  />
-                </div>
-              </>
-            )}
-
-            {/* Send Button with tooltip on invalid form */}
-            <div className={"relative " + (!isFormValid && !isLoading ? "send-tooltip" : "") }>
-              <button
-                onClick={onButtonClick}
-                disabled={!isFormValid || isLoading}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-black text-white mt-2 hover:bg-gray-900 transition-colors duration-300 disabled:bg-gray-900 disabled:cursor-not-allowed"
-              >
-                {isLoading ? (
-                  <>
-                    <svg
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                      />
-                    </svg>
-                    {buttonText}
-                  </>
-                )}
-              </button>
-              {(!isFormValid && !isLoading) && (
-                <div className="send-tooltip-content absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 transition-opacity duration-200 whitespace-nowrap z-20">
-                  All fields are required
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
-                </div>
-              )}
-            </div>
-          </>
-        ) : null}
-
-        {/* Message Display */}
-        {message && (
-          <div className="flex flex-col justify-center items-center space-y-4">
-            <div
-              className={`p-3 rounded text-sm ${
-                message.type === "success"
-                  ? " text-black text-2xl text-center "
-                  : "bg-red-50 text-red-800 border border-red-200"
-              }`}
-            >
-              {message.text}
-            </div>
-            <div className="flex justify-center">
-              <BookerDemo buttonText="BOOK DETAILED DEMO" />
+    <div className="group relative w-full cursor-pointer overflow-hidden p-[2.5px] shadow-2xl transition-all duration-300 hover:scale-[102%] xs:w-full mdx:w-1/2">
+      <div className="hover-animation absolute inset-0 bg-gradient-to-l from-stone-600 via-green-100 to-green-600" />
+      <div className="relative flex min-h-[500px] flex-col bg-white p-6 shadow-md">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex flex-col gap-1">
+            <h3 className="text-lg font-bold text-gray-900">
+              AI Scrum Facilitator demo
+            </h3>
+            <div className="text-[11px] text-gray-500">
+              AI will join the meeing url & facilitate current meeting
             </div>
           </div>
-        )}
+          <button
+            onClick={() => setShowSettings(!showSettings)}
+            className="h-6 w-6 cursor-pointer text-gray-400 transition-colors duration-200 hover:text-gray-600"
+            title="Settings"
+          >
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div className="flex flex-1 flex-col justify-center space-y-4">
+          {/* Show form fields and button only when there's no success message */}
+          {!message || message.type !== "success" ? (
+            <>
+              {/* User Name Input */}
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  className="w-full rounded border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-900"
+                />
+              </div>
+
+              {/* Email Input */}
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Company Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setEmail(value);
+                    if (!optInManuallySet) {
+                      setOptInInterview(!!value);
+                    }
+                  }}
+                  className="w-full rounded border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-900"
+                />
+              </div>
+
+              {/* Google Meet URL Input */}
+              <div>
+                <div className="flex w-full items-center justify-between gap-2">
+                  <div className="meet-tooltip relative flex items-center gap-2">
+                    <div className="z-10 flex h-10 w-full cursor-pointer items-center justify-center gap-2 border-2 border-white bg-white transition-transform duration-200 hover:scale-105">
+                      <img
+                        src={meet.src}
+                        alt="Google Meet"
+                        className="h-6 w-6"
+                      />
+                      <span className="text-sm">Google Meet URL</span>
+                    </div>
+                    <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-green-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                      Currently Supported
+                      <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-green-600"></div>
+                    </div>
+                  </div>
+                  <div>
+                    {/* Platform Icons */}
+                    <div className="mb-3 flex items-center -space-x-2">
+                      {/* Microsoft Teams - Coming Soon */}
+                      <div className="teams-tooltip relative">
+                        <div className="z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white opacity-60 shadow-sm transition-transform duration-200 hover:scale-110">
+                          <img
+                            src={teams.src}
+                            alt="Microsoft Teams"
+                            className="h-6 w-6"
+                          />
+                        </div>
+                        <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                          Coming Soon
+                          <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
+                        </div>
+                      </div>
+
+                      {/* Zoom - Coming Soon */}
+                      <div className="zoom-tooltip relative">
+                        <div className="z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white opacity-60 shadow-sm transition-transform duration-200 hover:scale-110">
+                          <img src={zoom.src} alt="Zoom" className="h-6 w-6" />
+                        </div>
+                        <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                          Coming Soon
+                          <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
+                        </div>
+                      </div>
+
+                      {/* Slack - Coming Soon */}
+                      <div className="slack-tooltip relative">
+                        <div className="z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white opacity-60 shadow-sm transition-transform duration-200 hover:scale-110">
+                          <img
+                            src={slack.src}
+                            alt="Slack"
+                            className="h-6 w-6"
+                          />
+                        </div>
+                        <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                          Coming Soon
+                          <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
+                        </div>
+                      </div>
+
+                      {/* Webex - Coming Soon */}
+                      <div className="webex-tooltip relative">
+                        <div className="z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white opacity-60 shadow-sm transition-transform duration-200 hover:scale-110">
+                          <img
+                            src={webex.src}
+                            alt="Webex"
+                            className="h-6 w-6"
+                          />
+                        </div>
+                        <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                          Coming Soon
+                          <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
+                        </div>
+                      </div>
+
+                      {/* GoToMeeting - Coming Soon */}
+                      <div className="gotomeeting-tooltip relative hidden md:block">
+                        <div className="z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white opacity-60 shadow-sm transition-transform duration-200 hover:scale-105">
+                          <img
+                            src={goTo.src}
+                            alt="GoToMeeting"
+                            className="h-5 w-5"
+                          />
+                        </div>
+                        <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                          Coming Soon
+                          <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <input
+                  type="url"
+                  placeholder="https://meet.google.com/xxx-xxxx-xxx"
+                  value={meetUrl}
+                  onChange={(e) => setMeetUrl(e.target.value)}
+                  className="w-full rounded border border-gray-300 px-3 py-2"
+                />
+              </div>
+
+              {/* Optional Opt-in Checkbox */}
+              <div className="flex items-center gap-2">
+                <input
+                  id="opt-in-interview"
+                  type="checkbox"
+                  checked={optInInterview}
+                  onChange={(e) => {
+                    setOptInInterview(e.target.checked);
+                    setOptInManuallySet(true);
+                  }}
+                  className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-gray-900"
+                />
+                <label
+                  htmlFor="opt-in-interview"
+                  className="text-[10px] text-gray-700"
+                >
+                  Opt me in for user interviews to improve the product{" "}
+                  <span className="text-[9px] text-gray-500">(optional)</span>
+                </label>
+              </div>
+
+              {/* Settings Fields */}
+              {showSettings && (
+                <>
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                      Bot Name
+                    </label>
+                    <input
+                      type="text"
+                      value={botName}
+                      onChange={(e) => setBotName(e.target.value)}
+                      placeholder="AIPM Scrum Master"
+                      className="w-full rounded border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-900"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                      Webpage URL
+                    </label>
+                    <input
+                      type="url"
+                      value={webpageUrl}
+                      disabled
+                      placeholder="https://getaipm.com/scrum?botID"
+                      className="w-full cursor-not-allowed rounded border border-gray-300 bg-gray-50 px-3 py-2 text-gray-500"
+                    />
+                  </div>
+                </>
+              )}
+
+              {/* Send Button with tooltip on invalid form */}
+              <div
+                className={
+                  "relative " +
+                  (!isFormValid && !isLoading ? "send-tooltip" : "")
+                }
+              >
+                <button
+                  onClick={onButtonClick}
+                  disabled={!isFormValid || isLoading}
+                  className="mt-2 flex w-full items-center justify-center gap-2 bg-black px-4 py-3 text-white transition-colors duration-300 hover:bg-gray-900 disabled:cursor-not-allowed disabled:bg-gray-900"
+                >
+                  {isLoading ? (
+                    <>
+                      <svg
+                        className="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <svg
+                        className="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                        />
+                      </svg>
+                      {buttonText}
+                    </>
+                  )}
+                </button>
+                {!isFormValid && !isLoading && (
+                  <div className="send-tooltip-content absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                    All fields are required
+                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : null}
+
+          {/* Message Display */}
+          {message && (
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <div
+                className={`rounded p-3 text-sm ${
+                  message.type === "success"
+                    ? "text-center text-2xl text-black"
+                    : "border border-red-200 bg-red-50 text-red-800"
+                }`}
+              >
+                {message.text}
+              </div>
+              <div className="flex justify-center">
+                <BookerDemo buttonText="BOOK DETAILED DEMO" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <style jsx>{`
@@ -491,7 +530,7 @@ export default function ScrumMasterInput({
         .group:hover .hover-animation {
           animation: gradient-x 10s ease infinite;
         }
-        
+
         /* Tooltip hover states */
         .meet-tooltip:hover > div:last-child {
           opacity: 1;

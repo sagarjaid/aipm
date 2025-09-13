@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export const useCountdownTimer = (
   initialState = false,
   duration = 120,
-  onTimerEnd
+  onTimerEnd,
 ) => {
   const [countdown, setCountdown] = useState(0);
   const [isRunning, setIsRunning] = useState(initialState);

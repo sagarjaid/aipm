@@ -1,8 +1,8 @@
 /** @format */
 
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 // Type declarations for MediaStreamTrackProcessor and AudioData
 declare global {
@@ -37,7 +37,7 @@ export const useMeetingAudio = (options: UseMeetingAudioOptions = {}) => {
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const trackProcessorRef = useRef<MediaStreamTrackProcessor | null>(null);
   const trackReaderRef = useRef<ReadableStreamDefaultReader<AudioData> | null>(
-    null
+    null,
   );
 
   const startListening = async () => {
@@ -47,7 +47,7 @@ export const useMeetingAudio = (options: UseMeetingAudioOptions = {}) => {
       // Check if MediaStreamTrackProcessor is supported
       if (!window.MediaStreamTrackProcessor) {
         throw new Error(
-          'MediaStreamTrackProcessor is not supported in this browser'
+          "MediaStreamTrackProcessor is not supported in this browser",
         );
       }
 
@@ -60,7 +60,7 @@ export const useMeetingAudio = (options: UseMeetingAudioOptions = {}) => {
       const meetingAudioTrack = mediaStream.getAudioTracks()[0];
 
       if (!meetingAudioTrack) {
-        throw new Error('No audio track found');
+        throw new Error("No audio track found");
       }
 
       // Create track processor for audio data
@@ -86,7 +86,7 @@ export const useMeetingAudio = (options: UseMeetingAudioOptions = {}) => {
             options.onAudioData?.(audioData);
           }
         } catch (err: any) {
-          const errorMessage = err.message || 'Error reading audio data';
+          const errorMessage = err.message || "Error reading audio data";
           setError(errorMessage);
           options.onError?.(errorMessage);
         }
@@ -95,7 +95,7 @@ export const useMeetingAudio = (options: UseMeetingAudioOptions = {}) => {
       readAudioData();
     } catch (err: any) {
       const errorMessage =
-        err.message || 'Failed to start listening to meeting audio';
+        err.message || "Failed to start listening to meeting audio";
       setError(errorMessage);
       options.onError?.(errorMessage);
     }

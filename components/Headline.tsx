@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Typewriter from 'typewriter-effect';
+import Typewriter from "typewriter-effect";
 
 const Headline = () => {
   return (
@@ -26,13 +26,13 @@ const Headline = () => {
         </span>
       </div> */}
       <div>Hire a Fully Automated</div>
-      <div className=' text-blue-500'>
+      <div className="text-blue-500">
         <Typewriter
           options={{
             strings: [
-              'AI Scrum Master',
-              'AI Project Manager',
-              'AI Product Manager',
+              "AI Scrum Master",
+              "AI Project Manager",
+              "AI Product Manager",
             ],
             autoStart: true,
             loop: true,

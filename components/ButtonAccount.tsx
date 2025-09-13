@@ -4,15 +4,15 @@
  * @format
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Popover, Transition } from '@headlessui/react';
-import { User } from '@supabase/supabase-js';
-import { createClient } from '@/libs/supabase/client';
-import apiClient from '@/libs/api';
-import { Link } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { Popover, Transition } from "@headlessui/react";
+import { User } from "@supabase/supabase-js";
+import { createClient } from "@/libs/supabase/client";
+import apiClient from "@/libs/api";
+import { Link } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 // A button to show user some account actions
 //  1. Billing: open a Stripe Customer Portal to manage their billing (cancel subscription, update payment method, etc.).
@@ -41,97 +41,102 @@ const ButtonAccount = () => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
-  if (pathName.endsWith('/') && !user) {
+  if (pathName.endsWith("/") && !user) {
     return (
       <button
-        className='flex w-fit items-center gap-1 border duration-200 px-2 pr-2.5 py-1.5 rounded-lg font-medium'
-        onClick={() => (window.location.href = '/signin')}>
+        className="flex w-fit items-center gap-1 rounded-lg border px-2 py-1.5 pr-2.5 font-medium duration-200"
+        onClick={() => (window.location.href = "/signin")}
+      >
         <svg
-          className='w-5 h-5'
-          fill='none'
+          className="h-5 w-5"
+          fill="none"
           strokeWidth={1.7}
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-          xmlns='http://www.w3.org/2000/svg'
-          aria-hidden='true'>
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
           <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z'
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
           />
         </svg>
-        <span className='font-semibold'>Get 1 FREE Interview</span>
+        <span className="font-semibold">Get 1 FREE Interview</span>
       </button>
     );
   }
 
-  if (pathName.endsWith('/') && user) {
+  if (pathName.endsWith("/") && user) {
     return (
       <button
-        className='flex w-fit items-center gap-1 border duration-200 px-2 pr-2.5 py-1.5 rounded-lg font-medium'
-        onClick={() => (window.location.href = '/dash')}>
+        className="flex w-fit items-center gap-1 rounded-lg border px-2 py-1.5 pr-2.5 font-medium duration-200"
+        onClick={() => (window.location.href = "/dash")}
+      >
         <svg
-          className='w-5 h-5'
-          fill='none'
+          className="h-5 w-5"
+          fill="none"
           strokeWidth={1.5}
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-          xmlns='http://www.w3.org/2000/svg'
-          aria-hidden='true'>
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
           <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z'
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"
           />
         </svg>
-        <span className='font-semibold font-base'>Dashboard</span>
+        <span className="font-base font-semibold">Dashboard</span>
       </button>
     );
   }
 
   return (
-    <Popover className='relative z-10'>
+    <Popover className="relative z-10">
       {({ open }) => (
         <>
-          <Popover.Button className='btn btn-sm bg-white shadow-none hover:bg-gray-50 text-xs'>
+          <Popover.Button className="btn btn-sm bg-white text-xs shadow-none hover:bg-gray-50">
             {user?.user_metadata?.avatar_url ? (
               <img
                 src={user?.user_metadata?.avatar_url}
-                alt={'Profile picture'}
-                className='w-5 h-5 rounded-full shrink-0'
-                referrerPolicy='no-referrer'
+                alt={"Profile picture"}
+                className="h-5 w-5 shrink-0 rounded-full"
+                referrerPolicy="no-referrer"
                 width={20}
                 height={20}
               />
             ) : (
-              <span className='w-6 h-6 bg-white border text-black flex justify-center items-center rounded-full shrink-0 capitalize'>
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border bg-white capitalize text-black">
                 {user?.email?.charAt(0)}
               </span>
             )}
 
             {user?.user_metadata?.name ||
-              user?.email?.split('@')[0] ||
-              (pathName.includes('/interview/') ? 'Guest User' : 'Account')}
+              user?.email?.split("@")[0] ||
+              (pathName.includes("/interview/") ? "Guest User" : "Account")}
 
             {isLoading ? (
-              <span className='loading loading-spinner bg-black border loading-xs'></span>
+              <span className="loading loading-spinner loading-xs border bg-black"></span>
             ) : (
               <>
                 {user && (
                   <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 20 20'
-                    fill='currentColor'
-                    className={`w-5 h-5 duration-200 opacity-50 ${
-                      open ? 'transform rotate-180 ' : ''
-                    }`}>
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className={`h-5 w-5 opacity-50 duration-200 ${
+                      open ? "rotate-180 transform" : ""
+                    }`}
+                  >
                     <path
-                      fillRule='evenodd'
-                      d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
-                      clipRule='evenodd'
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
                     />
                   </svg>
                 )}
@@ -140,30 +145,33 @@ const ButtonAccount = () => {
           </Popover.Button>
           {user && (
             <Transition
-              enter='transition duration-100 ease-out'
-              enterFrom='transform scale-95 opacity-0'
-              enterTo='transform scale-100 opacity-100'
-              leave='transition duration-75 ease-out'
-              leaveFrom='transform scale-100 opacity-100'
-              leaveTo='transform scale-95 opacity-0'>
-              <Popover.Panel className='absolute right-0 z-10 mt-3 w-screen max-w-[175px] transform'>
-                <div className='overflow-hidden rounded-md shadow-md ring-1 ring-base-content ring-opacity-5 bg-base-100 p-1'>
-                  <div className='space-y-0.5 text-sm'>
+              enter="transition duration-100 ease-out"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-75 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
+            >
+              <Popover.Panel className="absolute right-0 z-10 mt-3 w-screen max-w-[175px] transform">
+                <div className="overflow-hidden rounded-md bg-base-100 p-1 shadow-md ring-1 ring-base-content ring-opacity-5">
+                  <div className="space-y-0.5 text-sm">
                     <button
-                      className='flex items-center gap-2 hover:bg-base-300 duration-200 py-1.5 px-4 w-full rounded-md font-medium'
-                      onClick={() => (window.location.href = '/dash')}>
+                      className="flex w-full items-center gap-2 rounded-md px-4 py-1.5 font-medium duration-200 hover:bg-base-300"
+                      onClick={() => (window.location.href = "/dash")}
+                    >
                       <svg
-                        className='w-5 h-5'
-                        fill='none'
+                        className="h-5 w-5"
+                        fill="none"
                         strokeWidth={1.5}
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                        xmlns='http://www.w3.org/2000/svg'
-                        aria-hidden='true'>
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
                         <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          d='M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z'
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"
                         />
                       </svg>
                       Dashboard
@@ -215,20 +223,22 @@ const ButtonAccount = () => {
                     </button> */}
 
                     <button
-                      className='flex items-center gap-2 hover:bg-error/20 hover:text-error duration-200 py-1.5 px-4 w-full rounded-md font-medium'
-                      onClick={handleSignOut}>
+                      className="flex w-full items-center gap-2 rounded-md px-4 py-1.5 font-medium duration-200 hover:bg-error/20 hover:text-error"
+                      onClick={handleSignOut}
+                    >
                       <svg
-                        className='w-5 h-5'
-                        fill='none'
+                        className="h-5 w-5"
+                        fill="none"
                         strokeWidth={1.5}
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                        xmlns='http://www.w3.org/2000/svg'
-                        aria-hidden='true'>
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
                         <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          d='M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9'
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9"
                         />
                       </svg>
                       Logout

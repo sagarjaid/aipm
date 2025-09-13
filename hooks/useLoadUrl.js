@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 export const useLoadUrl = () => {
   const router = useRouter();
@@ -6,7 +6,7 @@ export const useLoadUrl = () => {
   const handleHomePageClik = (event) => {
     event.stopPropagation();
     event.preventDefault();
-    router.push('/interview/1q39813');
+    router.push("/interview/1q39813");
   };
 
   return handleHomePageClik;

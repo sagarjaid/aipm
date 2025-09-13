@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const useSpeechSynthesis = () => {
   const [voices, setVoices] = useState([]);
@@ -11,27 +11,27 @@ const useSpeechSynthesis = () => {
       setVoices(speechSynthesis.getVoices());
     };
 
-    speechSynthesis.addEventListener('voiceschanged', handleVoicesChanged);
+    speechSynthesis.addEventListener("voiceschanged", handleVoicesChanged);
 
     // Get initial voices
     handleVoicesChanged();
 
     return () => {
-      speechSynthesis.removeEventListener('voiceschanged', handleVoicesChanged);
+      speechSynthesis.removeEventListener("voiceschanged", handleVoicesChanged);
     };
   }, []);
 
   const getVoiceIndex = () => {
     const desiredVoices = [
-      'Microsoft AvaMultilingual Online (Natural) - English (United States)',
-      'Microsoft AndrewMultilingual Online (Natural) - English (United States)',
-      'Samantha',
-      'Aaron',
+      "Microsoft AvaMultilingual Online (Natural) - English (United States)",
+      "Microsoft AndrewMultilingual Online (Natural) - English (United States)",
+      "Samantha",
+      "Aaron",
     ];
 
     for (const desiredVoice of desiredVoices) {
       const index = voices.findIndex(
-        (voice) => voice.name.toLowerCase() === desiredVoice.toLowerCase()
+        (voice) => voice.name.toLowerCase() === desiredVoice.toLowerCase(),
       );
       if (index !== -1) {
         return index;

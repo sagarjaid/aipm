@@ -1,8 +1,8 @@
-import Stripe from 'stripe';
+import Stripe from "stripe";
 
 interface CreateCheckoutParams {
   priceId: string;
-  mode: 'payment' | 'subscription';
+  mode: "payment" | "subscription";
   successUrl: string;
   cancelUrl: string;
   couponId?: string | null;
@@ -30,27 +30,27 @@ export const createCheckout = async ({
 }: CreateCheckoutParams): Promise<string> => {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2023-08-16', // TODO: update this when Stripe updates their API
+      apiVersion: "2023-08-16", // TODO: update this when Stripe updates their API
       typescript: true,
     });
 
     const extraParams: {
       customer?: string;
-      customer_creation?: 'always';
+      customer_creation?: "always";
       customer_email?: string;
       invoice_creation?: { enabled: boolean };
-      payment_intent_data?: { setup_future_usage: 'on_session' };
+      payment_intent_data?: { setup_future_usage: "on_session" };
       tax_id_collection?: { enabled: boolean };
     } = {};
 
     if (user?.customerId) {
       extraParams.customer = user.customerId;
     } else {
-      if (mode === 'payment') {
-        extraParams.customer_creation = 'always';
+      if (mode === "payment") {
+        extraParams.customer_creation = "always";
         // The option below costs 0.4% (up to $2) per invoice. Alternatively, you can use https://zenvoice.io/ to create unlimited invoices automatically.
         // extraParams.invoice_creation = { enabled: true };
-        extraParams.payment_intent_data = { setup_future_usage: 'on_session' };
+        extraParams.payment_intent_data = { setup_future_usage: "on_session" };
       }
       if (user?.email) {
         extraParams.customer_email = user.email;
@@ -93,7 +93,7 @@ export const createCustomerPortal = async ({
   returnUrl,
 }: CreateCustomerPortalParams): Promise<string> => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2023-08-16', // TODO: update this when Stripe updates their API
+    apiVersion: "2023-08-16", // TODO: update this when Stripe updates their API
     typescript: true,
   });
 
@@ -109,12 +109,12 @@ export const createCustomerPortal = async ({
 export const findCheckoutSession = async (sessionId: string) => {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2023-08-16', // TODO: update this when Stripe updates their API
+      apiVersion: "2023-08-16", // TODO: update this when Stripe updates their API
       typescript: true,
     });
 
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ['line_items'],
+      expand: ["line_items"],
     });
 
     return session;

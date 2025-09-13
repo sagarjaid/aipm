@@ -1,9 +1,9 @@
 import {
   // generateQuestionResponse,
   generateSystemRole,
-} from '@/components/helper/prompts';
-import OpenAI from 'openai';
-import { NextResponse } from 'next/server';
+} from "@/components/helper/prompts";
+import OpenAI from "openai";
+import { NextResponse } from "next/server";
 
 // Initialize OpenAI with the API key
 const openai = new OpenAI({
@@ -15,13 +15,13 @@ export async function POST(req: Request) {
     // Parse the request body
     const qnAObj = await req.json();
 
-    console.log(qnAObj, 'qnAObj');
+    console.log(qnAObj, "qnAObj");
 
     // Check for missing required fields
     if (!qnAObj) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
+        { error: "Missing required fields" },
+        { status: 400 },
       );
     }
 
@@ -78,7 +78,7 @@ Interview factors:
 Response JSON obj
 {
   interviewID: ${
-    qnAObj?.interviewID || 'interviewID from QNAObj Oject key interviewID'
+    qnAObj?.interviewID || "interviewID from QNAObj Oject key interviewID"
   }  ,
   visaStatus: true as in if a students visa is approved || false as in the students visa is rejected,
   reasons: reasons for rejection or reasons for approval in form of [] (array of stings text) use from userAnswers qnAObj highly specific reasons, Note: you can't just simply state: Visa Approval/Rejection cases.
@@ -87,13 +87,13 @@ Response JSON obj
     // Make the OpenAI API call
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: "gpt-3.5-turbo",
       messages: [
         {
-          role: 'user',
+          role: "user",
           content: [
             {
-              type: 'text',
+              type: "text",
               text: userPrompt,
             },
           ],
@@ -105,17 +105,17 @@ Response JSON obj
       frequency_penalty: 0,
       presence_penalty: 0,
       response_format: {
-        type: 'json_object',
+        type: "json_object",
       },
     });
 
     const responseContent = response.choices[0]?.message?.content;
 
     if (!responseContent) {
-      throw new Error('Invalid response from OpenAI');
+      throw new Error("Invalid response from OpenAI");
     }
 
-    console.log(responseContent, 'responseContent');
+    console.log(responseContent, "responseContent");
 
     // Return the AI-generated response
     return NextResponse.json({ result: responseContent });
@@ -129,5 +129,5 @@ Response JSON obj
 
 // Handling non-POST methods
 export function OPTIONS() {
-  return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
+  return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
 }

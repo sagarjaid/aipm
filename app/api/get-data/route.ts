@@ -2,9 +2,9 @@
 import {
   // generateQuestionResponse,
   generateSystemRole,
-} from '@/components/helper/prompts';
-import OpenAI from 'openai';
-import { NextResponse } from 'next/server';
+} from "@/components/helper/prompts";
+import OpenAI from "openai";
+import { NextResponse } from "next/server";
 
 // Initialize OpenAI with the API key
 const openai = new OpenAI({
@@ -19,8 +19,8 @@ export async function POST(req: Request) {
     // Check for missing required fields
     if (!qnAObj) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
+        { error: "Missing required fields" },
+        { status: 400 },
       );
     }
 
@@ -30,31 +30,31 @@ export async function POST(req: Request) {
 
     // Make the OpenAI API call
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: "gpt-4o-mini",
       messages: [
         {
-          role: 'system',
+          role: "system",
           content: [
             {
-              type: 'text',
+              type: "text",
               text: userPrompt,
             },
           ],
         },
         {
-          role: 'user',
+          role: "user",
           content: [
             {
-              type: 'text',
-              text: 'generate response ',
+              type: "text",
+              text: "generate response ",
             },
           ],
         },
         {
-          role: 'assistant',
+          role: "assistant",
           content: [
             {
-              type: 'text',
+              type: "text",
               text: JSON.stringify(qnAObj),
             },
           ],
@@ -66,16 +66,16 @@ export async function POST(req: Request) {
       frequency_penalty: 0,
       presence_penalty: 0,
       response_format: {
-        type: 'json_object',
+        type: "json_object",
       },
     });
     const responseContent = response.choices[0]?.message?.content;
 
     if (!responseContent) {
-      throw new Error('Invalid response from OpenAI');
+      throw new Error("Invalid response from OpenAI");
     }
 
-    console.log(responseContent, 'responseContent');
+    console.log(responseContent, "responseContent");
 
     // Return the AI-generated response
     return NextResponse.json({ result: responseContent });
@@ -89,5 +89,5 @@ export async function POST(req: Request) {
 
 // Handling non-POST methods
 export function OPTIONS() {
-  return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
+  return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
 }

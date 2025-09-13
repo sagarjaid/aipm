@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { ChevronUp } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { ChevronUp } from "lucide-react";
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,9 +17,9 @@ export default function BackToTop() {
 
   // Set the scroll event listener
   useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility);
+    window.addEventListener("scroll", toggleVisibility);
     return () => {
-      window.removeEventListener('scroll', toggleVisibility);
+      window.removeEventListener("scroll", toggleVisibility);
     };
   }, []);
 
@@ -27,7 +27,7 @@ export default function BackToTop() {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
@@ -36,10 +36,10 @@ export default function BackToTop() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 bg-primary hover:bg-primary/90 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          className="fixed bottom-8 right-8 z-50 rounded-full bg-primary p-3 text-white shadow-lg transition-all duration-300 hover:scale-110 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           aria-label="Back to top"
         >
-          <ChevronUp className="w-6 h-6" />
+          <ChevronUp className="h-6 w-6" />
         </button>
       )}
     </>

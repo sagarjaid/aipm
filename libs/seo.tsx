@@ -1,7 +1,7 @@
 /** @format */
 
-import type { Metadata } from 'next';
-import config from '@/config';
+import type { Metadata } from "next";
+import config from "@/config";
 
 // These are all the SEO tags you can add to your pages.
 // It prefills data with default title/description/OG, etc.. and you can cusotmize it for each page.
@@ -21,31 +21,28 @@ export const getSEOTags = ({
 } = {}) => {
   return {
     // up to 50 characters (what does your app do for the user?) > your main should be here
-    title: 'AIPM - AI Scrum Master',
+    title: "AIPM - AI Scrum Master",
     // up to 160 characters (how does your app help the user?)
     description:
       description ||
       config.appDescription ||
-      'AI Scrum Master | AI Project Manager',
+      "AI Scrum Master | AI Project Manager",
     // some keywords separated by commas. by default it will be your app name
     keywords: keywords || [config.appName],
     applicationName: config.appName,
     // set a base URL prefix for other fields that require a fully qualified URL (.e.g og:image: og:image: 'https://yourdomain.com/share.png' => '/share.png')
     metadataBase: new URL(
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3000/'
-        : `https://${config.domainName}/`
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/"
+        : `https://${config.domainName}/`,
     ),
 
     openGraph: {
-      title:
-        openGraph?.title ||
-        'AIPM -  AI Scrum Master' ||
-        config.appName,
+      title: openGraph?.title || "AIPM -  AI Scrum Master" || config.appName,
       description:
         openGraph?.description ||
         config.appDescription ||
-        'AI Scrum Master | AI Project Manager',
+        "AI Scrum Master | AI Project Manager",
       url: openGraph?.url || `https://${config.domainName}/`,
       siteName: openGraph?.title || config.appName,
       // If you add an opengraph-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
@@ -56,23 +53,20 @@ export const getSEOTags = ({
       //     height: 660,
       //   },
       // ],
-      locale: 'en_US',
-      type: 'website',
+      locale: "en_US",
+      type: "website",
     },
 
     twitter: {
-      title:
-        openGraph?.title ||
-        'AIPM - AI Scrum Master' ||
-        config.appName,
+      title: openGraph?.title || "AIPM - AI Scrum Master" || config.appName,
       description:
         openGraph?.description ||
         config.appDescription ||
-        'AI Scrum Master | AI Project Manager',
+        "AI Scrum Master | AI Project Manager",
       // If you add an twitter-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
       // images: [openGraph?.image || defaults.og.image],
-      card: 'summary_large_image',
-      creator: '@sagarjaid',
+      card: "summary_large_image",
+      creator: "@sagarjaid",
     },
 
     // If a canonical URL is given, we add it. The metadataBase will turn the relative URL into a fully qualified URL
@@ -95,34 +89,35 @@ export const getSEOTags = ({
 export const renderSchemaTags = () => {
   return (
     <script
-      type='application/ld+json'
+      type="application/ld+json"
       dangerouslySetInnerHTML={{
         __html: JSON.stringify({
-          '@context': 'http://schema.org',
-          '@type': 'SoftwareApplication',
+          "@context": "http://schema.org",
+          "@type": "SoftwareApplication",
           name: config.appName,
           description: config.appDescription,
           image: `https://${config.domainName}/icon.png`,
           url: `https://${config.domainName}/`,
           author: {
-            '@type': 'Person',
-            name: 'Sagar Jaid',
+            "@type": "Person",
+            name: "Sagar Jaid",
           },
-          datePublished: '2024-08-01',
-          applicationCategory: 'EducationalApplication',
+          datePublished: "2024-08-01",
+          applicationCategory: "EducationalApplication",
           aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: '4.8',
-            ratingCount: '12',
+            "@type": "AggregateRating",
+            ratingValue: "4.8",
+            ratingCount: "12",
           },
           offers: [
             {
-              '@type': 'Offer',
-              price: '39.00',
-              priceCurrency: 'USD',
+              "@type": "Offer",
+              price: "39.00",
+              priceCurrency: "USD",
             },
           ],
         }),
-      }}></script>
+      }}
+    ></script>
   );
 };

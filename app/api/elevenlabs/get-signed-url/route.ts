@@ -1,6 +1,6 @@
 /** @format */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,16 +8,16 @@ export async function POST(request: NextRequest) {
 
     if (!agentId) {
       return NextResponse.json(
-        { error: 'Agent ID is required' },
-        { status: 400 }
+        { error: "Agent ID is required" },
+        { status: 400 },
       );
     }
 
     const apiKey = process.env.ELEVENLABS_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: 'ElevenLabs API key not configured' },
-        { status: 500 }
+        { error: "ElevenLabs API key not configured" },
+        { status: 500 },
       );
     }
 
@@ -25,20 +25,20 @@ export async function POST(request: NextRequest) {
     const response = await fetch(
       `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${agentId}`,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'xi-api-key': apiKey,
-          'Content-Type': 'application/json',
+          "xi-api-key": apiKey,
+          "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('ElevenLabs API error:', errorData);
+      console.error("ElevenLabs API error:", errorData);
       return NextResponse.json(
-        { error: 'Failed to generate signed URL' },
-        { status: response.status }
+        { error: "Failed to generate signed URL" },
+        { status: response.status },
       );
     }
 
@@ -49,10 +49,10 @@ export async function POST(request: NextRequest) {
       conversationId: data.conversation_id,
     });
   } catch (error) {
-    console.error('Error generating signed URL:', error);
+    console.error("Error generating signed URL:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }

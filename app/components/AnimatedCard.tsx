@@ -1,9 +1,9 @@
 /** @format */
 
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface AnimatedCardProps {
   image: any;
@@ -24,10 +24,9 @@ export default function AnimatedCard({
     setIsVisible(true);
   }, []);
 
-
   return (
-    <div className='w-full p-[2.5px] relative overflow-hidden group cursor-pointer hover:scale-105 transition-all border rounded  border-gray-300  shadow-lg duration-300'>
-      <div className='flex pt-16  pb-36 flex-col h-full w-full items-start px-6 gap-4 bg-white relative'>
+    <div className="group relative w-full cursor-pointer overflow-hidden rounded border border-gray-200 p-[2.5px] shadow-md transition-all duration-300 hover:scale-105">
+      <div className="relative flex h-full w-full flex-col items-start gap-4 bg-white px-6 pb-36 pt-16">
         <Image
           src={image}
           className={imageClassName}
@@ -35,28 +34,38 @@ export default function AnimatedCard({
           width={100}
           height={100}
         />
-        <div className='text-xl font-medium'>{title}</div>
-        <ul className='flex flex-col gap-2 text-xs pl-4'>
+        <div className="text-xl font-medium">{title}</div>
+        <ul className="flex flex-col gap-3 pl-2 text-[13px] font-medium">
           {description.map((item, index) => (
-            <li key={index} className='flex items-center'>
-              <div className={`flex items-center justify-center w-3 h-3 rounded-full mr-1 ${item === 'Facilitate Daily Stand-up' 
-                || item === "Monitor & update Jira tickets"
-                ? 'bg-green-600' : 'bg-gray-300'}`}>
-                <svg 
-                  className='w-2 h-2 text-white' 
-                  fill='currentColor' 
-                  viewBox='0 0 20 20'
+            <li key={index} className="flex items-center">
+              <div
+                className={`mr-1 flex h-3 w-3 items-center justify-center rounded-full ${
+                  item === "Facilitate Daily Stand-up" ||
+                  item === "Monitor & update Jira tickets"
+                    ? "bg-green-600"
+                    : "bg-gray-300"
+                }`}
+              >
+                <svg
+                  className="h-2 w-2 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
                 >
-                  <path 
-                    fillRule='evenodd' 
-                    d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' 
-                    clipRule='evenodd' 
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
                   />
                 </svg>
               </div>
-              <span 
-                className={`${item === 'Facilitate Daily Stand-up' || item === "Monitor & update Jira tickets" ? 'text-green-600' : ''} relative cursor-pointer hover:bg-gray-50 px-1 py-0.5 rounded transition-colors duration-200`}
-                data-tooltip={item === 'Facilitate Daily Stand-up' || item === "Monitor & update Jira tickets" ? 'Live' : 'Coming Soon'}
+              <span
+                className={`${item === "Facilitate Daily Stand-up" || item === "Monitor & update Jira tickets" ? "text-green-600" : ""} relative cursor-pointer rounded px-1 py-0.5 transition-colors duration-200 hover:bg-gray-50`}
+                data-tooltip={
+                  item === "Facilitate Daily Stand-up" ||
+                  item === "Monitor & update Jira tickets"
+                    ? "Live"
+                    : "Coming Soon"
+                }
               >
                 {item}
               </span>
@@ -83,9 +92,9 @@ export default function AnimatedCard({
           opacity: 1;
           transition: opacity 0.2s ease;
         }
-        
+
         span[data-tooltip]:hover::before {
-          content: '';
+          content: "";
           position: absolute;
           bottom: 100%;
           left: 50%;

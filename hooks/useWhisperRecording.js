@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 export const useWhisperRecording = ({
   removeSilence = false,
@@ -8,8 +8,8 @@ export const useWhisperRecording = ({
   streaming = true,
 } = {}) => {
   const [recording, setRecording] = useState(false);
-  const [transcript, setTranscript] = useState(''); // Stores final transcribed text
-  const [interimTranscript, setInterimTranscript] = useState(''); // Stores interim text
+  const [transcript, setTranscript] = useState(""); // Stores final transcribed text
+  const [interimTranscript, setInterimTranscript] = useState(""); // Stores interim text
   const recognitionRef = useRef(null); // Ref for SpeechRecognition instance
   const stopTimeoutRef = useRef(null); // Ref for timeout to auto-stop the recording
 
@@ -21,7 +21,7 @@ export const useWhisperRecording = ({
       const recognitionInstance = new SpeechRecognition();
       recognitionInstance.continuous = streaming; // Continuous recording based on the streaming flag
       recognitionInstance.interimResults = true; // Capture partial results while speaking
-      recognitionInstance.lang = 'en-US'; // Set the language
+      recognitionInstance.lang = "en-US"; // Set the language
 
       // When recording starts
       recognitionInstance.onstart = () => {
@@ -29,19 +29,19 @@ export const useWhisperRecording = ({
         if (stopTimeout) {
           stopTimeoutRef.current = setTimeout(
             () => stopRecording(),
-            stopTimeout
+            stopTimeout,
           ); // Stop after timeout
         }
       };
 
       // Handle the results of speech recognition
       recognitionInstance.onresult = (event) => {
-        let newInterimTranscript = '';
-        let finalTranscript = '';
+        let newInterimTranscript = "";
+        let finalTranscript = "";
 
         for (let i = event.resultIndex; i < event.results.length; i++) {
           if (event.results[i].isFinal) {
-            finalTranscript += event.results[i][0].transcript + ' ';
+            finalTranscript += event.results[i][0].transcript + " ";
           } else {
             newInterimTranscript += event.results[i][0].transcript;
           }
@@ -50,7 +50,7 @@ export const useWhisperRecording = ({
         // Optionally remove extra silence or spaces
         if (removeSilence) {
           newInterimTranscript = newInterimTranscript
-            .replace(/(\s+)/g, ' ')
+            .replace(/(\s+)/g, " ")
             .trim();
         }
 
@@ -63,7 +63,7 @@ export const useWhisperRecording = ({
 
       // Handle errors in speech recognition
       recognitionInstance.onerror = (event) => {
-        console.error('Speech recognition error:', event.error);
+        console.error("Speech recognition error:", event.error);
         setRecording(false);
       };
 
@@ -75,14 +75,14 @@ export const useWhisperRecording = ({
 
       recognitionRef.current = recognitionInstance;
     } else {
-      console.error('Speech recognition not supported');
+      console.error("Speech recognition not supported");
     }
   }, [removeSilence, stopTimeout, streaming]);
 
   // Start recording function
   const startRecording = () => {
-    setTranscript(''); // Clear transcript each time recording starts
-    setInterimTranscript(''); // Clear interim transcript
+    setTranscript(""); // Clear transcript each time recording starts
+    setInterimTranscript(""); // Clear interim transcript
     if (recognitionRef.current) {
       recognitionRef.current.start();
     }

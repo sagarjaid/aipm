@@ -4,17 +4,17 @@
  * @format
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { User } from '@supabase/supabase-js';
-import { createClient } from '@/libs/supabase/client';
-import apiClient from '@/libs/api';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import RightSidebar from './molecules/RightSidebar';
-import config from '@/config';
-import BookerDemo from './BookerDemo';
+import { useState, useEffect } from "react";
+import { User } from "@supabase/supabase-js";
+import { createClient } from "@/libs/supabase/client";
+import apiClient from "@/libs/api";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import RightSidebar from "./molecules/RightSidebar";
+import config from "@/config";
+import BookerDemo from "./BookerDemo";
 
 // A button to show user some account actions
 //  1. Billing: open a Stripe Customer Portal to manage their billing (cancel subscription, update payment method, etc.).
@@ -43,7 +43,7 @@ const MobileNav = () => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   const handleBilling = async () => {
@@ -51,10 +51,10 @@ const MobileNav = () => {
 
     try {
       const { url }: { url: string } = await apiClient.post(
-        '/lemonsqueezy/create-portal',
+        "/lemonsqueezy/create-portal",
         {
           returnUrl: window.location.href,
-        }
+        },
       );
 
       window.location.href = url;
@@ -67,98 +67,102 @@ const MobileNav = () => {
 
   const pricingSvg = (
     <svg
-      className='w-5 h-5'
-      fill='none'
+      className="h-5 w-5"
+      fill="none"
       strokeWidth={1.5}
-      stroke='currentColor'
-      viewBox='0 0 24 24'
-      xmlns='http://www.w3.org/2000/svg'
-      aria-hidden='true'>
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3'
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"
       />
     </svg>
   );
 
   const historySvg = (
     <svg
-      className='w-5 h-5'
-      fill='none'
+      className="h-5 w-5"
+      fill="none"
       strokeWidth={1.5}
-      stroke='currentColor'
-      viewBox='0 0 24 24'
-      xmlns='http://www.w3.org/2000/svg'
-      aria-hidden='true'>
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3'
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
       />
     </svg>
   );
 
   const dashboardSvg = (
     <svg
-      className='w-5 h-5'
-      fill='none'
+      className="h-5 w-5"
+      fill="none"
       strokeWidth={1.5}
-      stroke='currentColor'
-      viewBox='0 0 24 24'
-      xmlns='http://www.w3.org/2000/svg'
-      aria-hidden='true'>
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z'
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"
       />
     </svg>
   );
 
   const accountSvg = (
     <svg
-      className='w-5 h-5'
-      fill='none'
+      className="h-5 w-5"
+      fill="none"
       strokeWidth={1.5}
-      stroke='currentColor'
-      viewBox='0 0 24 24'
-      xmlns='http://www.w3.org/2000/svg'
-      aria-hidden='true'>
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z'
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
       />
     </svg>
   );
 
   const fillters = [
     {
-      name: 'Dashboard',
+      name: "Dashboard",
       svg: dashboardSvg,
-      slug: '/dash',
+      slug: "/dash",
     },
     {
-      name: 'History',
+      name: "History",
       svg: historySvg,
-      slug: '/history',
+      slug: "/history",
     },
     {
-      name: 'Pricing',
+      name: "Pricing",
       svg: pricingSvg,
-      slug: '/pricing',
+      slug: "/pricing",
     },
     {
-      name: 'Account',
+      name: "Account",
       svg: accountSvg,
-      slug: '/account',
+      slug: "/account",
     },
   ];
 
   return (
     <>
-      <div className='flex flex-col h-full justify-between pt-2 pb-10'>
+      <div className="flex h-full flex-col justify-between pb-10 pt-2">
         {/* <div className='flex flex-col gap-2.5'>
               <div className='bg-white p-1.5 rounded-md hover:bg-gray-50 flex gap-2'>
                 <svg
@@ -215,8 +219,8 @@ const MobileNav = () => {
               </div>
             </div> */}
 
-        <div className='overflow-hidden bg-base-100 p-1'>
-          <div className='flex flex-col gap-3 text-sm'>
+        <div className="overflow-hidden bg-base-100 p-1">
+          <div className="flex flex-col gap-3 text-sm">
             {/* <button
             className='flex items-center gap-2 hover:bg-base-300 duration-200 p-1.5   w-full rounded-lg font-medium'
             onClick={() => (window.location.href = '/list')}>
@@ -254,80 +258,88 @@ const MobileNav = () => {
             {user && (
               <>
                 <button
-                  className='flex items-center gap-2 hover:bg-base-300 duration-200 p-1.5   w-full rounded-lg font-medium'
-                  onClick={() => (window.location.href = '/dash')}>
+                  className="flex w-full items-center gap-2 rounded-lg p-1.5 font-medium duration-200 hover:bg-base-300"
+                  onClick={() => (window.location.href = "/dash")}
+                >
                   <svg
-                    className='w-5 h-5'
-                    fill='none'
+                    className="h-5 w-5"
+                    fill="none"
                     strokeWidth={1.5}
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                    xmlns='http://www.w3.org/2000/svg'
-                    aria-hidden='true'>
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
                     <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z'
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"
                     />
                   </svg>
                   Dashboard
                 </button>
 
                 <button
-                  className='flex items-center gap-2 hover:bg-base-300 duration-200 p-1.5   w-full rounded-lg font-medium'
-                  onClick={() => (window.location.href = '/history')}>
+                  className="flex w-full items-center gap-2 rounded-lg p-1.5 font-medium duration-200 hover:bg-base-300"
+                  onClick={() => (window.location.href = "/history")}
+                >
                   <svg
-                    className='w-5 h-5'
-                    fill='none'
+                    className="h-5 w-5"
+                    fill="none"
                     strokeWidth={1.5}
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                    xmlns='http://www.w3.org/2000/svg'
-                    aria-hidden='true'>
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
                     <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3'
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
                     />
                   </svg>
                   History
                 </button>
 
                 <button
-                  className='flex items-center gap-2 hover:bg-base-300 duration-200 p-1.5   w-full rounded-lg font-medium'
-                  onClick={() => (window.location.href = '/pricing')}>
+                  className="flex w-full items-center gap-2 rounded-lg p-1.5 font-medium duration-200 hover:bg-base-300"
+                  onClick={() => (window.location.href = "/pricing")}
+                >
                   <svg
-                    className='w-5 h-5'
-                    fill='none'
+                    className="h-5 w-5"
+                    fill="none"
                     strokeWidth={1.5}
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                    xmlns='http://www.w3.org/2000/svg'
-                    aria-hidden='true'>
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
                     <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3'
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"
                     />
                   </svg>
                   Pricing
                 </button>
 
                 <button
-                  className='flex items-center gap-2 hover:bg-base-300 duration-200 p-1.5   w-full rounded-lg font-medium'
-                  onClick={() => (window.location.href = '/account')}>
+                  className="flex w-full items-center gap-2 rounded-lg p-1.5 font-medium duration-200 hover:bg-base-300"
+                  onClick={() => (window.location.href = "/account")}
+                >
                   <svg
-                    className='w-5 h-5'
-                    fill='none'
+                    className="h-5 w-5"
+                    fill="none"
                     strokeWidth={1.5}
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                    xmlns='http://www.w3.org/2000/svg'
-                    aria-hidden='true'>
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
                     <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z'
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                     />
                   </svg>
                   Account
@@ -366,24 +378,18 @@ const MobileNav = () => {
                   Continue with Google
                 </button> */}
 
-                <div className=' w-full'>
-                  <div className='flex flex-col justify-start  gap-2 mb-10 text-sm'>
-                    <Link
-                      href='/'
-                      className='link link-hover'>
+                <div className="w-full">
+                  <div className="mb-10 flex flex-col justify-start gap-2 text-sm">
+                    <Link href="/" className="link-hover link">
                       Home
                     </Link>
-                    <Link
-                      href='/#products'
-                      className='link link-hover'>
+                    <Link href="/#products" className="link-hover link">
                       Products
                     </Link>
-                    <Link
-                      href='/manifesto'
-                      className='link link-hover'>
+                    <Link href="/manifesto" className="link-hover link">
                       Manifesto
                     </Link>
-                    <BookerDemo /> 
+                    <BookerDemo />
                   </div>
                 </div>
                 {/* <button
@@ -421,20 +427,22 @@ const MobileNav = () => {
 
             {user && (
               <button
-                className='flex items-center gap-2 hover:bg-rose-200 duration-200 p-1.5   w-full rounded-lg font-medium'
-                onClick={handleSignOut}>
+                className="flex w-full items-center gap-2 rounded-lg p-1.5 font-medium duration-200 hover:bg-rose-200"
+                onClick={handleSignOut}
+              >
                 <svg
-                  className='w-5 h-5'
-                  fill='none'
+                  className="h-5 w-5"
+                  fill="none"
                   strokeWidth={1.5}
-                  stroke='currentColor'
-                  viewBox='0 0 24 24'
-                  xmlns='http://www.w3.org/2000/svg'
-                  aria-hidden='true'>
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
                   <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9'
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9"
                   />
                 </svg>
                 Logout
@@ -446,22 +454,16 @@ const MobileNav = () => {
         <div>
           {/* {user && <RightSidebar />} */}
 
-          <div className='pt-6 pl-1.5'>
-            <div className='footer-title font-semibold text-base-content tracking-widest text-sm md:text-left mb-3'>
+          <div className="pl-1.5 pt-6">
+            <div className="footer-title mb-3 text-sm font-semibold tracking-widest text-base-content md:text-left">
               LEGAL
             </div>
 
-            <div className='flex flex-col justify-center items-start gap-2.5  text-xs'>
-              <Link
-                target='_blank'
-                href='/tos'
-                className='link link-hover'>
+            <div className="flex flex-col items-start justify-center gap-2.5 text-xs">
+              <Link target="_blank" href="/tos" className="link-hover link">
                 Terms of services
               </Link>
-              <Link
-                target='_blank'
-                href='/privacy'
-                className='link link-hover'>
+              <Link target="_blank" href="/privacy" className="link-hover link">
                 Privacy policy
               </Link>
               {/* <Link
@@ -469,16 +471,14 @@ const MobileNav = () => {
                 className='link link-hover'>
                 Pricing
               </Link> */}
-              <Link
-                target='_blank'
-                href='/privacy'
-                className='link link-hover'>
+              <Link target="_blank" href="/privacy" className="link-hover link">
                 Support
               </Link>
               <Link
-                target='_blank'
-                href='https://sagarjaid.com'
-                className='link link-hover'>
+                target="_blank"
+                href="https://sagarjaid.com"
+                className="link-hover link"
+              >
                 Build by Sagar Jaid
               </Link>
             </div>

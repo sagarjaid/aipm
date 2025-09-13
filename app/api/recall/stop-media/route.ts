@@ -1,6 +1,6 @@
 /** @format */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(request: NextRequest) {
   try {
@@ -8,16 +8,16 @@ export async function DELETE(request: NextRequest) {
 
     if (!botId) {
       return NextResponse.json(
-        { error: 'Bot ID is required' },
-        { status: 400 }
+        { error: "Bot ID is required" },
+        { status: 400 },
       );
     }
 
     const recallApiKey = process.env.RECALL_API_KEY;
     if (!recallApiKey) {
       return NextResponse.json(
-        { error: 'Recall API key not configured' },
-        { status: 500 }
+        { error: "Recall API key not configured" },
+        { status: 500 },
       );
     }
 
@@ -25,33 +25,33 @@ export async function DELETE(request: NextRequest) {
     const response = await fetch(
       `https://us-west-2.recall.ai/api/v1/bot/${botId}/output_media/`,
       {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
           Authorization: `Token ${recallApiKey}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ camera: true }),
-      }
+      },
     );
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('Recall API error:', errorData);
+      console.error("Recall API error:", errorData);
       return NextResponse.json(
-        { error: 'Failed to stop bot media', details: errorData },
-        { status: response.status }
+        { error: "Failed to stop bot media", details: errorData },
+        { status: response.status },
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: 'Bot media stopped successfully',
+      message: "Bot media stopped successfully",
     });
   } catch (error) {
-    console.error('Error stopping Recall bot media:', error);
+    console.error("Error stopping Recall bot media:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }

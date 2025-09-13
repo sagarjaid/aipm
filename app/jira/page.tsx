@@ -1,29 +1,29 @@
 /** @format */
 
-'use client';
+"use client";
 
-import type React from 'react';
-import { useState, useEffect, useRef } from 'react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Calendar, MessageSquare, Settings, List, Grid3X3 } from 'lucide-react';
+import type React from "react";
+import { useState, useEffect, useRef } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar, MessageSquare, Settings, List, Grid3X3 } from "lucide-react";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 // Components
-import { ConfigForm } from '@/components/jira/config-form';
-import { BoardFilters } from '@/components/jira/board-filters';
-import { IssueListView } from '@/components/jira/issue-list-view';
-import { IssueGridView } from '@/components/jira/issue-grid-view';
-import { IssueDetailView } from '@/components/jira/issue-detail-view';
+import { ConfigForm } from "@/components/jira/config-form";
+import { BoardFilters } from "@/components/jira/board-filters";
+import { IssueListView } from "@/components/jira/issue-list-view";
+import { IssueGridView } from "@/components/jira/issue-grid-view";
+import { IssueDetailView } from "@/components/jira/issue-detail-view";
 
 // Types and utilities
 import type {
@@ -38,7 +38,7 @@ import type {
   JiraUser,
   Transition,
   JiraComment,
-} from '@/lib/jira-types';
+} from "@/lib/jira-types";
 import {
   getBoardTypeColor,
   extractTextFromDescription,
@@ -46,20 +46,20 @@ import {
   saveLastSelectedBoard,
   getLastSelectedBoard,
   clearLastSelectedBoard,
-} from '@/lib/jira-utils';
+} from "@/lib/jira-utils";
 
-import AIPageContent from '../ai/AIPageContent';
+import AIPageContent from "../ai/AIPageContent";
 
 export default function UnifiedJiraBoard() {
   // Configuration states
   const [boards, setBoards] = useState<JiraBoard[]>([]);
   const [config, setConfig] = useState<JiraConfig>({
-    id: '',
-    domain: '',
-    email: '',
-    apiToken: '',
-    lastUsed: '',
-    createdAt: '',
+    id: "",
+    domain: "",
+    email: "",
+    apiToken: "",
+    lastUsed: "",
+    createdAt: "",
   });
   const [showConfig, setShowConfig] = useState(true);
   const [savedConfigs, setSavedConfigs] = useState<SavedConfig[]>([]);
@@ -69,20 +69,20 @@ export default function UnifiedJiraBoard() {
   // Board and Sprint states
   const [selectedBoard, setSelectedBoard] = useState<BoardData | null>(null);
   const [lastSelectedBoardId, setLastSelectedBoardId] = useState<string | null>(
-    null
+    null,
   );
   const [sprint, setSprint] = useState<JiraSprint | null>(null);
   const [issues, setIssues] = useState<JiraIssue[]>([]);
   const [filteredIssues, setFilteredIssues] = useState<JiraIssue[]>([]);
-  const [viewMode, setViewMode] = useState<ViewMode>('list');
+  const [viewMode, setViewMode] = useState<ViewMode>("list");
 
   // Issue detail states
   const [selectedIssue, setSelectedIssue] = useState<JiraIssue | null>(null);
   const [comments, setComments] = useState<JiraComment[]>([]);
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState("");
   const [editMode, setEditMode] = useState<string | null>(null);
-  const [editSummary, setEditSummary] = useState('');
-  const [editDescription, setEditDescription] = useState('');
+  const [editSummary, setEditSummary] = useState("");
+  const [editDescription, setEditDescription] = useState("");
 
   // Loading and error states
   const [loading, setLoading] = useState(false);
@@ -106,7 +106,7 @@ export default function UnifiedJiraBoard() {
   const [priorities, setPriorities] = useState<any[]>([]);
 
   // Tab state
-  const [activeTab, setActiveTab] = useState('sprint-list');
+  const [activeTab, setActiveTab] = useState("sprint-list");
 
   useEffect(() => {
     loadSavedConfigs();
@@ -123,7 +123,7 @@ export default function UnifiedJiraBoard() {
       const lastBoardId = getLastSelectedBoard(selectedConfigId);
       if (lastBoardId) {
         const lastBoard = boards.find(
-          (board: JiraBoard) => board.id.toString() === lastBoardId
+          (board: JiraBoard) => board.id.toString() === lastBoardId,
         );
         if (lastBoard) {
           setSelectedBoard({
@@ -166,16 +166,16 @@ export default function UnifiedJiraBoard() {
   // Configuration functions
   const loadSavedConfigs = () => {
     try {
-      const saved = localStorage.getItem('jiraSavedConfigs');
+      const saved = localStorage.getItem("jiraSavedConfigs");
       if (saved) {
         const configs: SavedConfig[] = JSON.parse(saved);
         setSavedConfigs(configs);
 
-        const currentConfig = localStorage.getItem('jiraConfig');
+        const currentConfig = localStorage.getItem("jiraConfig");
         if (currentConfig) {
           const current = JSON.parse(currentConfig);
           const activeConfig = configs.find(
-            (c) => c.domain === current.domain && c.email === current.email
+            (c) => c.domain === current.domain && c.email === current.email,
           );
           if (activeConfig) {
             setSelectedConfigId(activeConfig.id);
@@ -198,7 +198,7 @@ export default function UnifiedJiraBoard() {
         }
       }
     } catch (error) {
-      console.error('Failed to load saved configs:', error);
+      console.error("Failed to load saved configs:", error);
     }
   };
 
@@ -211,15 +211,15 @@ export default function UnifiedJiraBoard() {
         createdAt: config.createdAt || new Date().toISOString(),
       };
 
-      localStorage.setItem('jiraConfig', JSON.stringify(configToSave));
+      localStorage.setItem("jiraConfig", JSON.stringify(configToSave));
 
       const existingConfigs = savedConfigs.filter(
-        (c) => c.id !== configToSave.id
+        (c) => c.id !== configToSave.id,
       );
       const updatedConfigs = [configToSave, ...existingConfigs].slice(0, 10);
 
       setSavedConfigs(updatedConfigs);
-      localStorage.setItem('jiraSavedConfigs', JSON.stringify(updatedConfigs));
+      localStorage.setItem("jiraSavedConfigs", JSON.stringify(updatedConfigs));
       setSelectedConfigId(configToSave.id);
 
       // Clear any previous board selection for new configurations
@@ -228,7 +228,7 @@ export default function UnifiedJiraBoard() {
         setSelectedBoard(null);
       }
     } catch (error) {
-      console.error('Failed to save config:', error);
+      console.error("Failed to save config:", error);
     }
   };
 
@@ -240,13 +240,13 @@ export default function UnifiedJiraBoard() {
 
     setConfig(updatedConfig);
     setSelectedConfigId(savedConfig.id);
-    localStorage.setItem('jiraConfig', JSON.stringify(updatedConfig));
+    localStorage.setItem("jiraConfig", JSON.stringify(updatedConfig));
 
     const updatedConfigs = savedConfigs.map((c) =>
-      c.id === savedConfig.id ? updatedConfig : c
+      c.id === savedConfig.id ? updatedConfig : c,
     );
     setSavedConfigs(updatedConfigs);
-    localStorage.setItem('jiraSavedConfigs', JSON.stringify(updatedConfigs));
+    localStorage.setItem("jiraSavedConfigs", JSON.stringify(updatedConfigs));
 
     // Load last selected board for this configuration
     const lastBoardId = getLastSelectedBoard(savedConfig.id);
@@ -263,7 +263,7 @@ export default function UnifiedJiraBoard() {
   const deleteSavedConfig = (configId: string) => {
     const updatedConfigs = savedConfigs.filter((c) => c.id !== configId);
     setSavedConfigs(updatedConfigs);
-    localStorage.setItem('jiraSavedConfigs', JSON.stringify(updatedConfigs));
+    localStorage.setItem("jiraSavedConfigs", JSON.stringify(updatedConfigs));
 
     // Clean up board selection for deleted configuration
     clearLastSelectedBoard(configId);
@@ -271,19 +271,19 @@ export default function UnifiedJiraBoard() {
     if (selectedConfigId === configId) {
       setSelectedConfigId(null);
       setLastSelectedBoardId(null);
-      localStorage.removeItem('jiraConfig');
+      localStorage.removeItem("jiraConfig");
       setShowConfig(true);
     }
   };
 
   const handleAddNew = () => {
     setConfig({
-      id: '',
-      domain: '',
-      email: '',
-      apiToken: '',
-      lastUsed: '',
-      createdAt: '',
+      id: "",
+      domain: "",
+      email: "",
+      apiToken: "",
+      lastUsed: "",
+      createdAt: "",
     });
     setSelectedConfigId(null);
     setLastSelectedBoardId(null);
@@ -295,7 +295,7 @@ export default function UnifiedJiraBoard() {
     const activeConfig = configToUse || config;
 
     if (!activeConfig.domain || !activeConfig.email || !activeConfig.apiToken) {
-      setError('Please provide all required configuration fields');
+      setError("Please provide all required configuration fields");
       return;
     }
 
@@ -303,10 +303,10 @@ export default function UnifiedJiraBoard() {
     setError(null);
 
     try {
-      const response = await fetch('/api/jira/boards', {
-        method: 'POST',
+      const response = await fetch("/api/jira/boards", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(activeConfig),
       });
@@ -328,7 +328,7 @@ export default function UnifiedJiraBoard() {
           const lastBoardId = getLastSelectedBoard(currentConfigId);
           if (lastBoardId) {
             const lastBoard = data.values.find(
-              (board: JiraBoard) => board.id.toString() === lastBoardId
+              (board: JiraBoard) => board.id.toString() === lastBoardId,
             );
             if (lastBoard) {
               setSelectedBoard({
@@ -343,9 +343,9 @@ export default function UnifiedJiraBoard() {
         }
       }
     } catch (err) {
-      console.error('Fetch error:', err);
+      console.error("Fetch error:", err);
       setError(
-        err instanceof Error ? err.message : 'An unexpected error occurred'
+        err instanceof Error ? err.message : "An unexpected error occurred",
       );
     } finally {
       setLoading(false);
@@ -357,10 +357,10 @@ export default function UnifiedJiraBoard() {
     setError(null);
 
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig) {
         setError(
-          'No Jira configuration found. Please configure your connection.'
+          "No Jira configuration found. Please configure your connection.",
         );
         return;
       }
@@ -368,9 +368,9 @@ export default function UnifiedJiraBoard() {
       const config = JSON.parse(storedConfig);
 
       try {
-        const boardResponse = await fetch('/api/jira/board', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        const boardResponse = await fetch("/api/jira/board", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...config, boardId }),
         });
 
@@ -381,27 +381,27 @@ export default function UnifiedJiraBoard() {
           setSelectedBoard({
             id: boardId,
             name: `Board ${boardId}`,
-            type: 'unknown',
+            type: "unknown",
           });
         }
       } catch (boardError) {
         setSelectedBoard({
           id: boardId,
           name: `Board ${boardId}`,
-          type: 'unknown',
+          type: "unknown",
         });
       }
 
-      const sprintResponse = await fetch('/api/jira/sprint', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const sprintResponse = await fetch("/api/jira/sprint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...config, boardId }),
       });
 
       if (!sprintResponse.ok) {
         const sprintError = await sprintResponse.json();
         throw new Error(
-          sprintError.error || `HTTP error! status: ${sprintResponse.status}`
+          sprintError.error || `HTTP error! status: ${sprintResponse.status}`,
         );
       }
 
@@ -410,11 +410,11 @@ export default function UnifiedJiraBoard() {
       setSprint(sprintData.sprint);
       setIssues(sprintData.issues || []);
     } catch (err) {
-      console.error('Fetch error:', err);
+      console.error("Fetch error:", err);
       setError(
         err instanceof Error
           ? err.message
-          : 'An error occurred while fetching board data'
+          : "An error occurred while fetching board data",
       );
     } finally {
       setLoading(false);
@@ -423,7 +423,7 @@ export default function UnifiedJiraBoard() {
 
   const testConnection = async () => {
     if (!config.domain || !config.email || !config.apiToken) {
-      setError('Please provide all required configuration fields');
+      setError("Please provide all required configuration fields");
       return;
     }
 
@@ -431,10 +431,10 @@ export default function UnifiedJiraBoard() {
     setError(null);
 
     try {
-      const response = await fetch('/api/jira/test', {
-        method: 'POST',
+      const response = await fetch("/api/jira/test", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(config),
       });
@@ -448,13 +448,13 @@ export default function UnifiedJiraBoard() {
           displayName: data.user,
         }));
         alert(
-          `✅ Connection successful!\nConnected as: ${data.user}\nDomain: ${data.domain}`
+          `✅ Connection successful!\nConnected as: ${data.user}\nDomain: ${data.domain}`,
         );
       } else {
         setError(data.error);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Connection test failed');
+      setError(err instanceof Error ? err.message : "Connection test failed");
     } finally {
       setLoading(false);
     }
@@ -471,10 +471,10 @@ export default function UnifiedJiraBoard() {
 
     if (filters.assignees.length > 0) {
       filtered = filtered.filter((issue) => {
-        if (filters.assignees.includes('unassigned')) {
+        if (filters.assignees.includes("unassigned")) {
           return (
             !issue.fields.assignee ||
-            filters.assignees.includes(issue.fields.assignee?.accountId || '')
+            filters.assignees.includes(issue.fields.assignee?.accountId || "")
           );
         }
         return (
@@ -486,27 +486,27 @@ export default function UnifiedJiraBoard() {
 
     if (filters.types.length > 0) {
       filtered = filtered.filter((issue) =>
-        filters.types.includes(issue.fields.issuetype.name)
+        filters.types.includes(issue.fields.issuetype.name),
       );
     }
 
     if (filters.statuses.length > 0) {
       filtered = filtered.filter((issue) =>
-        filters.statuses.includes(issue.fields.status.name)
+        filters.statuses.includes(issue.fields.status.name),
       );
     }
 
     if (filters.labels.length > 0) {
       filtered = filtered.filter((issue) =>
-        issue.fields.labels?.some((label) => filters.labels.includes(label))
+        issue.fields.labels?.some((label) => filters.labels.includes(label)),
       );
     }
 
     if (filters.fixVersions.length > 0) {
       filtered = filtered.filter((issue) =>
         issue.fields.fixVersions?.some((version) =>
-          filters.fixVersions.includes(version.id)
-        )
+          filters.fixVersions.includes(version.id),
+        ),
       );
     }
 
@@ -515,14 +515,14 @@ export default function UnifiedJiraBoard() {
 
   const fetchUsers = async () => {
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig) return;
 
       const config = JSON.parse(storedConfig);
 
-      const response = await fetch('/api/jira/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/jira/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...config,
           projectKey: issues[0]?.fields.project.key,
@@ -534,20 +534,20 @@ export default function UnifiedJiraBoard() {
         setUsers(Array.isArray(usersData) ? usersData : []);
       }
     } catch (err) {
-      console.error('Failed to fetch users:', err);
+      console.error("Failed to fetch users:", err);
     }
   };
 
   const fetchPriorities = async () => {
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig) return;
 
       const config = JSON.parse(storedConfig);
 
-      const response = await fetch('/api/jira/priorities', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/jira/priorities", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(config),
       });
 
@@ -556,20 +556,20 @@ export default function UnifiedJiraBoard() {
         setPriorities(Array.isArray(prioritiesData) ? prioritiesData : []);
       }
     } catch (err) {
-      console.error('Failed to fetch priorities:', err);
+      console.error("Failed to fetch priorities:", err);
     }
   };
 
   const fetchTransitionsForIssues = async () => {
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig || issues.length === 0) return;
 
       const config = JSON.parse(storedConfig);
 
-      const response = await fetch('/api/jira/issue/transitions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/jira/issue/transitions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...config, issueKey: issues[0].key }),
       });
 
@@ -578,29 +578,29 @@ export default function UnifiedJiraBoard() {
         setTransitions(transitionsData.transitions || []);
       }
     } catch (err) {
-      console.error('Failed to fetch transitions:', err);
+      console.error("Failed to fetch transitions:", err);
     }
   };
 
   // Issue functions
   const handleIssueClick = (issue: JiraIssue) => {
     setSelectedIssue(issue);
-    setEditSummary(issue.fields.summary || '');
+    setEditSummary(issue.fields.summary || "");
     setEditDescription(extractTextFromDescription(issue.fields.description));
-    setActiveTab('work-item');
+    setActiveTab("work-item");
     fetchIssueDetails(issue.key);
   };
 
   const fetchIssueDetails = async (issueKey: string) => {
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig) return;
 
       const config = JSON.parse(storedConfig);
 
-      const response = await fetch('/api/jira/issue', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/jira/issue", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...config, issueKey }),
       });
 
@@ -611,14 +611,14 @@ export default function UnifiedJiraBoard() {
         fetchTransitions(issueKey);
       }
     } catch (err) {
-      console.error('Failed to fetch issue details:', err);
+      console.error("Failed to fetch issue details:", err);
     }
   };
 
   const fetchComments = async (issue: JiraIssue) => {
     setCommentsLoading(true);
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig) return;
 
       const config = JSON.parse(storedConfig);
@@ -631,8 +631,8 @@ export default function UnifiedJiraBoard() {
       });
 
       const response = await fetch(`/api/jira/comments?${params}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
       });
 
       if (response.ok) {
@@ -642,7 +642,7 @@ export default function UnifiedJiraBoard() {
         setComments([]);
       }
     } catch (err) {
-      console.error('Failed to fetch comments:', err);
+      console.error("Failed to fetch comments:", err);
       setComments([]);
     } finally {
       setCommentsLoading(false);
@@ -651,14 +651,14 @@ export default function UnifiedJiraBoard() {
 
   const fetchTransitions = async (issueKey: string) => {
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig) return;
 
       const config = JSON.parse(storedConfig);
 
-      const response = await fetch('/api/jira/issue/transitions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/jira/issue/transitions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...config, issueKey }),
       });
 
@@ -667,7 +667,7 @@ export default function UnifiedJiraBoard() {
         setTransitions(transitionsData.transitions || []);
       }
     } catch (err) {
-      console.error('Failed to fetch transitions:', err);
+      console.error("Failed to fetch transitions:", err);
     }
   };
 
@@ -676,14 +676,14 @@ export default function UnifiedJiraBoard() {
 
     setAddingComment(true);
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig) return;
 
       const config = JSON.parse(storedConfig);
 
-      const response = await fetch('/api/jira/comments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/jira/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...config,
           issueKey: selectedIssue.key,
@@ -692,15 +692,15 @@ export default function UnifiedJiraBoard() {
       });
 
       if (response.ok) {
-        setNewComment('');
+        setNewComment("");
         await fetchComments(selectedIssue);
         setError(null);
       } else {
         const errorData = await response.json();
-        setError(errorData.error || 'Failed to add comment');
+        setError(errorData.error || "Failed to add comment");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to add comment');
+      setError(err instanceof Error ? err.message : "Failed to add comment");
     } finally {
       setAddingComment(false);
     }
@@ -709,11 +709,11 @@ export default function UnifiedJiraBoard() {
   const updateIssueField = async (
     issueKey: string,
     fieldName: string,
-    fieldValue: any
+    fieldValue: any,
   ) => {
     setUpdating(issueKey);
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig) return;
 
       const config = JSON.parse(storedConfig);
@@ -721,9 +721,9 @@ export default function UnifiedJiraBoard() {
       const fields: any = {};
       fields[fieldName] = fieldValue;
 
-      const response = await fetch('/api/jira/issue/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/jira/issue/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...config, issueKey, fields }),
       });
 
@@ -732,22 +732,22 @@ export default function UnifiedJiraBoard() {
           prevIssues.map((issue) => {
             if (issue.key === issueKey) {
               const updatedIssue = { ...issue };
-              if (fieldName === 'priority') {
+              if (fieldName === "priority") {
                 updatedIssue.fields.priority = fieldValue;
-              } else if (fieldName === 'assignee') {
+              } else if (fieldName === "assignee") {
                 updatedIssue.fields.assignee = fieldValue;
-              } else if (fieldName === 'summary') {
+              } else if (fieldName === "summary") {
                 updatedIssue.fields.summary = fieldValue;
               }
               return updatedIssue;
             }
             return issue;
-          })
+          }),
         );
 
         if (selectedIssue && selectedIssue.key === issueKey) {
           const updatedIssue = { ...selectedIssue };
-          if (fieldName === 'summary') {
+          if (fieldName === "summary") {
             updatedIssue.fields.summary = fieldValue;
           }
           setSelectedIssue(updatedIssue);
@@ -757,10 +757,10 @@ export default function UnifiedJiraBoard() {
         setError(null);
       } else {
         const errorData = await response.json();
-        setError(errorData.error || 'Failed to update field');
+        setError(errorData.error || "Failed to update field");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to update field');
+      setError(err instanceof Error ? err.message : "Failed to update field");
     } finally {
       setUpdating(null);
     }
@@ -769,14 +769,14 @@ export default function UnifiedJiraBoard() {
   const updateIssueStatus = async (issueKey: string, transitionId: string) => {
     setUpdating(issueKey);
     try {
-      const storedConfig = localStorage.getItem('jiraConfig');
+      const storedConfig = localStorage.getItem("jiraConfig");
       if (!storedConfig) return;
 
       const config = JSON.parse(storedConfig);
 
-      const response = await fetch('/api/jira/issue/transitions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/jira/issue/transitions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...config, issueKey, transitionId }),
       });
 
@@ -787,10 +787,10 @@ export default function UnifiedJiraBoard() {
         setError(null);
       } else {
         const errorData = await response.json();
-        setError(errorData.error || 'Failed to update status');
+        setError(errorData.error || "Failed to update status");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to update status');
+      setError(err instanceof Error ? err.message : "Failed to update status");
     } finally {
       setUpdating(null);
     }
@@ -823,11 +823,11 @@ export default function UnifiedJiraBoard() {
   const handleSaveField = (fieldName: string) => {
     if (!selectedIssue) return;
     switch (fieldName) {
-      case 'summary':
-        updateIssueField(selectedIssue.key, 'summary', editSummary);
+      case "summary":
+        updateIssueField(selectedIssue.key, "summary", editSummary);
         break;
-      case 'description':
-        updateIssueField(selectedIssue.key, 'description', editDescription);
+      case "description":
+        updateIssueField(selectedIssue.key, "description", editDescription);
         break;
     }
   };
@@ -835,9 +835,9 @@ export default function UnifiedJiraBoard() {
   const handleCancelEdit = () => {
     setEditMode(null);
     if (selectedIssue) {
-      setEditSummary(selectedIssue.fields.summary || '');
+      setEditSummary(selectedIssue.fields.summary || "");
       setEditDescription(
-        extractTextFromDescription(selectedIssue.fields.description)
+        extractTextFromDescription(selectedIssue.fields.description),
       );
     }
   };
@@ -864,19 +864,19 @@ export default function UnifiedJiraBoard() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50 p-4'>
-      <div className='max-w-7xl mx-auto'>
+    <div className="min-h-screen bg-gray-50 p-4">
+      <div className="mx-auto max-w-7xl">
         {/* Header */}
-        <div className='flex items-center justify-between mb-6'>
-          <div className='flex items-center gap-4'>
-            <h1 className='text-2xl font-bold text-gray-900'>
-              {sprint?.name || selectedBoard?.name || 'Active Sprint'}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <h1 className="text-2xl font-bold text-gray-900">
+              {sprint?.name || selectedBoard?.name || "Active Sprint"}
             </h1>
           </div>
-          <div className='flex gap-2'>
+          <div className="flex gap-2">
             <AIPageContent />
             <Select
-              value={selectedBoard?.id || ''}
+              value={selectedBoard?.id || ""}
               onValueChange={(boardId) => {
                 const board = boards.find((b) => b.id.toString() === boardId);
                 if (board) {
@@ -894,21 +894,21 @@ export default function UnifiedJiraBoard() {
 
                   fetchBoardData(boardId);
                 }
-              }}>
-              <SelectTrigger className='w-64'>
-                <SelectValue placeholder='Select Board'>
-                  {selectedBoard?.name || 'Select Board'}
+              }}
+            >
+              <SelectTrigger className="w-64">
+                <SelectValue placeholder="Select Board">
+                  {selectedBoard?.name || "Select Board"}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {boards.map((board) => (
-                  <SelectItem
-                    key={board.id}
-                    value={board.id.toString()}>
-                    <div className='flex items-center gap-2'>
+                  <SelectItem key={board.id} value={board.id.toString()}>
+                    <div className="flex items-center gap-2">
                       <Badge
                         className={getBoardTypeColor(board.type)}
-                        variant='secondary'>
+                        variant="secondary"
+                      >
                         {board.type}
                       </Badge>
                       {board.name}
@@ -917,10 +917,8 @@ export default function UnifiedJiraBoard() {
                 ))}
               </SelectContent>
             </Select>
-            <Button
-              variant='outline'
-              onClick={() => setShowConfig(true)}>
-              <Settings className='mr-2 h-4 w-4' />
+            <Button variant="outline" onClick={() => setShowConfig(true)}>
+              <Settings className="mr-2 h-4 w-4" />
               Jira Config
             </Button>
           </div>
@@ -928,29 +926,22 @@ export default function UnifiedJiraBoard() {
 
         {/* Error Display */}
         {error && (
-          <Alert
-            variant='destructive'
-            className='mb-6'>
+          <Alert variant="destructive" className="mb-6">
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
 
         {/* Tabs */}
-        <Tabs
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className='w-full'>
-          <TabsList className='grid w-full grid-cols-2 max-w-md'>
-            <TabsTrigger value='sprint-list'>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full max-w-md grid-cols-2">
+            <TabsTrigger value="sprint-list">
               Active Sprint List View
             </TabsTrigger>
-            <TabsTrigger value='work-item'>Individual Work Item</TabsTrigger>
+            <TabsTrigger value="work-item">Individual Work Item</TabsTrigger>
           </TabsList>
 
           {/* Sprint List Tab */}
-          <TabsContent
-            value='sprint-list'
-            className='space-y-6'>
+          <TabsContent value="sprint-list" className="space-y-6">
             {selectedBoard && (
               <>
                 {/* Filters */}
@@ -967,19 +958,17 @@ export default function UnifiedJiraBoard() {
 
                 {/* Issues Display */}
                 {loading ? (
-                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {[...Array(6)].map((_, i) => (
-                      <div
-                        key={i}
-                        className='bg-white p-4 rounded-lg border'>
-                        <Skeleton className='h-6 w-3/4 mb-2' />
-                        <Skeleton className='h-4 w-1/2 mb-2' />
-                        <Skeleton className='h-4 w-full' />
+                      <div key={i} className="rounded-lg border bg-white p-4">
+                        <Skeleton className="mb-2 h-6 w-3/4" />
+                        <Skeleton className="mb-2 h-4 w-1/2" />
+                        <Skeleton className="h-4 w-full" />
                       </div>
                     ))}
                   </div>
                 ) : filteredIssues.length > 0 ? (
-                  viewMode === 'list' ? (
+                  viewMode === "list" ? (
                     <IssueListView
                       issues={filteredIssues}
                       users={users}
@@ -1000,23 +989,24 @@ export default function UnifiedJiraBoard() {
                     />
                   )
                 ) : (
-                  <div className='text-center py-12'>
-                    <Calendar className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-                    <h3 className='text-lg font-medium text-gray-900 mb-2'>
+                  <div className="py-12 text-center">
+                    <Calendar className="mx-auto mb-4 h-12 w-12 text-gray-400" />
+                    <h3 className="mb-2 text-lg font-medium text-gray-900">
                       {issues.length === 0
-                        ? 'No issues found'
-                        : 'No issues match the current filters'}
+                        ? "No issues found"
+                        : "No issues match the current filters"}
                     </h3>
-                    <p className='text-gray-500'>
+                    <p className="text-gray-500">
                       {issues.length === 0
-                        ? 'Select a board to view issues.'
-                        : 'Try adjusting your filters to see more results.'}
+                        ? "Select a board to view issues."
+                        : "Try adjusting your filters to see more results."}
                     </p>
                     {issues.length > 0 && hasActiveFilters() && (
                       <Button
-                        variant='outline'
-                        className='mt-4 bg-transparent'
-                        onClick={clearFilters}>
+                        variant="outline"
+                        className="mt-4 bg-transparent"
+                        onClick={clearFilters}
+                      >
                         Clear All Filters
                       </Button>
                     )}
@@ -1026,12 +1016,12 @@ export default function UnifiedJiraBoard() {
             )}
 
             {!selectedBoard && (
-              <div className='text-center py-12'>
-                <Calendar className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-                <h3 className='text-lg font-medium text-gray-900 mb-2'>
+              <div className="py-12 text-center">
+                <Calendar className="mx-auto mb-4 h-12 w-12 text-gray-400" />
+                <h3 className="mb-2 text-lg font-medium text-gray-900">
                   Select a Board
                 </h3>
-                <p className='text-gray-500'>
+                <p className="text-gray-500">
                   Choose a board from the dropdown to view its active sprint
                   issues.
                 </p>
@@ -1040,9 +1030,7 @@ export default function UnifiedJiraBoard() {
           </TabsContent>
 
           {/* Individual Work Item Tab */}
-          <TabsContent
-            value='work-item'
-            className='space-y-6'>
+          <TabsContent value="work-item" className="space-y-6">
             {selectedIssue ? (
               <IssueDetailView
                 selectedIssue={selectedIssue}
@@ -1068,12 +1056,12 @@ export default function UnifiedJiraBoard() {
                 onCancelEdit={handleCancelEdit}
               />
             ) : (
-              <div className='text-center py-12'>
-                <MessageSquare className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-                <h3 className='text-lg font-medium text-gray-900 mb-2'>
+              <div className="py-12 text-center">
+                <MessageSquare className="mx-auto mb-4 h-12 w-12 text-gray-400" />
+                <h3 className="mb-2 text-lg font-medium text-gray-900">
                   Select an Issue
                 </h3>
-                <p className='text-gray-500'>
+                <p className="text-gray-500">
                   Click on an issue from the Active Sprint List to view its
                   details.
                 </p>

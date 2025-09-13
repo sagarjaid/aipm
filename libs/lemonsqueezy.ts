@@ -3,7 +3,7 @@ import {
   createCheckout,
   getCustomer,
   lemonSqueezySetup,
-} from '@lemonsqueezy/lemonsqueezy.js';
+} from "@lemonsqueezy/lemonsqueezy.js";
 
 interface CreateLemonSqueezyCheckoutParams {
   variantId: string;
@@ -46,7 +46,7 @@ export const createLemonSqueezyCheckout = async ({
     const { data, error } = await createCheckout(
       storeId,
       variantId,
-      newCheckout
+      newCheckout,
     );
 
     if (error) {

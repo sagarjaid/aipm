@@ -1,12 +1,12 @@
 /** @format */
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-const words = ['Wanderer', 'Explorer', 'Traveler', 'Nomad'];
+const words = ["Wanderer", "Explorer", "Traveler", "Nomad"];
 
 export default function RandomWord() {
-  const [randomWord, setRandomWord] = useState('');
+  const [randomWord, setRandomWord] = useState("");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -18,14 +18,14 @@ export default function RandomWord() {
   // Don't render until mounted to prevent hydration mismatch
   if (!isMounted) {
     return (
-      <span className='underline decoration-wavy decoration-rose-300 underline-offset-4'>
+      <span className="underline decoration-rose-300 decoration-wavy underline-offset-4">
         Wanderer
       </span>
     );
   }
 
   return (
-    <span className='underline decoration-wavy decoration-rose-300 underline-offset-4'>
+    <span className="underline decoration-rose-300 decoration-wavy underline-offset-4">
       {randomWord}
     </span>
   );

@@ -1,10 +1,10 @@
 /** @format */
 
-import config from '@/config';
-import { SupabaseClient } from '@supabase/supabase-js';
-import crypto from 'crypto';
-import { headers } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
+import config from "@/config";
+import { SupabaseClient } from "@supabase/supabase-js";
+import crypto from "crypto";
+import { headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 // This is where we receive Lemon Squeezy webhook events
 // It used to update the user data, send emails, etc...
@@ -14,15 +14,15 @@ export async function POST(req: NextRequest) {
   const text = await req.text();
 
   const hmac = crypto.createHmac(
-    'sha256',
-    process.env.LEMONSQUEEZY_SIGNING_SECRET
+    "sha256",
+    process.env.LEMONSQUEEZY_SIGNING_SECRET,
   );
-  const digest = Buffer.from(hmac.update(text).digest('hex'), 'utf8');
-  const signature = Buffer.from((await headers()).get('x-signature'), 'utf8');
+  const digest = Buffer.from(hmac.update(text).digest("hex"), "utf8");
+  const signature = Buffer.from((await headers()).get("x-signature"), "utf8");
 
   // Verify the signature
   if (!crypto.timingSafeEqual(digest, signature)) {
-    return new Response('Invalid signature.', {
+    return new Response("Invalid signature.", {
       status: 400,
     });
   }
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   // Create a private supabase client using the secret service_role API key
   const supabase = new SupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
   );
 
   // Get the payload
@@ -41,14 +41,14 @@ export async function POST(req: NextRequest) {
 
   try {
     switch (eventName) {
-      case 'order_created': {
+      case "order_created": {
         // ✅ Grant access to the product
         const userId = payload.meta?.custom_data?.userId;
         const email = payload.data.attributes.user_email;
         const variantId =
           payload.data.attributes.first_order_item.variant_id.toString();
         const plan = config.lemonsqueezy.plans.find(
-          (p) => p.variantId === variantId
+          (p) => p.variantId === variantId,
         );
 
         if (!plan) break;
@@ -57,9 +57,9 @@ export async function POST(req: NextRequest) {
         if (!userId) {
           // check if user already exists
           const { data: profile } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('email', email)
+            .from("profiles")
+            .select("*")
+            .eq("email", email)
             .single();
           if (profile) {
             user = profile;
@@ -74,23 +74,23 @@ export async function POST(req: NextRequest) {
         } else {
           // find user by ID
           const { data: profile } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', userId)
+            .from("profiles")
+            .select("*")
+            .eq("id", userId)
             .single();
 
           user = profile;
         }
 
         await supabase
-          .from('profiles')
+          .from("profiles")
           .update({
             customer_id: customerId,
             variant_id: variantId,
             has_access: true,
             total_credits: 20,
           })
-          .eq('id', user?.id);
+          .eq("id", user?.id);
 
         // Extra: send email with user link, product page, etc...
         // try {
@@ -102,23 +102,23 @@ export async function POST(req: NextRequest) {
         break;
       }
 
-      case 'subscription_cancelled': {
+      case "subscription_cancelled": {
         // The customer subscription stopped
         // ❌ Revoke access to the product
 
         const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('customer_id', customerId)
+          .from("profiles")
+          .select("*")
+          .eq("customer_id", customerId)
           .single();
 
         // Revoke access to your product
         await supabase
-          .from('profiles')
+          .from("profiles")
           .update({
             has_access: false,
           })
-          .eq('id', profile?.id);
+          .eq("id", profile?.id);
 
         break;
       }
@@ -127,7 +127,7 @@ export async function POST(req: NextRequest) {
       // Unhandled event type
     }
   } catch (e) {
-    console.error('lemonsqueezy error: ', e.message);
+    console.error("lemonsqueezy error: ", e.message);
   }
 
   return NextResponse.json({});

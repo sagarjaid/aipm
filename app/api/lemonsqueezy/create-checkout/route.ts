@@ -1,6 +1,6 @@
-import { createLemonSqueezyCheckout } from '@/libs/lemonsqueezy';
-import { createClient } from '@/libs/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
+import { createLemonSqueezyCheckout } from "@/libs/lemonsqueezy";
+import { createClient } from "@/libs/supabase/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // This function is used to create a Lemon Squeezy Checkout Session (one-time payment or subscription)
 // It's called by the <ButtonCheckout /> component
@@ -10,13 +10,13 @@ export async function POST(req: NextRequest) {
 
   if (!body.variantId) {
     return NextResponse.json(
-      { error: 'Variant ID is required' },
-      { status: 400 }
+      { error: "Variant ID is required" },
+      { status: 400 },
     );
   } else if (!body.redirectUrl) {
     return NextResponse.json(
-      { error: 'Redirect URL is required' },
-      { status: 400 }
+      { error: "Redirect URL is required" },
+      { status: 400 },
     );
   }
 
@@ -30,9 +30,9 @@ export async function POST(req: NextRequest) {
     const { variantId, redirectUrl } = body;
 
     const { data: profile } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user?.id)
+      .from("profiles")
+      .select("*")
+      .eq("id", user?.id)
       .single();
 
     const checkoutURL = await createLemonSqueezyCheckout({

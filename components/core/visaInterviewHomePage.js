@@ -1,12 +1,12 @@
-import UserFeedbackView from '../molecules/userFeedbackView';
-import SpeechContainer from '../molecules/speechContainer';
-import ToggleSections from '../molecules/toggleSections';
-import Question from '../molecules/question';
+import UserFeedbackView from "../molecules/userFeedbackView";
+import SpeechContainer from "../molecules/speechContainer";
+import ToggleSections from "../molecules/toggleSections";
+import Question from "../molecules/question";
 
-import { useState } from 'react';
-import { useWhisperRecording } from '@/hooks/useWhisperRecording';
-import { useToggle } from '@/hooks/useToggle';
-import { useTextToSpeech } from '@/hooks/useTextToSpeech';
+import { useState } from "react";
+import { useWhisperRecording } from "@/hooks/useWhisperRecording";
+import { useToggle } from "@/hooks/useToggle";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 const VisaInterviewHomePage = () => {
   const {
@@ -26,14 +26,14 @@ const VisaInterviewHomePage = () => {
   const { recording, transcript, startRecording, stopRecording } =
     useWhisperRecording(process.env.NEXT_PUBLIC_OPENAI_KEY);
 
-  const [visaOfficerResponseText, setVisaOfficerResponseText] = useState('');
+  const [visaOfficerResponseText, setVisaOfficerResponseText] = useState("");
 
   return (
-    <div className='flex h-fit flex-col gap-4 rounded-xl p-4 sdm:flex-row'>
-      <div className='flex h-fit w-full flex-col rounded-lg border bg-white drop-shadow-xl sdm:w-[600px]'>
+    <div className="flex h-fit flex-col gap-4 rounded-xl p-4 sdm:flex-row">
+      <div className="flex h-fit w-full flex-col rounded-lg border bg-white drop-shadow-xl sdm:w-[600px]">
         <Question
           questionNumber={1}
-          question={'Why do you want the US student visa today?'}
+          question={"Why do you want the US student visa today?"}
           handleTextToSpeech={handleTextToSpeech}
         />
         <UserFeedbackView userAnswer={transcript} />

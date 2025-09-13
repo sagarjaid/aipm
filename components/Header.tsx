@@ -1,47 +1,47 @@
 /** @format */
 
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import type { JSX } from 'react';
-import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import ButtonSignin from './ButtonSignin';
-import logo from '@/app/logo.png';
-import arrowRight from '@/app/arrow-right.svg';
-import logoGif from '@/app/logo.gif';
+import { useState, useEffect } from "react";
+import type { JSX } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import ButtonSignin from "./ButtonSignin";
+import logo from "@/app/logo.png";
+import arrowRight from "@/app/arrow-right.svg";
+import logoGif from "@/app/logo.gif";
 
-import config from '@/config';
-import Navbar from './Navbar';
-import ButtonAccount from './ButtonAccount';
-import { usePathname } from 'next/navigation';
+import config from "@/config";
+import Navbar from "./Navbar";
+import ButtonAccount from "./ButtonAccount";
+import { usePathname } from "next/navigation";
 
-import MobileNav from './MobileNav';
-import AnimatedLogo from './AnimatedLogo';
-import BookerDemo from './BookerDemo';
+import MobileNav from "./MobileNav";
+import AnimatedLogo from "./AnimatedLogo";
+import BookerDemo from "./BookerDemo";
 
 const links: {
   href: string;
   label: string;
 }[] = [
   {
-    href: '/#pricing',
-    label: 'Pricing',
+    href: "/#pricing",
+    label: "Pricing",
   },
   {
-    href: '/#testimonials',
-    label: 'Reviews',
+    href: "/#testimonials",
+    label: "Reviews",
   },
   {
-    href: '/#faq',
-    label: 'FAQ',
+    href: "/#faq",
+    label: "FAQ",
   },
 ];
 
 // const cta: JSX.Element = <ButtonSignin />;
 
-const cta: JSX.Element = <ButtonSignin extraStyle='btn-primary' />;
+const cta: JSX.Element = <ButtonSignin extraStyle="btn-primary" />;
 
 // A header with a logo on the left, links in the center (like Pricing, etc...), and a CTA (like Get Started or Login) on the right.
 // The header is responsive, and on mobile, the links are hidden behind a burger button.
@@ -58,27 +58,29 @@ const Header = () => {
 
   const pricingSvg = (
     <svg
-      className='w-5 h-5'
-      fill='none'
+      className="h-5 w-5"
+      fill="none"
       strokeWidth={1.5}
-      stroke='currentColor'
-      viewBox='0 0 24 24'
-      xmlns='http://www.w3.org/2000/svg'
-      aria-hidden='true'>
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3'
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"
       />
     </svg>
   );
 
   return (
-    <header className='w-full'>
+    <header className="w-full">
       <nav
-        className='flex items-center justify-between px-4 py-3 w-full'
-        aria-label='Global'>
-        <div className='flex lg:flex-1'>
+        className="flex w-full items-center justify-between px-4 py-3"
+        aria-label="Global"
+      >
+        <div className="flex lg:flex-1">
           {/* <Link
             className='flex items-center gap-2 shrink-0 '
             href='/'
@@ -96,23 +98,25 @@ const Header = () => {
           {/* </Link> */}
         </div>
         {/* Burger button to open menu on mobile */}
-        <div className='flex lg:hidden'>
+        <div className="flex lg:hidden">
           <button
-            type='button'
-            className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5'
-            onClick={() => setIsOpen(true)}>
-            <span className='sr-only'>Open main menu</span>
+            type="button"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5"
+            onClick={() => setIsOpen(true)}
+          >
+            <span className="sr-only">Open main menu</span>
             <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke='currentColor'
-              className='w-6 h-6 text-base-content'>
+              stroke="currentColor"
+              className="h-6 w-6 text-base-content"
+            >
               <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
               />
             </svg>
           </button>
@@ -133,17 +137,15 @@ const Header = () => {
         </div> */}
 
         {/* CTA on large screens */}
-        <div className='hidden lg:flex lg:justify-end lg:flex-1 text-sm'>
-          <div className='flex items-center justify-center gap-4'>
-
-            
-            {pathName.endsWith('/') ? (
+        <div className="hidden text-sm lg:flex lg:flex-1 lg:justify-end">
+          <div className="flex items-center justify-center gap-4">
+            {pathName.endsWith("/") ? (
               <>
-               <a href='#try-it'>Try it</a>
+                <a href="#try-it">Try it</a>
 
-                <a href='#products'>Products</a>
-                <a href='/manifesto'>Manifesto</a>
-               
+                <a href="#products">Products</a>
+                <a href="/manifesto">Manifesto</a>
+
                 {/* <a href='#'>Join Waitlist</a> */}
 
                 {/* <a
@@ -195,12 +197,10 @@ const Header = () => {
                     </g>
                   </svg>
                 </a> */}
-                <a href='/'>Home</a>
-                
+                <a href="/">Home</a>
               </>
-              
             )}
-            <BookerDemo />  
+            <BookerDemo />
           </div>
 
           {/* <a
@@ -233,11 +233,12 @@ const Header = () => {
       </nav>
 
       {/* Mobile menu, show/hide based on menu state. */}
-      <div className={`relative z-50 lg:hidden ${isOpen ? '' : 'hidden'}`}>
+      <div className={`relative z-50 lg:hidden ${isOpen ? "" : "hidden"}`}>
         <div
-          className={`fixed inset-y-0 right-0 z-10 w-full p-4 overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-neutral/10 transform origin-right transition ease-in-out duration-300`}>
+          className={`fixed inset-y-0 right-0 z-10 w-full origin-right transform overflow-y-auto bg-white p-4 transition duration-300 ease-in-out sm:max-w-sm sm:ring-1 sm:ring-neutral/10`}
+        >
           {/* Your logo/name on small screens */}
-          <div className='flex items-center justify-between'>
+          <div className="flex items-center justify-between">
             {/* <Link
               className='flex items-center gap-2 shrink-0 '
               href='/'
@@ -254,21 +255,23 @@ const Header = () => {
 
             <AnimatedLogo />
             <button
-              type='button'
-              className='-m-2.5 rounded-md p-2.5'
-              onClick={() => setIsOpen(false)}>
-              <span className='sr-only'>Close menu</span>
+              type="button"
+              className="-m-2.5 rounded-md p-2.5"
+              onClick={() => setIsOpen(false)}
+            >
+              <span className="sr-only">Close menu</span>
               <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
                 strokeWidth={1.5}
-                stroke='currentColor'
-                className='w-6 h-6'>
+                stroke="currentColor"
+                className="h-6 w-6"
+              >
                 <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M6 18L18 6M6 6l12 12'
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
             </button>

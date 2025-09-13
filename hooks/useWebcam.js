@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useDeviceDetection } from './useDeviceDetection';
+import { useState, useEffect, useCallback } from "react";
+import { useDeviceDetection } from "./useDeviceDetection";
 
 export const useWebcam = () => {
   const [err, setErr] = useState(false);
@@ -15,7 +15,7 @@ export const useWebcam = () => {
       setStream(userStream);
     } catch (error) {
       setErr(true);
-      console.error('Error accessing webcam:', error);
+      console.error("Error accessing webcam:", error);
     }
   }, []);
 

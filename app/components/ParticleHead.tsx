@@ -1,11 +1,11 @@
 /** @format */
 
-'use client';
+"use client";
 
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { gsap } from 'gsap';
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { gsap } from "gsap";
 
 export default function ParticleHead() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -16,7 +16,7 @@ export default function ParticleHead() {
     multiplier: 0.7,
     velocity: 6,
     size: 0.1,
-    color: '#363636',
+    color: "#363636",
     width: 500,
     height: 500,
     zoom: 450,
@@ -36,7 +36,7 @@ export default function ParticleHead() {
       },
       {
         threshold: 0.1, // Trigger when at least 10% of the element is visible
-      }
+      },
     );
 
     if (mountRef.current) {
@@ -47,7 +47,7 @@ export default function ParticleHead() {
       35,
       PARTICLE_CONFIG.width / PARTICLE_CONFIG.height,
       1,
-      2000
+      2000,
     );
     camera.position.z = PARTICLE_CONFIG.zoom;
 
@@ -58,13 +58,13 @@ export default function ParticleHead() {
     const colors: number[] = [];
 
     const colorA = new THREE.Color(PARTICLE_CONFIG.color);
-    const colorB = new THREE.Color('#9fc5e8');
-    const colorC = new THREE.Color('#ea9999');
+    const colorB = new THREE.Color("#9fc5e8");
+    const colorC = new THREE.Color("#ea9999");
 
     const loader = new OBJLoader();
 
     loader.load(
-      'https://s3-us-west-2.amazonaws.com/s.cdpn.io/40480/head.obj',
+      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/40480/head.obj",
       function (object) {
         object.traverse(function (child) {
           if (child instanceof THREE.Mesh) {
@@ -73,7 +73,7 @@ export default function ParticleHead() {
             geometry.computeBoundingBox();
             geometry.computeVertexNormals();
 
-            const positionAttribute = geometry.getAttribute('position');
+            const positionAttribute = geometry.getAttribute("position");
             for (let i = 0; i < positionAttribute.count; i++) {
               const baseX = positionAttribute.getX(i) * scale;
               const baseY = positionAttribute.getY(i) * scale;
@@ -81,7 +81,7 @@ export default function ParticleHead() {
 
               const count = Math.max(
                 1,
-                Math.round(PARTICLE_CONFIG.multiplier * 2)
+                Math.round(PARTICLE_CONFIG.multiplier * 2),
               );
               for (let j = 0; j < count; j++) {
                 const offsetX = (Math.random() - 0.5) * 5;
@@ -90,13 +90,13 @@ export default function ParticleHead() {
                 positions.push(
                   baseX + offsetX,
                   baseY + offsetY,
-                  baseZ + offsetZ
+                  baseZ + offsetZ,
                 );
                 origins.push(baseX + offsetX, baseY + offsetY, baseZ + offsetZ);
                 velocities.push(
                   (Math.random() - 0.5) * PARTICLE_CONFIG.velocity,
                   (Math.random() - 0.5) * PARTICLE_CONFIG.velocity,
-                  (Math.random() - 0.5) * PARTICLE_CONFIG.velocity
+                  (Math.random() - 0.5) * PARTICLE_CONFIG.velocity,
                 );
 
                 const colorChoice = j % 3;
@@ -114,12 +114,12 @@ export default function ParticleHead() {
 
         const p_geom = new THREE.BufferGeometry();
         p_geom.setAttribute(
-          'position',
-          new THREE.Float32BufferAttribute(positions, 3)
+          "position",
+          new THREE.Float32BufferAttribute(positions, 3),
         );
         p_geom.setAttribute(
-          'color',
-          new THREE.Float32BufferAttribute(colors, 3)
+          "color",
+          new THREE.Float32BufferAttribute(colors, 3),
         );
 
         const p_material = new THREE.PointsMaterial({
@@ -131,7 +131,7 @@ export default function ParticleHead() {
         scene.add(particles);
 
         const positionAttr = p_geom.getAttribute(
-          'position'
+          "position",
         ) as THREE.BufferAttribute;
         const positionArray = positionAttr.array as Float32Array;
 
@@ -167,7 +167,7 @@ export default function ParticleHead() {
         };
 
         gsap.ticker.add(animate);
-      }
+      },
     );
 
     const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -195,10 +195,10 @@ export default function ParticleHead() {
       renderer.render(scene, camera);
     }
 
-    window.addEventListener('mousemove', onDocumentMouseMove);
+    window.addEventListener("mousemove", onDocumentMouseMove);
 
     return () => {
-      window.removeEventListener('mousemove', onDocumentMouseMove);
+      window.removeEventListener("mousemove", onDocumentMouseMove);
       gsap.ticker.remove(render);
       mountRef.current?.removeChild(renderer.domElement);
       observer.disconnect();
