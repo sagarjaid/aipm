@@ -379,7 +379,7 @@ const MobileNav = () => {
                 </button> */}
 
                 <div className="w-full">
-                  <div className="mb-10 flex flex-col justify-start gap-2 text-sm">
+                  <div className="mb-10 flex flex-col justify-start gap-4 text-sm">
                     <Link href="/" className="link-hover link">
                       Home
                     </Link>

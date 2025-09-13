@@ -63,11 +63,13 @@ const FooterBIg = () => {
                   </a>
                 )} */}
 
-                <ClickableEmail
-                  email={config.mailgun.supportEmail}
-                  className="block text-sm hover:text-gray-700"
-                  showIcon={false}
-                />
+                <div className="flex justify-center md:justify-start">
+                  <ClickableEmail
+                    email={config.mailgun.supportEmail}
+                    className="text-sm hover:text-gray-700"
+                    showIcon={false}
+                  />
+                </div>
               </div>
             </div>
 
