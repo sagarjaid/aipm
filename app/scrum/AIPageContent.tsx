@@ -2,13 +2,31 @@
 
 "use client";
 
+/**
+ * ScrumPageContent - AI Scrum Master Component
+ *
+ * This component supports two AI providers:
+ * - ElevenLabs: Uses @elevenlabs/react for voice conversations
+ * - Vapi: Uses @vapi-ai/web for voice conversations
+ *
+ * Provider can be set in two ways:
+ * 1. Config file: config.ScrumMasterProvider.provider = "elevenlabs" | "vapi"
+ * 2. URL parameter: ?provider=elevenlabs or ?provider=vapi (for Recall AI integration)
+ *
+ * Required environment variables:
+ * ElevenLabs: NEXT_PUBLIC_ELEVENLABS_AGENT_ID
+ * Vapi: NEXT_PUBLIC_VAPI_PUBLIC_KEY, NEXT_PUBLIC_VAPI_ASSISTANT_ID
+ */
+
 import React, { useEffect, useRef, useState } from "react";
 import { useConversation } from "@elevenlabs/react";
+import Vapi from "@vapi-ai/web";
 import { Mic, X, Headphones, MessageSquare } from "lucide-react";
 import { useMeetingAudio } from "@/hooks/useMeetingAudio";
 import { useSearchParams } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { JiraIssue } from "@/lib/jira-types";
+import config from "@/config";
 
 // type ScrumPageContentProps = {
 //   issues: JiraIssue[];
@@ -90,9 +108,23 @@ const ScrumPageContent = () => {
   const [showTranscripts, setShowTranscripts] = useState(false);
   const silenceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
+  const vapiRef = useRef<Vapi | null>(null);
   const searchParams = useSearchParams();
   const agentId =
     searchParams.get("botID") || process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID;
+
+  // Get the provider from URL params (for Recall AI) or config
+  const providerFromUrl = searchParams.get("provider");
+  const provider = providerFromUrl || config.ScrumMasterProvider.provider;
+
+  // Log provider source for debugging
+  useEffect(() => {
+    if (providerFromUrl) {
+      console.log(`Provider set via URL parameter: ${provider}`);
+    } else {
+      console.log(`Provider set via config: ${provider}`);
+    }
+  }, [provider, providerFromUrl]);
 
   // Move CSS injection to useEffect to prevent hydration mismatch
   useEffect(() => {
@@ -136,6 +168,7 @@ const ScrumPageContent = () => {
     },
   });
 
+  // ElevenLabs conversation (only used when provider is elevenlabs)
   const conversation = useConversation({
     onConnect: () => {
       setIsInitialized(true);
@@ -162,6 +195,77 @@ const ScrumPageContent = () => {
       clearSilenceTimer();
     },
   });
+
+  // Vapi conversation state
+  const [vapiStatus, setVapiStatus] = useState<string>("idle");
+  const [vapiIsSpeaking, setVapiIsSpeaking] = useState(false);
+
+  // Initialize Vapi when provider is vapi
+  useEffect(() => {
+    if (provider === "vapi") {
+      const publicKey = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY;
+      if (!publicKey) {
+        setError("Vapi public key not found in environment variables");
+        setIsLoading(false);
+        return;
+      }
+
+      const vapi = new Vapi(publicKey);
+      vapiRef.current = vapi;
+
+      // Set up Vapi event listeners
+      vapi.on("call-start", () => {
+        console.log("Vapi call started");
+        setIsInitialized(true);
+        setIsLoading(false);
+        setError(null);
+        setVapiStatus("connected");
+        resetSilenceTimer();
+      });
+
+      vapi.on("call-end", () => {
+        console.log("Vapi call ended");
+        setIsInitialized(false);
+        setVapiStatus("idle");
+        clearSilenceTimer();
+      });
+
+      vapi.on("speech-start", () => {
+        console.log("Vapi speech started");
+        setVapiIsSpeaking(true);
+        resetSilenceTimer();
+      });
+
+      vapi.on("speech-end", () => {
+        console.log("Vapi speech ended");
+        setVapiIsSpeaking(false);
+      });
+
+      vapi.on("message", (message) => {
+        console.log("Vapi message:", message);
+        if (message.type === "transcript") {
+          resetSilenceTimer();
+        }
+      });
+
+      vapi.on("error", (error) => {
+        console.error("Vapi error:", error);
+        setError(
+          error.message || "An error occurred during the Vapi conversation",
+        );
+        setIsLoading(false);
+        clearSilenceTimer();
+      });
+
+      // Cleanup function
+      return () => {
+        if (vapiRef.current) {
+          vapiRef.current.stop();
+          vapiRef.current = null;
+        }
+      };
+    }
+  }, [provider]);
 
   useEffect(() => {
     const checkMeetingContext = () => {
@@ -230,31 +334,41 @@ const ScrumPageContent = () => {
       try {
         setIsLoading(true);
         await navigator.mediaDevices.getUserMedia({ audio: true });
-        // const uniqueAssignees = getUniqueAssignees(issues);
 
         const list_of_team_members = "Asha, Bob, Charlie";
 
-        // const list_of_team_members = uniqueAssignees
-        //   .map((a) => a.displayName)
-        //   .join(', ');
-
         console.log("list_of_team_members", list_of_team_members);
+        console.log("Starting session with provider:", provider);
 
-        console.log(
-          "Starting session with agentId:",
-          agentId,
-          "list_of_team_members:",
-          list_of_team_members,
-        );
+        if (provider === "elevenlabs") {
+          console.log(
+            "Starting ElevenLabs session with agentId:",
+            agentId,
+            "list_of_team_members:",
+            list_of_team_members,
+          );
 
-        const response = await fetch("/api/elevenlabs/get-signed-url", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ agentId, list_of_team_members }),
-        });
-        if (!response.ok) throw new Error("Failed to get signed URL");
-        const { signedUrl } = await response.json();
-        await conversation.startSession({ signedUrl });
+          const response = await fetch("/api/elevenlabs/get-signed-url", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ agentId, list_of_team_members }),
+          });
+          if (!response.ok) throw new Error("Failed to get signed URL");
+          const { signedUrl } = await response.json();
+          await conversation.startSession({ signedUrl });
+        } else if (provider === "vapi") {
+          console.log("Starting Vapi session");
+          const assistantId = process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID;
+          if (!assistantId) {
+            throw new Error(
+              "Vapi assistant ID not found in environment variables",
+            );
+          }
+
+          if (vapiRef.current) {
+            await vapiRef.current.start(assistantId);
+          }
+        }
       } catch (err: any) {
         toast({
           title: "Error",
@@ -265,11 +379,15 @@ const ScrumPageContent = () => {
     };
     start();
     return () => clearSilenceTimer();
-  }, []);
+  }, [provider]);
 
   const endConversation = async () => {
     try {
-      await conversation.endSession();
+      if (provider === "elevenlabs") {
+        await conversation.endSession();
+      } else if (provider === "vapi" && vapiRef.current) {
+        await vapiRef.current.stop();
+      }
       setIsInitialized(false);
       clearSilenceTimer();
       if (isInMeeting) {
@@ -283,15 +401,21 @@ const ScrumPageContent = () => {
     }
   };
 
-  const waveActive = conversation.isSpeaking;
-  const micActive = conversation.isSpeaking || isInitialized;
+  const waveActive =
+    provider === "elevenlabs" ? conversation.isSpeaking : vapiIsSpeaking;
+  const micActive =
+    provider === "elevenlabs"
+      ? conversation.isSpeaking || isInitialized
+      : vapiIsSpeaking || isInitialized;
 
   let statusText = "";
   if (isLoading) {
     statusText = "Loading...";
-  } else if (conversation.isSpeaking) {
+  } else if (waveActive) {
     statusText = "AI is speaking...";
-  } else if (conversation.status === "connected") {
+  } else if (provider === "elevenlabs" && conversation.status === "connected") {
+    statusText = isInMeeting ? "Connected to Meeting" : "Connected";
+  } else if (provider === "vapi" && vapiStatus === "connected") {
     statusText = isInMeeting ? "Connected to Meeting" : "Connected";
   } else {
     statusText = "Disconnected";
@@ -309,7 +433,7 @@ const ScrumPageContent = () => {
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-3">
-      <AnimatedWaveform active={conversation.isSpeaking} />
+      <AnimatedWaveform active={waveActive} />
       <div className="flex items-center gap-2">
         <button
           className="flex h-9 w-9 items-center justify-center rounded-lg bg-green-500 p-2 focus:outline-none"

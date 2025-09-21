@@ -1,6 +1,7 @@
 /** @format */
 
 import { NextRequest, NextResponse } from "next/server";
+import config from "@/config";
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,6 +13,14 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
+
+    // Get the current provider from config
+    const provider = config.ScrumMasterProvider.provider;
+    
+    // Add provider parameter to the webpage URL
+    const urlWithProvider = new URL(webpageUrl);
+    urlWithProvider.searchParams.set('provider', provider);
+    const finalWebpageUrl = urlWithProvider.toString();
 
     const recallApiKey = process.env.RECALL_API_KEY;
     if (!recallApiKey) {
@@ -35,7 +44,7 @@ export async function POST(request: NextRequest) {
           camera: {
             kind: "webpage",
             config: {
-              url: webpageUrl,
+              url: finalWebpageUrl,
             },
           },
         },
@@ -61,6 +70,8 @@ export async function POST(request: NextRequest) {
       status: botData.status,
       meetingUrl: botData.meeting_url,
       botName: botData.bot_name,
+      provider: provider,
+      webpageUrl: finalWebpageUrl,
     });
   } catch (error) {
     console.error("Error creating Recall bot:", error);

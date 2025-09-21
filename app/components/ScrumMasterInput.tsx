@@ -2,6 +2,16 @@
 
 "use client";
 
+/**
+ * ScrumMasterInput - Component for creating Recall AI bots
+ *
+ * This component automatically generates the webpage URL with the correct provider parameter
+ * based on the config.ScrumMasterProvider.provider setting.
+ *
+ * The generated URL format: https://yoursite.com/scrum?provider=vapi&botID
+ * This ensures Recall AI bots use the correct AI provider (ElevenLabs or Vapi).
+ */
+
 import { useState, useEffect } from "react";
 import meet from "@/app/img/google-meet.svg";
 import teams from "@/app/img/teams.svg";
@@ -10,6 +20,7 @@ import slack from "@/app/img/slack.svg";
 import webex from "@/app/img/webex.svg";
 import goTo from "@/app/img/go-to.svg";
 import BookerDemo from "@/components/BookerDemo";
+import config from "@/config";
 
 interface ScrumMasterInputProps {
   emailPlaceholder?: string;
@@ -36,15 +47,23 @@ export default function ScrumMasterInput({
   } | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [botName, setBotName] = useState("AI Scrum Master");
-  const [webpageUrl, setWebpageUrl] = useState(
-    "https://getaipm.com/scrum?botID",
-  );
+  const [webpageUrl, setWebpageUrl] = useState("");
   const [isMounted, setIsMounted] = useState(false);
 
   // Ensure component is mounted before rendering dynamic content
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Generate webpage URL with provider parameter
+  useEffect(() => {
+    if (isMounted) {
+      const provider = config.ScrumMasterProvider.provider;
+      const baseUrl = `${window.location.origin}/scrum`;
+      const urlWithProvider = `${baseUrl}?provider=${provider}&botID`;
+      setWebpageUrl(urlWithProvider);
+    }
+  }, [isMounted]);
 
   const onButtonClick = async () => {
     if (!email || !userName || !meetUrl) {
@@ -416,11 +435,17 @@ export default function ScrumMasterInput({
                     <label className="mb-2 block text-sm font-medium text-gray-700">
                       Webpage URL
                     </label>
+                    <div className="mb-1 text-xs text-gray-500">
+                      Automatically includes provider parameter from config
+                    </div>
                     <input
                       type="url"
                       value={webpageUrl}
                       disabled
-                      placeholder="https://getaipm.com/scrum?botID"
+                      placeholder={
+                        webpageUrl ||
+                        "https://getaipm.com/scrum?provider=vapi&botID"
+                      }
                       className="w-full cursor-not-allowed rounded border border-gray-300 bg-gray-50 px-3 py-2 text-gray-500"
                     />
                   </div>

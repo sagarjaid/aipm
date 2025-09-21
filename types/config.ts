@@ -30,6 +30,9 @@ export interface ConfigProps {
     id?: string;
     onlyShowOnRoutes?: string[];
   };
+  ScrumMasterProvider: {
+    provider: "elevenlabs" | "vapi";
+  };
   stripe: {
     plans: {
       isFeatured?: boolean;

@@ -16,7 +16,13 @@ const config = {
     // Hide Crisp by default, except on route "/". Crisp is toggled with <ButtonSupport/>. If you want to show Crisp on every routes, just remove this below
     onlyShowOnRoutes: ["/"],
   },
-
+  ScrumMasterProvider: {
+    // Switch between "elevenlabs" and "vapi" to change the AI provider
+    // This setting is used for:
+    // 1. Direct access to /scrum page
+    // 2. Recall AI bot creation (automatically adds ?provider=xxx to webpage URL)
+    provider: "vapi"
+  },
   stripe: {
     // Create multiple plans in your Stripe dashboard, then add them here. You can add as many plans as you want, just make sure to add the priceId
     plans: [
