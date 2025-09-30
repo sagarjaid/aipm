@@ -427,7 +427,9 @@ export default function ScrumMasterInput({
                             className="z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white shadow-sm transition-transform duration-200 hover:scale-110"
                             onClick={() => {
                               setCurrentPlatform("google_meet");
-                              setMeetUrl("https://meet.google.com/");
+                              setMeetUrl(
+                                "https://meet.google.com/ahz-iath-xks",
+                              );
                             }}
                           >
                             <img
@@ -451,7 +453,7 @@ export default function ScrumMasterInput({
                             onClick={() => {
                               setCurrentPlatform("microsoft_teams");
                               setMeetUrl(
-                                "https://teams.microsoft.com/l/meetup-join/",
+                                "https://teams.live.com/meet/932087745130?p=MgX810jvGfVFTQ6Dg5",
                               );
                             }}
                           >
