@@ -9,6 +9,7 @@ import ClientWrapper from "@/components/ClientWrapper";
 import BackToTop from "@/components/BackToTop";
 import config from "@/config";
 import "./globals.css";
+import HelloBar from "@/components/HelloBar";
 
 // Define SEO metadata
 export const metadata = getSEOTags();
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <GoogleAnalytics gaId="G-XWQZQB0RB3" />{" "}
         {/* GA email: getaipmcom@gmail.com*/}
         {/* <HotJar /> */}
+        <HelloBar />
         <ClientWrapper>{children}</ClientWrapper>
         <BackToTop />
       </body>

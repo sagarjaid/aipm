@@ -49,6 +49,9 @@ export default function ScrumMasterInput({
   const [botName, setBotName] = useState("AI Scrum Master");
   const [webpageUrl, setWebpageUrl] = useState("");
   const [isMounted, setIsMounted] = useState(false);
+  const [currentPlatform, setCurrentPlatform] = useState<
+    "google_meet" | "microsoft_teams" | null
+  >(null);
 
   // Ensure component is mounted before rendering dynamic content
   useEffect(() => {
@@ -59,35 +62,77 @@ export default function ScrumMasterInput({
   useEffect(() => {
     if (isMounted) {
       const provider = config.ScrumMasterProvider.provider;
-      const baseUrl = `${window.location.origin}/scrum`;
+      const baseUrl = "https://getaipm.com/scrum";
       const urlWithProvider = `${baseUrl}?provider=${provider}&botID`;
       setWebpageUrl(urlWithProvider);
     }
   }, [isMounted]);
 
+  // Detect platform from URL and update current platform
+  useEffect(() => {
+    if (meetUrl) {
+      if (meetUrl.includes("meet.google.com")) {
+        setCurrentPlatform("google_meet");
+      } else if (
+        meetUrl.includes("teams.microsoft.com") ||
+        meetUrl.includes("teams.live.com")
+      ) {
+        setCurrentPlatform("microsoft_teams");
+      } else {
+        setCurrentPlatform(null);
+      }
+    } else {
+      setCurrentPlatform(null);
+    }
+  }, [meetUrl]);
+
   const onButtonClick = async () => {
+    console.log("🚀 onButtonClick started");
+    console.log("📝 Form data:", {
+      email,
+      userName,
+      meetUrl,
+      botName,
+      webpageUrl,
+      currentPlatform,
+    });
+
     if (!email || !userName || !meetUrl) {
+      console.log("❌ Validation failed: missing required fields");
       setMessage({ type: "error", text: "Please fill in all fields" });
       return;
     }
 
-    // Check if the meeting URL is a Google Meet URL
-    if (!meetUrl.includes("meet.google.com")) {
+    // Check if the meeting URL is a supported platform
+    const isGoogleMeet = meetUrl.includes("meet.google.com");
+    const isMicrosoftTeams =
+      meetUrl.includes("teams.microsoft.com") ||
+      meetUrl.includes("teams.live.com");
+
+    console.log("🔍 Platform detection:", {
+      isGoogleMeet,
+      isMicrosoftTeams,
+      meetUrl,
+    });
+
+    if (!isGoogleMeet && !isMicrosoftTeams) {
+      console.log("❌ Unsupported platform detected");
       setMessage({
         type: "error",
-        text: "Currently, we only support Google Meet. We are working round the clock to make other meeting platforms available for our beta users. If you have any special requests, feel free to reach out to us at hello@getaipm.com",
+        text: "Currently, we only support Google Meet and Microsoft Teams. We are working round the clock to make other meeting platforms available for our beta users. If you have any special requests, feel free to reach out to us at hello@getaipm.com",
       });
       return;
     }
 
-    // Open the Google Meet URL in a new tab immediately after validation
+    // Open the meeting URL in a new tab immediately after validation
     try {
+      console.log("🌐 Opening meeting URL in new tab:", meetUrl);
       const newTab = window.open(meetUrl, "_blank", "noopener,noreferrer");
       if (newTab) {
         newTab.opener = null;
       }
     } catch (e) {
-      console.warn("Failed to open Meet URL in new tab:", e);
+      console.warn("Failed to open meeting URL in new tab:", e);
     }
 
     setIsLoading(true);
@@ -95,25 +140,40 @@ export default function ScrumMasterInput({
 
     try {
       // First, create a bot using Recall.ai API
+      const requestBody = {
+        meetingUrl: meetUrl,
+        botName: botName.trim(),
+        webpageUrl: webpageUrl.trim(),
+        platform: isGoogleMeet ? "google_meet" : "microsoft_teams",
+      };
+
+      console.log("📤 Sending bot creation request:", requestBody);
+
       const botResponse = await fetch("/api/recall/create-bot", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          meetingUrl: meetUrl,
-          botName: botName.trim(),
-          webpageUrl: webpageUrl.trim(),
-        }),
+        body: JSON.stringify(requestBody),
       });
 
+      console.log("📥 Bot response status:", botResponse.status);
+      console.log(
+        "📥 Bot response headers:",
+        Object.fromEntries(botResponse.headers.entries()),
+      );
+
       const botData = await botResponse.json();
+      console.log("📥 Bot response data:", botData);
 
       if (!botResponse.ok) {
+        console.log("❌ Bot creation failed:", botData);
         throw new Error(
           botData.error || "Failed to create AI Scrum Master bot",
         );
       }
+
+      console.log("✅ Bot created successfully:", botData);
 
       // Store the bot ID and meeting info
       const meetingInfo = {
@@ -126,10 +186,11 @@ export default function ScrumMasterInput({
       };
 
       // You can store this in localStorage or send to your backend
-      console.log("Meeting info:", meetingInfo);
+      console.log("💾 Meeting info stored:", meetingInfo);
 
       // Send lead data to Sheety API
       try {
+        console.log("📊 Sending lead data to Sheety...");
         const sheetyUrl =
           "https://api.sheety.co/33d9ec27f5c7dfb130eb655baacab48d/aipmLeads/leads";
         const leadData = {
@@ -142,6 +203,8 @@ export default function ScrumMasterInput({
           },
         };
 
+        console.log("📊 Sheety lead data:", leadData);
+
         const sheetyResponse = await fetch(sheetyUrl, {
           method: "POST",
           headers: {
@@ -152,15 +215,15 @@ export default function ScrumMasterInput({
 
         if (sheetyResponse.ok) {
           const sheetyData = await sheetyResponse.json();
-          console.log("Lead saved to Sheety:", sheetyData.lead);
+          console.log("✅ Lead saved to Sheety:", sheetyData.lead);
         } else {
           console.warn(
-            "Failed to save lead to Sheety:",
+            "❌ Failed to save lead to Sheety:",
             await sheetyResponse.text(),
           );
         }
       } catch (sheetyError) {
-        console.warn("Error saving lead to Sheety:", sheetyError);
+        console.warn("❌ Error saving lead to Sheety:", sheetyError);
         // Don't fail the main flow if Sheety fails
       }
 
@@ -176,14 +239,21 @@ export default function ScrumMasterInput({
       setOptInInterview(false);
       setOptInManuallySet(false);
 
-      console.log("AI Scrum Master sent successfully:", botData);
+      console.log("🎉 AI Scrum Master sent successfully:", botData);
     } catch (error: any) {
+      console.error("💥 Error in onButtonClick:", error);
+      console.error("💥 Error details:", {
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
+      });
+
       setMessage({
         type: "error",
         text: error.message || "Failed to send AI Scrum Master",
       });
-      console.error("Error sending AI Scrum Master:", error);
     } finally {
+      console.log("🏁 onButtonClick completed, setting loading to false");
       setIsLoading(false);
     }
   };
@@ -292,40 +362,111 @@ export default function ScrumMasterInput({
                 />
               </div>
 
-              {/* Google Meet URL Input */}
+              {/* Meeting URL Input */}
               <div>
                 <div className="flex w-full items-center justify-between gap-2">
-                  <div className="meet-tooltip relative flex items-center gap-2">
-                    <div className="z-10 flex h-10 w-full cursor-pointer items-center justify-center gap-2 border-2 border-white bg-white transition-transform duration-200 hover:scale-105">
-                      <img
-                        src={meet.src}
-                        alt="Google Meet"
-                        className="h-6 w-6"
-                      />
-                      <span className="text-sm">Google Meet URL</span>
+                  {/* Show platform indicator based on current URL */}
+                  {currentPlatform === "google_meet" && (
+                    <div className="meet-tooltip relative flex items-center gap-2">
+                      <div className="z-10 flex h-10 w-full cursor-pointer items-center justify-center gap-2 border-2 border-white bg-white transition-transform duration-200 hover:scale-105">
+                        <img
+                          src={meet.src}
+                          alt="Google Meet"
+                          className="h-6 w-6"
+                        />
+                        <span className="text-sm">Google Meet URL</span>
+                      </div>
+                      <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-green-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                        Currently Supported
+                        <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-green-600"></div>
+                      </div>
                     </div>
-                    <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-green-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
-                      Currently Supported
-                      <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-green-600"></div>
+                  )}
+
+                  {currentPlatform === "microsoft_teams" && (
+                    <div className="teams-tooltip relative flex items-center gap-2">
+                      <div className="z-10 flex h-10 w-full cursor-pointer items-center justify-center gap-2 border-2 border-white bg-white transition-transform duration-200 hover:scale-105">
+                        <img
+                          src={teams.src}
+                          alt="Microsoft Teams"
+                          className="h-6 w-6"
+                        />
+                        <span className="text-sm">Microsoft Teams URL</span>
+                      </div>
+                      <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-green-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                        Currently Supported
+                        <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-green-600"></div>
+                      </div>
                     </div>
-                  </div>
+                  )}
+
+                  {/* Show only Google Meet when no URL is entered (default) */}
+                  {!currentPlatform && (
+                    <div className="meet-tooltip relative flex items-center gap-2">
+                      <div className="z-10 flex h-10 w-full cursor-pointer items-center justify-center gap-2 border-2 border-white bg-white transition-transform duration-200 hover:scale-105">
+                        <img
+                          src={meet.src}
+                          alt="Google Meet"
+                          className="h-6 w-6"
+                        />
+                        <span className="text-sm">Google Meet URL</span>
+                      </div>
+                      <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-green-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                        Currently Supported
+                        <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-green-600"></div>
+                      </div>
+                    </div>
+                  )}
                   <div>
                     {/* Platform Icons */}
                     <div className="mb-3 flex items-center -space-x-2">
-                      {/* Microsoft Teams - Coming Soon */}
-                      <div className="teams-tooltip relative">
-                        <div className="z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white opacity-60 shadow-sm transition-transform duration-200 hover:scale-110">
-                          <img
-                            src={teams.src}
-                            alt="Microsoft Teams"
-                            className="h-6 w-6"
-                          />
+                      {/* Google Meet - Show only when Microsoft Teams is selected */}
+                      {currentPlatform === "microsoft_teams" && (
+                        <div className="meet-tooltip relative">
+                          <div
+                            className="z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white shadow-sm transition-transform duration-200 hover:scale-110"
+                            onClick={() => {
+                              setCurrentPlatform("google_meet");
+                              setMeetUrl("https://meet.google.com/");
+                            }}
+                          >
+                            <img
+                              src={meet.src}
+                              alt="Google Meet"
+                              className="h-6 w-6"
+                            />
+                          </div>
+                          <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-green-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                            Currently Supported
+                            <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-green-600"></div>
+                          </div>
                         </div>
-                        <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
-                          Coming Soon
-                          <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600"></div>
+                      )}
+
+                      {/* Microsoft Teams - Show only when Google Meet is selected */}
+                      {currentPlatform !== "microsoft_teams" && (
+                        <div className="teams-tooltip relative">
+                          <div
+                            className="z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-white shadow-sm transition-transform duration-200 hover:scale-110"
+                            onClick={() => {
+                              setCurrentPlatform("microsoft_teams");
+                              setMeetUrl(
+                                "https://teams.microsoft.com/l/meetup-join/",
+                              );
+                            }}
+                          >
+                            <img
+                              src={teams.src}
+                              alt="Microsoft Teams"
+                              className="h-6 w-6"
+                            />
+                          </div>
+                          <div className="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-green-600 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">
+                            Currently Supported
+                            <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-4 border-r-4 border-t-4 border-transparent border-t-green-600"></div>
+                          </div>
                         </div>
-                      </div>
+                      )}
 
                       {/* Zoom - Coming Soon */}
                       <div className="zoom-tooltip relative">
@@ -387,7 +528,13 @@ export default function ScrumMasterInput({
                 </div>
                 <input
                   type="url"
-                  placeholder="https://meet.google.com/xxx-xxxx-xxx"
+                  placeholder={
+                    currentPlatform === "google_meet"
+                      ? "https://meet.google.com/xxx-xxxx-xxx"
+                      : currentPlatform === "microsoft_teams"
+                        ? "https://teams.microsoft.com/l/meetup-join/..."
+                        : "https://meet.google.com/xxx-xxxx-xxx or https://teams.microsoft.com/l/meetup-join/..."
+                  }
                   value={meetUrl}
                   onChange={(e) => setMeetUrl(e.target.value)}
                   className="w-full rounded border border-gray-300 px-3 py-2"
